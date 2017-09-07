@@ -12,11 +12,6 @@ public class UserService {
     public UserService()
     {
         userList = new ArrayList<>();
-        userList.add(new User("1"));
-        userList.add(new User("2"));
-        userList.add(new User("3"));
-        userList.add(new User("4"));
-        userList.add(new User("5"));
     }
 
     public List<User> findAll(){
