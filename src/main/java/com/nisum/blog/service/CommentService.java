@@ -43,7 +43,7 @@ public class CommentService {
 
         for (int i = 0; i < commentList.size(); i++) {
 
-            if (commentList.get(i).getAuthor().getAlias() == alias) {
+            if (commentList.get(i).getAuthor().getAlias().equalsIgnoreCase(alias)) {
 
                 commentByAuthor.add(commentList.get(i));
 
