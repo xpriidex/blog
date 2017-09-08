@@ -47,11 +47,12 @@ public class PostServiceTest {
     @Test
     public void itShouldReturnAllPostsByTitle(){
         //ACT
-        List<Post> result = postService.findAllByTitle("Narnia");
+        List<Post> result = postService.findAllByTitle("NaRNIA");
 
         //ASSERT
         assertThat(result.size(), is(equalTo(1)));
         assertEquals(result.get(0).getTitle(),"Narnia");
+
     }
 
 

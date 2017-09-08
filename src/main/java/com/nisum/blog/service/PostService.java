@@ -24,7 +24,7 @@ public class PostService {
         List<Post> postsByTitle = new ArrayList<>();
 
         for (int i=0; i< postList.size();i++){
-            if(postList.get(i).getTitle().contains(title))
+            if(postList.get(i).getTitle().toLowerCase().contains(title.toLowerCase()))
                 postsByTitle.add(postList.get(i));
         }
 
