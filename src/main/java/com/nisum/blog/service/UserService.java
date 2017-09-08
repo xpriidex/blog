@@ -35,7 +35,7 @@ public class UserService {
         User userFound = new User();
 
         for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getAlias() == alias) {
+            if (userList.get(i).getAlias().equalsIgnoreCase(alias)) {
                 userFound = userList.get(i);
                 break;
             }
@@ -60,7 +60,7 @@ public class UserService {
         List<User> usersFound = new ArrayList<>();
 
         for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getLastName() == lastName) {
+            if (userList.get(i).getLastName().equalsIgnoreCase(lastName)) {
                 usersFound.add(userList.get(i));
             }
         }
@@ -72,7 +72,7 @@ public class UserService {
         User user = new User();
 
         for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getEmail() == email) {
+            if (userList.get(i).getEmail().equalsIgnoreCase(email)) {
                 user = userList.get(i);
                 break;
             }

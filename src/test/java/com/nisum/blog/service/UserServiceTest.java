@@ -15,7 +15,7 @@ import java.util.List;
 
 public class UserServiceTest {
 
-    public static final String MIKI = "Miki";
+    private static final String MIKI = "Miki";
     private UserService userService;
     private User user1;
     private User user2;
@@ -95,18 +95,18 @@ public class UserServiceTest {
         assertThat(usersFound.size(), is(equalTo(1)));
     }
 
-    //Users by LastName
+    //Users by LastName. Case insensitive search
     @Test
     public void itShouldReturnUsersByLastName() throws Exception {
-        List<User> usersFound = userService.findByLastName("Yurjevic");
+        List<User> usersFound = userService.findByLastName("YURJEVIC");
 
         assertThat(usersFound.size(), is(equalTo(1)));
     }
 
-    //User by email
+    //User by email. Case insensitive search
     @Test
     public void itShouldReturnUsersByEmail() throws Exception {
-        User user = userService.findByEmail("myurjevic@gmail.com");
+        User user = userService.findByEmail("myurjevic@gmail.COM");
 
         assertThat(user.getId(), is(equalTo(1)));
     }
