@@ -1,6 +1,7 @@
 package com.nisum.blog.service;
 
 import com.nisum.blog.domain.Post;
+import com.nisum.blog.service.exceptions.PostNotFoundException;
 import com.nisum.blog.service.exceptions.UserNotFoundException;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class PostService {
         return postsByTitle;
     }
 
-    public List<Post> findAllByAuthorsAlias(String alias) throws UserNotFoundException {
+    public List<Post> findAllByAuthorsAlias(String alias) throws PostNotFoundException {
         List<Post> postsByAuthorAlias = new ArrayList<>();
 
         for (int i=0; i< postList.size();i++){
@@ -41,7 +42,7 @@ public class PostService {
         }
 
         if(postsByAuthorAlias.size()==0)
-            throw new UserNotFoundException();
+            throw new PostNotFoundException();
 
 
         return postsByAuthorAlias;
