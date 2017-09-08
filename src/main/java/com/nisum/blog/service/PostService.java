@@ -4,7 +4,6 @@ import com.nisum.blog.domain.Post;
 import com.nisum.blog.service.exceptions.AliasNotFoundException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PostService {

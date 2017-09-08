@@ -79,8 +79,6 @@ public class PostServiceTest {
     public void itShouldReturnAliasNotFoundExceptionWhenAllPostsByAuthorsButAliasNotExits() throws AliasNotFoundException {
         //ACT
         List<Post> result = postService.findAllByAuthorsAlias("German");
-
-
     }
 
 }
