@@ -19,4 +19,15 @@ public class PostService {
     public List<Post> findAll() {
         return postList;
     }
+
+    public List<Post> findAllByTitle(String title) {
+        List<Post> postsByTitle = new ArrayList<>();
+
+        for (int i=0; i< postList.size();i++){
+            if(postList.get(i).getTitle().contains(title))
+                postsByTitle.add(postList.get(i));
+        }
+
+        return postsByTitle;
+    }
 }

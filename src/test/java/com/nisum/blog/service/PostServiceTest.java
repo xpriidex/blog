@@ -18,21 +18,22 @@ public class PostServiceTest {
 
     @Before
     public void setUp() throws Exception {
+        //ARRENGE
         postService = new PostService();
         post1 = new Post();
         post2 = new Post();
 
         post1.setId(1);
+        post1.setTitle("Narnia");
         post2.setId(2);
+        post2.setTitle("Papelucho");
 
-
+        postService.add(post1);
+        postService.add(post2);
     }
 
     @Test
     public void itShouldReturnAllPosts() throws Exception {
-        //ARRENGE
-        postService.add(post1);
-        postService.add(post2);
 
         //ACT
         List<Post> result = postService.findAll();
@@ -41,6 +42,16 @@ public class PostServiceTest {
         assertThat(result.size(), is(equalTo(2)));
         assertEquals(result.get(0).getId(),1);
         assertEquals(result.get(1).getId(),2);
+    }
+
+    @Test
+    public void itShouldReturnAllPostsByTitle(){
+        //ACT
+        List<Post> result = postService.findAllByTitle("Narnia");
+
+        //ASSERT
+        assertThat(result.size(), is(equalTo(1)));
+        assertEquals(result.get(0).getTitle(),"Narnia");
     }
 
 
