@@ -30,4 +30,15 @@ public class PostService {
 
         return postsByTitle;
     }
+
+    public List<Post> findAllByAuthorsAlias(String alias) {
+        List<Post> postsByAuthorAlias = new ArrayList<>();
+
+        for (int i=0; i< postList.size();i++){
+            if(postList.get(i).getAuthor().getAlias().toLowerCase().contains(alias.toLowerCase()))
+                postsByAuthorAlias.add(postList.get(i));
+        }
+
+        return postsByAuthorAlias;
+    }
 }
