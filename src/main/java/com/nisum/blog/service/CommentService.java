@@ -1,6 +1,8 @@
 package com.nisum.blog.service;
 
 import com.nisum.blog.domain.Comment;
+import com.nisum.blog.domain.Post;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,19 +58,19 @@ public class CommentService {
         commentList.add(comment);
     }
 
-    /*public List<Comment> findByPostId(int id) {
+    public List<Comment> findByPostId(int id) {
 
         List<Comment> commentByPost = new ArrayList<>();
 
         for (int i = 0; i < commentList.size(); i++) {
 
-            if (commentList.get(i).getOriginalPost().) == alias) {
+            if (commentList.get(i).getOriginalPost().getId() == id) {
 
                 commentByPost.add(commentList.get(i));
 
             }
         }
 
-        return commentByAuthor;
-    }*/
+        return commentByPost;
+    }
 }
