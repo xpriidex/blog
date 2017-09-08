@@ -66,7 +66,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void itShouldReturnAllPostsByAuthorsAliasWhenAliasExist() throws UserNotFoundException {
+    public void itShouldReturnAllPostsByAuthorsAliasWhenAliasExist() throws PostNotFoundException {
         //ACT
         List<Post> result = postService.findAllByAuthorsAlias("Felipe");
 
@@ -77,7 +77,7 @@ public class PostServiceTest {
     }
 
     @Test(expected = PostNotFoundException.class)
-    public void itShouldReturnPostNotFoundExceptionWhenNoPostsByAlias() throws UserNotFoundException, PostNotFoundException {
+    public void itShouldReturnPostNotFoundExceptionWhenNoPostsByAlias() throws PostNotFoundException {
         //ACT
         List<Post> result = postService.findAllByAuthorsAlias("German");
     }

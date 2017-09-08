@@ -44,7 +44,6 @@ public class PostService {
         if(postsByAuthorAlias.size()==0)
             throw new PostNotFoundException();
 
-
         return postsByAuthorAlias;
     }
 }
