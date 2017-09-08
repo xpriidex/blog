@@ -1,11 +1,11 @@
 package com.nisum.blog.service.exceptions;
 
-public class AliasNotFoundException extends Exception{
+public class UserNotFoundException extends Exception{
 
-    public AliasNotFoundException() {
+    public UserNotFoundException() {
     }
 
-    public AliasNotFoundException(String message) {
+    public UserNotFoundException(String message) {
         super(message);
     }
 }
