@@ -13,6 +13,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class PostServiceTest {
     private PostService postService;
@@ -22,7 +23,7 @@ public class PostServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        //ARRENGE
+        //Arrenge
         postService = new PostService();
         post1 = new Post();
         post2 = new Post();
@@ -32,54 +33,85 @@ public class PostServiceTest {
         post1.setId(1);
         post1.setTitle("Narnia");
         post1.setAuthor(user);
+        post1.setBody("I am post about ANDROID");
 
         post2.setId(2);
         post2.setTitle("Papelucho");
         post2.setAuthor(user);
-
+        post2.setBody("I am post about AnImAlS");
 
         postService.add(post1);
         postService.add(post2);
+
     }
 
     @Test
     public void itShouldReturnAllPosts() throws Exception {
-
-        //ACT
+        //Act
         List<Post> result = postService.findAll();
 
-        //ASSERT
+        //Assert
         assertThat(result.size(), is(equalTo(2)));
-        assertEquals(result.get(0).getId(),1);
-        assertEquals(result.get(1).getId(),2);
+        assertEquals(result.get(0).getId(), 1);
+        assertEquals(result.get(1).getId(), 2);
+    }
+
+    @Test(expected = PostNotFoundException.class)
+    public void itShouldReturnPostNotFoundExceptionWhenNoPosts() throws PostNotFoundException {
+        //Arrenge
+        postService.empty();
+
+        //Act
+        List<Post> result = postService.findAll();
     }
 
     @Test
-    public void itShouldReturnAllPostsByTitle(){
-        //ACT
+    public void itShouldReturnAllPostsByTitle() throws PostNotFoundException {
+        //Act
         List<Post> result = postService.findAllByTitle("NaRNIA");
 
-        //ASSERT
+        //Assert
         assertThat(result.size(), is(equalTo(1)));
-        assertEquals(result.get(0).getTitle(),"Narnia");
+
 
     }
 
+    @Test(expected = PostNotFoundException.class)
+    public void itShouldReturnPostNotFoundExceptionWhenNoPostsByTitle() throws PostNotFoundException {
+        //Act
+        List<Post> result = postService.findAllByTitle("El principito");
+    }
+
     @Test
-    public void itShouldReturnAllPostsByAuthorsAliasWhenAliasExist() throws PostNotFoundException {
-        //ACT
+    public void itShouldReturnAllPostsByAuthorsAliasWhenAliasExists() throws PostNotFoundException {
+        //Act
         List<Post> result = postService.findAllByAuthorsAlias("Felipe");
 
-        //ASSERT
+        //Assert
         assertThat(result.size(), is(equalTo(2)));
-        assertEquals(result.get(0).getAuthor().getAlias(),"Felipe");
-        assertEquals(result.get(1).getAuthor().getAlias(),"Felipe");
+        assertEquals(result.get(0).getAuthor().getAlias(), "Felipe");
+        assertEquals(result.get(1).getAuthor().getAlias(), "Felipe");
     }
 
     @Test(expected = PostNotFoundException.class)
     public void itShouldReturnPostNotFoundExceptionWhenNoPostsByAlias() throws PostNotFoundException {
-        //ACT
+        //Act
         List<Post> result = postService.findAllByAuthorsAlias("German");
+    }
+
+    @Test
+    public void itShouldReturnAllPostsByContent() throws PostNotFoundException {
+        //Act
+        List<Post> result = postService.findAllByContent("ANDROID");
+
+        //Assert
+        assertThat(result.size(), is(equalTo(1)));
+    }
+
+    @Test(expected = PostNotFoundException.class)
+    public void itShouldReturnPostNotFoundExceptionWhenNoPostsByContent() throws PostNotFoundException {
+        //Act
+        List<Post> result = postService.findAllByContent("AiRPlanE");
     }
 
 }
