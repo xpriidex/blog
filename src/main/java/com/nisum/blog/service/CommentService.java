@@ -11,13 +11,7 @@ public class CommentService {
 
     public CommentService()
     {
-        UserService userService = new UserService();
-
         commentList = new ArrayList<>();
-
-        Comment comment1 = new Comment();
-        comment1.setAuthor(userService.findById(1));
-        commentList.add(comment1);
     }
 
     public List<Comment> findAll(){
@@ -55,6 +49,11 @@ public class CommentService {
         }
 
         return commentByAuthor;
+    }
+
+    public void add(Comment comment) {
+
+        commentList.add(comment);
     }
 
     /*public List<Comment> findByPostId(int id) {
