@@ -23,20 +23,25 @@ public class PostServiceTest {
         post2 = new Post();
 
         post1.setId(1);
-        post2.setId(1);
+        post2.setId(2);
 
-        postService.add(post1);
-        postService.add(post2);
+
     }
 
     @Test
     public void itShouldReturnAllPosts() throws Exception {
-        assertThat(postService.findAll().size(), is(equalTo(2)));
+        //ARRENGE
+        postService.add(post1);
+        postService.add(post2);
+
+        //ACT
+        List<Post> result = postService.findAll();
+
+        //ASSERT
+        assertThat(result.size(), is(equalTo(2)));
+        assertEquals(result.get(0).getId(),1);
+        assertEquals(result.get(1).getId(),2);
     }
-
-
-
-
 
 
 }
