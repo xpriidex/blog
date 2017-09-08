@@ -2,7 +2,7 @@ package com.nisum.blog.service;
 
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
-import com.nisum.blog.service.exceptions.AliasNotFoundException;
+import com.nisum.blog.service.exceptions.UserNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -65,7 +65,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void itShouldReturnAllPostsByAuthorsAliasWhenAliasExist() throws AliasNotFoundException {
+    public void itShouldReturnAllPostsByAuthorsAliasWhenAliasExist() throws UserNotFoundException {
         //ACT
         List<Post> result = postService.findAllByAuthorsAlias("Felipe");
 
@@ -75,8 +75,8 @@ public class PostServiceTest {
         assertEquals(result.get(1).getAuthor().getAlias(),"Felipe");
     }
 
-    @Test(expected = AliasNotFoundException.class)
-    public void itShouldReturnAliasNotFoundExceptionWhenAllPostsByAuthorsButAliasNotExits() throws AliasNotFoundException {
+    @Test(expected = UserNotFoundException.class)
+    public void itShouldReturnAliasNotFoundExceptionWhenAllPostsByAuthorsButAliasNotExits() throws UserNotFoundException {
         //ACT
         List<Post> result = postService.findAllByAuthorsAlias("German");
     }

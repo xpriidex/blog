@@ -1,7 +1,7 @@
 package com.nisum.blog.service;
 
 import com.nisum.blog.domain.Post;
-import com.nisum.blog.service.exceptions.AliasNotFoundException;
+import com.nisum.blog.service.exceptions.UserNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class PostService {
         return postsByTitle;
     }
 
-    public List<Post> findAllByAuthorsAlias(String alias) throws AliasNotFoundException {
+    public List<Post> findAllByAuthorsAlias(String alias) throws UserNotFoundException {
         List<Post> postsByAuthorAlias = new ArrayList<>();
 
         for (int i=0; i< postList.size();i++){
@@ -41,7 +41,8 @@ public class PostService {
         }
 
         if(postsByAuthorAlias.size()==0)
-            throw new AliasNotFoundException();
+            throw new UserNotFoundException();
+
 
         return postsByAuthorAlias;
     }
