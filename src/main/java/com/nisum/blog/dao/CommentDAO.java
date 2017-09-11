@@ -6,13 +6,16 @@ import java.util.List;
 
 public interface CommentDAO {
 
-    int void create(Comment comment);
+    int create(Comment comment);
 
-    Comment findById(int id);
-    List<Comment> findByAlias();
+    List<Comment> findByAuthorId(int id);
+
+    List<Comment> findByAlias(String alias);
+
+    List<Comment> findByPostId(int id);
 
 
-    void update(Comment comment);
+    //void update(Comment comment);
 
-    void delete(int id);
+    //void delete(int id);
 }

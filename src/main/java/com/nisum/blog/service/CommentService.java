@@ -1,7 +1,6 @@
 package com.nisum.blog.service;
 
 import com.nisum.blog.domain.Comment;
-import com.nisum.blog.domain.Post;
 
 import java.util.ArrayList;
 import java.util.List;
