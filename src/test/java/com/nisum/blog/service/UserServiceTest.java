@@ -65,7 +65,7 @@ public class UserServiceTest {
 
     //Todos los usuarios
     @Test
-    public void itShouldReturnAllUsers() throws Exception {
+    public void shouldReturnAllUsers() throws Exception {
         int userListSize = userService.findAll().size();
 
         assertThat(userListSize, is(equalTo(3)));
@@ -73,7 +73,7 @@ public class UserServiceTest {
 
     //User by Id
     @Test
-    public void itShouldReturnOneUserById() throws Exception {
+    public void shouldReturnOneUserById() throws Exception {
         int userId = userService.findById(3).getId();
 
         assertThat(userId, is(equalTo(3)));
@@ -81,7 +81,7 @@ public class UserServiceTest {
 
     //Users by Alias
     @Test
-    public void itShouldReturnUserByAlias() throws Exception {
+    public void shouldReturnUserByAlias() throws Exception {
         int userId = userService.findByAlias(MIKI).getId();
 
         assertThat(userId, is(equalTo(1)));
@@ -89,7 +89,7 @@ public class UserServiceTest {
 
     //Users by Name
     @Test
-    public void itShouldReturnUsersByFirstName() throws Exception {
+    public void shouldReturnUsersByFirstName() throws Exception {
         List<User> usersFound = userService.findByFirstName("Juan");
 
         assertThat(usersFound.size(), is(equalTo(1)));
@@ -97,7 +97,7 @@ public class UserServiceTest {
 
     //Users by LastName. Case insensitive search
     @Test
-    public void itShouldReturnUsersByLastName() throws Exception {
+    public void shouldReturnUsersByLastName() throws Exception {
         List<User> usersFound = userService.findByLastName("YURJEVIC");
 
         assertThat(usersFound.size(), is(equalTo(1)));
@@ -105,9 +105,11 @@ public class UserServiceTest {
 
     //User by email. Case insensitive search
     @Test
-    public void itShouldReturnUsersByEmail() throws Exception {
+    public void shouldReturnUsersByEmail() throws Exception {
         User user = userService.findByEmail("myurjevic@gmail.COM");
 
         assertThat(user.getId(), is(equalTo(1)));
     }
+
+    //shouldFailOn___ or shouldFailW
 }

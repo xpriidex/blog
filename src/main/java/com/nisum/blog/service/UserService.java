@@ -1,5 +1,6 @@
 package com.nisum.blog.service;
 
+import com.nisum.blog.dao.UserDAOImpl;
 import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
@@ -15,11 +16,10 @@ public class UserService {
         userList = new ArrayList<>();
     }
 
-    public List<User> findAll() throws UserNotFoundException {
-        if (userList.isEmpty())
-        {
-            throw new UserNotFoundException();
-        }
+    public List<User> findAll() {
+        UserDAOImpl userDAO = new UserDAOImpl();
+
+        userList = userDAO.findAll();
 
         return userList;
     }
