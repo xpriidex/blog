@@ -10,13 +10,11 @@ public class User {
     private String bio;
     private String email;
     private String image;
-    private List<Post> myPosts;
-    private List<Comment> myComments;
 
     public User(){
     }
 
-    public User(int id, String firstName, String lastName, String alias, String bio, String email, String image, List<Post> myPosts, List<Comment> myComments) {
+    public User(int id, String firstName, String lastName, String alias, String bio, String email, String image) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,8 +22,6 @@ public class User {
         this.bio = bio;
         this.email = email;
         this.image = image;
-        this.myPosts = myPosts;
-        this.myComments = myComments;
     }
 
     public int getId() {
@@ -82,21 +78,5 @@ public class User {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public List<Post> getMyPosts() {
-        return myPosts;
-    }
-
-    public void setMyPosts(List<Post> myPosts) {
-        this.myPosts = myPosts;
-    }
-
-    public List<Comment> getMyComments() {
-        return myComments;
-    }
-
-    public void setMyComments(List<Comment> myComments) {
-        this.myComments = myComments;
     }
 }

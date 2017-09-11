@@ -8,9 +8,17 @@ public interface UserDAO {
 
     int create(User user);
 
+    List<User> findAll();
+
     User findById(int id);
 
-    List<User> findAll();
+    User findByAlias(String alias);
+
+    List<User> findByFirstName(String firstName);
+
+    List<User> findByLastName(String lastName);
+
+    User findByEmail(String email);
 
     void update(User user);
 

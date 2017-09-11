@@ -5,14 +5,12 @@ import com.nisum.blog.dao.UserDAOImpl;
 import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
-import com.nisum.blog.service.exceptions.UserNotFoundException;
 
 import java.util.*;
 
 public class UserService {
 
     private List<User> userList;
-
 
     private UserDAO userDAO = new UserDAOImpl();
 
@@ -26,85 +24,32 @@ public class UserService {
         return userList;
     }
 
-    public User findById(int id) throws UserNotFoundException {
-        User userFound = null;
-
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getId() == id) {
-                userFound = userList.get(i);
-                break;
-            }
-        }
-
-        if (userFound == null) {
-            throw new UserNotFoundException();
-        }
+    public User findById(int id) {
+        User userFound = userDAO.findById(id);
 
         return userFound;
     }
 
-    public User findByAlias(String alias) throws UserNotFoundException {
-        User userFound = null;
-
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getAlias().equalsIgnoreCase(alias)) {
-                userFound = userList.get(i);
-                break;
-            }
-        }
-
-        if (userFound == null) {
-            throw new UserNotFoundException();
-        }
+    public User findByAlias(String alias) {
+        User userFound = userDAO.findByAlias(alias);
 
         return userFound;
     }
 
-    public List<User> findByFirstName(String firstName) throws UserNotFoundException {
-        List<User> usersFound = new ArrayList<>();
-
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getFirstName() == firstName) {
-                usersFound.add(userList.get(i));
-            }
-        }
-
-        if (usersFound.isEmpty()) {
-            throw new UserNotFoundException();
-        }
+    public List<User> findByFirstName(String firstName) {
+        List<User> usersFound = userDAO.findByFirstName(firstName);
 
         return usersFound;
     }
 
-    public List<User> findByLastName(String lastName) throws UserNotFoundException {
-        List<User> usersFound = new ArrayList<>();
-
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getLastName().equalsIgnoreCase(lastName)) {
-                usersFound.add(userList.get(i));
-            }
-        }
-
-        if (usersFound.isEmpty()) {
-            throw new UserNotFoundException();
-        }
+    public List<User> findByLastName(String lastName) {
+        List<User> usersFound = userDAO.findByLastName(lastName);
 
         return usersFound;
     }
 
-    public User findByEmail(String email) throws UserNotFoundException {
-        User userFound = null;
-
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getEmail().equalsIgnoreCase(email)) {
-                userFound = userList.get(i);
-                break;
-            }
-        }
-
-        if (userFound == null) {
-            throw new UserNotFoundException();
-        }
+    public User findByEmail(String email) {
+        User userFound = userDAO.findByEmail(email);
 
         return userFound;
     }

@@ -26,8 +26,6 @@ public class UserDAOImpl implements UserDAO {
         user1.setBio("Wazuup");
         user1.setEmail("myurjevic@gmail.com");
         user1.setImage("http://miFotoFeliz");
-        user1.setMyPosts(new ArrayList<Post>());
-        user1.setMyComments(new ArrayList<Comment>());
 
         User user2 = new User();
         user2.setId(2);
@@ -37,8 +35,6 @@ public class UserDAOImpl implements UserDAO {
         user2.setBio("Programar, comer, dormir, repeat");
         user2.setEmail("juan4eva@gmail.com");
         user2.setImage("http://fotoViaje");
-        user2.setMyPosts(new ArrayList<Post>());
-        user2.setMyComments(new ArrayList<Comment>());
 
         User user3 = new User();
         user3.setId(3);
@@ -48,8 +44,6 @@ public class UserDAOImpl implements UserDAO {
         user3.setBio("Dispersion");
         user3.setEmail("pgamboa@nisum.com");
         user3.setImage("http://selfieTrekking");
-        user3.setMyPosts(new ArrayList<Post>());
-        user3.setMyComments(new ArrayList<Comment>());
 
         userList.add(user1);
         userList.add(user2);
@@ -61,14 +55,78 @@ public class UserDAOImpl implements UserDAO {
         return 0;
     }
 
-    @Override
-    public User findById(int id) {
-        return null;
-    }
 
     @Override
     public List<User> findAll() {
         return userList;
+    }
+
+    @Override
+    public User findById(int id) {
+        User userFound = null;
+
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getId() == id) {
+                userFound = userList.get(i);
+                break;
+            }
+        }
+
+        return userFound;
+    }
+
+    @Override
+    public User findByAlias(String alias) {
+        User userFound = null;
+
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getAlias().equalsIgnoreCase(alias)) {
+                userFound = userList.get(i);
+                break;
+            }
+        }
+
+        return userFound;
+    }
+
+    @Override
+    public List<User> findByFirstName(String firstName) {
+
+        List<User> usersFound = new ArrayList<>();
+
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getFirstName() == firstName) {
+                usersFound.add(userList.get(i));
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<User> findByLastName(String lastName) {
+        List<User> usersFound = new ArrayList<>();
+
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getLastName().equalsIgnoreCase(lastName)) {
+                usersFound.add(userList.get(i));
+            }
+        }
+        return usersFound;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        User userFound = null;
+
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getEmail().equalsIgnoreCase(email)) {
+                userFound = userList.get(i);
+                break;
+            }
+        }
+
+        return userFound;
     }
 
     @Override
