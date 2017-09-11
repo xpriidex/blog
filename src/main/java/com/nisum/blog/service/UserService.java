@@ -3,6 +3,7 @@ package com.nisum.blog.service;
 import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
+import com.nisum.blog.service.exceptions.UserNotFoundException;
 
 import java.util.*;
 
@@ -14,12 +15,17 @@ public class UserService {
         userList = new ArrayList<>();
     }
 
-    public List<User> findAll() {
+    public List<User> findAll() throws UserNotFoundException {
+        if (userList.isEmpty())
+        {
+            throw new UserNotFoundException();
+        }
+
         return userList;
     }
 
-    public User findById(int id) {
-        User userFound = new User();
+    public User findById(int id) throws UserNotFoundException {
+        User userFound = null;
 
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getId() == id) {
@@ -28,11 +34,16 @@ public class UserService {
             }
         }
 
+        if (userFound == null)
+        {
+            throw new UserNotFoundException();
+        }
+
         return userFound;
     }
 
-    public User findByAlias(String alias) {
-        User userFound = new User();
+    public User findByAlias(String alias) throws UserNotFoundException {
+        User userFound = null;
 
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getAlias().equalsIgnoreCase(alias)) {
@@ -41,10 +52,15 @@ public class UserService {
             }
         }
 
+        if (userFound == null)
+        {
+            throw new UserNotFoundException();
+        }
+
         return userFound;
     }
 
-    public List<User> findByFirstName(String firstName) {
+    public List<User> findByFirstName(String firstName) throws UserNotFoundException {
         List<User> usersFound = new ArrayList<>();
 
         for (int i = 0; i < userList.size(); i++) {
@@ -53,10 +69,15 @@ public class UserService {
             }
         }
 
+        if (usersFound.isEmpty())
+        {
+            throw new UserNotFoundException();
+        }
+
         return usersFound;
     }
 
-    public List<User> findByLastName(String lastName) {
+    public List<User> findByLastName(String lastName) throws UserNotFoundException {
         List<User> usersFound = new ArrayList<>();
 
         for (int i = 0; i < userList.size(); i++) {
@@ -65,20 +86,30 @@ public class UserService {
             }
         }
 
+        if (usersFound.isEmpty())
+        {
+            throw new UserNotFoundException();
+        }
+
         return usersFound;
     }
 
-    public User findByEmail(String email) {
-        User user = new User();
+    public User findByEmail(String email) throws UserNotFoundException {
+        User userFound = null;
 
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getEmail().equalsIgnoreCase(email)) {
-                user = userList.get(i);
+                userFound = userList.get(i);
                 break;
             }
         }
 
-        return user;
+        if (userFound == null)
+        {
+            throw new UserNotFoundException();
+        }
+
+        return userFound;
     }
 
     public void add(User user) {
