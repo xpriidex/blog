@@ -1,5 +1,6 @@
 package com.nisum.blog.service;
 
+import com.nisum.blog.dao.PostDAOImpl;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.service.exceptions.PostNotFoundException;
 
@@ -7,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostService {
+
+    private PostDAOImpl postDAO = new PostDAOImpl();
     private List<Post> postList;
 
     public PostService() {
@@ -25,7 +28,7 @@ public class PostService {
         if (postList.isEmpty())
             throw new PostNotFoundException();
 
-        return postList;
+        return postDAO.findAll();
     }
 
     public List<Post> findAllByTitle(String title) throws PostNotFoundException {

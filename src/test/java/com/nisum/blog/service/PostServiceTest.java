@@ -3,7 +3,6 @@ package com.nisum.blog.service;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
 import com.nisum.blog.service.exceptions.PostNotFoundException;
-import com.nisum.blog.service.exceptions.UserNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +12,6 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class PostServiceTest {
     private PostService postService;
@@ -112,6 +110,11 @@ public class PostServiceTest {
     public void itShouldReturnPostNotFoundExceptionWhenNoPostsByContent() throws PostNotFoundException {
         //Act
         List<Post> result = postService.findAllByContent("AiRPlanE");
+    }
+
+    @Test
+    public void shouldFindNothingOnSearchByBodyContent(){
+
     }
 
 }

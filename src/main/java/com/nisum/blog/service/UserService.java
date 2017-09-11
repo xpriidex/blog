@@ -1,5 +1,6 @@
 package com.nisum.blog.service;
 
+import com.nisum.blog.dao.UserDAO;
 import com.nisum.blog.dao.UserDAOImpl;
 import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.Post;
@@ -12,13 +13,14 @@ public class UserService {
 
     private List<User> userList;
 
+
+    private UserDAO userDAO = new UserDAOImpl();
+
     public UserService() {
         userList = new ArrayList<>();
     }
 
     public List<User> findAll() {
-        UserDAOImpl userDAO = new UserDAOImpl();
-
         userList = userDAO.findAll();
 
         return userList;
@@ -34,8 +36,7 @@ public class UserService {
             }
         }
 
-        if (userFound == null)
-        {
+        if (userFound == null) {
             throw new UserNotFoundException();
         }
 
@@ -52,8 +53,7 @@ public class UserService {
             }
         }
 
-        if (userFound == null)
-        {
+        if (userFound == null) {
             throw new UserNotFoundException();
         }
 
@@ -69,8 +69,7 @@ public class UserService {
             }
         }
 
-        if (usersFound.isEmpty())
-        {
+        if (usersFound.isEmpty()) {
             throw new UserNotFoundException();
         }
 
@@ -86,8 +85,7 @@ public class UserService {
             }
         }
 
-        if (usersFound.isEmpty())
-        {
+        if (usersFound.isEmpty()) {
             throw new UserNotFoundException();
         }
 
@@ -104,8 +102,7 @@ public class UserService {
             }
         }
 
-        if (userFound == null)
-        {
+        if (userFound == null) {
             throw new UserNotFoundException();
         }
 

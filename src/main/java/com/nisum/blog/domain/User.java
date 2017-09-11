@@ -14,7 +14,6 @@ public class User {
     private List<Comment> myComments;
 
     public User(){
-
     }
 
     public User(int id, String firstName, String lastName, String alias, String bio, String email, String image, List<Post> myPosts, List<Comment> myComments) {

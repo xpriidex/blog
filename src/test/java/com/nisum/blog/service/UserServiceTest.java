@@ -1,29 +1,45 @@
 package com.nisum.blog.service;
 
-import static org.hamcrest.core.Is.*;
-import static org.hamcrest.core.IsEqual.*;
-import static org.junit.Assert.*;
-
+import com.nisum.blog.dao.UserDAO;
 import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
+
+@RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 
     private static final String MIKI = "Miki";
-    private UserService userService;
     private User user1;
     private User user2;
     private User user3;
+    private List<User> users;
+
+    @Mock
+    private UserDAO userDAO;
+
+    @InjectMocks
+    private UserService userService;
+
 
     @Before
     public void setUp() throws Exception {
-        userService = new UserService();
+        //userService = new UserService();
+        users = new ArrayList<>();
+
 
         User user1 = new User();
         user1.setId(1);
@@ -58,6 +74,10 @@ public class UserServiceTest {
         user3.setMyPosts( new ArrayList<Post>());
         user3.setMyComments(new ArrayList<Comment>());;
 
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
+
         userService.add(user1);
         userService.add(user2);
         userService.add(user3);
@@ -66,9 +86,12 @@ public class UserServiceTest {
     //Todos los usuarios
     @Test
     public void shouldReturnAllUsers() throws Exception {
+        when(userDAO.findAll()).thenReturn(users);
+
         int userListSize = userService.findAll().size();
 
         assertThat(userListSize, is(equalTo(3)));
+        verify(userDAO,times(1)).findAll();
     }
 
     //User by Id
