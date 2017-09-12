@@ -1,6 +1,7 @@
 package com.nisum.blog.dao;
 
 import com.nisum.blog.domain.Comment;
+import com.nisum.blog.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +9,13 @@ import java.util.List;
 public class CommentDAOImpl implements CommentDAO{
 
     private List<Comment> commentList;
+    private UserDAO userDAO;
 
     public CommentDAOImpl() { init();}
 
     private void init() {
         commentList = new ArrayList<>();
+        userDAO = new UserDAOImpl();
 
         Comment comment1 = new Comment();
         comment1.setAuthorId(1);
@@ -52,8 +55,19 @@ public class CommentDAOImpl implements CommentDAO{
     }
 
     @Override
-    public List<Comment> findByAlias(String alias) {
-        return null;
+    public List<Comment> findByAuthorAlias(String alias) {
+        List<Comment> commentsByAuthorAlias = new ArrayList<>();
+        User userFound =  userDAO.findByAlias(alias);
+
+        if (userFound==null)
+            return commentsByAuthorAlias;
+
+        for (int i = 0; i < commentList.size(); i++) {
+            if (commentList.get(i).getAuthorId()==userFound.getId())
+                commentsByAuthorAlias.add(commentList.get(i));
+        }
+
+        return commentsByAuthorAlias;
     }
 
     @Override

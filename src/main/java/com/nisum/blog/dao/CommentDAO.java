@@ -10,7 +10,7 @@ public interface CommentDAO {
 
     List<Comment> findByAuthorId(int id);
 
-    List<Comment> findByAlias(String alias);
+    List<Comment> findByAuthorAlias(String alias);
 
     List<Comment> findByPostId(int id);
 

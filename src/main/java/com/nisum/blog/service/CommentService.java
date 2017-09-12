@@ -23,25 +23,12 @@ public class CommentService {
         return commentByAuthor;
     }
 
-    /*public List<Comment> findByAuthorAlias(String alias) {
+    public List<Comment> findByAuthorAlias(String alias) {
 
-        List<Comment> commentByAuthor = new ArrayList<>();
+        List<Comment> commentByAuthorAlias = commentDAO.findByAuthorAlias(alias);
 
-        for (int i = 0; i < commentList.size(); i++) {
+        return commentByAuthorAlias;
 
-            if (commentList.get(i).getAuthor().getAlias().equalsIgnoreCase(alias)) {
-
-                commentByAuthor.add(commentList.get(i));
-
-            }
-        }
-
-        return commentByAuthor;
-    }*/
-
-    public void add(Comment comment) {
-
-        //commentList.add(comment);
     }
 
     public List<Comment> findByPostId(int id) {
