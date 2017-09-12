@@ -46,17 +46,8 @@ public class CommentService {
 
     public List<Comment> findByPostId(int id) {
 
-        List<Comment> commentByPost = new ArrayList<>();
-        /*
-        for (int i = 0; i < commentList.size(); i++) {
+        List<Comment> commentByPost = commentDAO.findByPostId(id);
 
-            if (commentList.get(i).getOriginalPost().getId() == id) {
-
-                commentByPost.add(commentList.get(i));
-
-            }
-        }
-        */
         return commentByPost;
     }
 }

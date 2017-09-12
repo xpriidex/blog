@@ -9,9 +9,7 @@ public class CommentDAOImpl implements CommentDAO{
 
     private List<Comment> commentList;
 
-    public CommentDAOImpl() {
-        init();
-    }
+    public CommentDAOImpl() { init();}
 
     private void init() {
         commentList = new ArrayList<>();
@@ -60,7 +58,17 @@ public class CommentDAOImpl implements CommentDAO{
 
     @Override
     public List<Comment> findByPostId(int id) {
-        return null;
+        List<Comment> commentByPost = new ArrayList<>();
+
+        for (int i = 0; i < commentList.size(); i++) {
+
+            if (commentList.get(i).getPostId() == id) {
+
+                commentByPost.add(commentList.get(i));
+
+            }
+        }
+        return commentByPost;
     }
 
     @Override
