@@ -1,28 +1,41 @@
 package com.nisum.blog.service;
 
+import com.nisum.blog.dao.PostDAO;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
-import com.nisum.blog.service.exceptions.PostNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class PostServiceTest {
-    private PostService postService;
     private Post post1;
     private Post post2;
     private User user;
+    private List<Post> postList;
+
+    @Mock
+    private PostDAO postDAO;
+
+    @InjectMocks
+    private PostService postService;
 
     @Before
     public void setUp() throws Exception {
-        //Arrenge
-        postService = new PostService();
+        //Arrange
+        postList = new ArrayList<>();
         post1 = new Post();
         post2 = new Post();
         user = new User();
@@ -38,13 +51,43 @@ public class PostServiceTest {
         post2.setAuthor(user);
         post2.setBody("I am post about AnImAlS");
 
-        postService.add(post1);
-        postService.add(post2);
+        postList.add(post1);
+        postList.add(post2);
+    }
 
+
+
+    @Test
+    public void shouldReturnAPostIfIdExists(){
+        //Arrange
+        when(postDAO.findById(post1.getId())).thenReturn(post1);
+
+        //Act
+        Post result=postService.findById(post1.getId());
+
+        //Assert
+        assertEquals(result.getTitle(),"Narnia");
+        verify(postDAO).findById(post1.getId());
     }
 
     @Test
-    public void itShouldReturnAllPosts() throws Exception {
+    public void shouldReturnNullIfIdNotExists(){
+        //Arrange
+        when(postDAO.findById(2)).thenReturn(null);
+
+        //Act
+        Post result=postService.findById(2);
+
+        //Assert
+        assertNull(result);
+        verify(postDAO).findById(2);
+    }
+
+    @Test
+    public void shouldReturnAllPosts() throws Exception {
+        //Arrange
+        when(postDAO.findAll()).thenReturn(postList);
+
         //Act
         List<Post> result = postService.findAll();
 
@@ -52,36 +95,55 @@ public class PostServiceTest {
         assertThat(result.size(), is(equalTo(2)));
         assertEquals(result.get(0).getId(), 1);
         assertEquals(result.get(1).getId(), 2);
-    }
+        verify(postDAO).findAll();
 
-    @Test(expected = PostNotFoundException.class)
-    public void itShouldReturnPostNotFoundExceptionWhenNoPosts() throws PostNotFoundException {
-        //Arrenge
-        postService.empty();
-
-        //Act
-        List<Post> result = postService.findAll();
     }
 
     @Test
-    public void itShouldReturnAllPostsByTitle() throws PostNotFoundException {
+    public void shouldReturnEmptyListWhenNoPostsFound(){
+        //Arrange
+        when(postDAO.findAll()).thenReturn(new ArrayList<>());
+
+        //Act
+        List<Post> result = postService.findAll();
+
+        assertEquals(result.size(),0);
+    }
+
+    @Test
+    public void shouldReturnAllPostsByTitle(){
+        //Arrange
+        List<Post> postsByTitle = new ArrayList<>();
+        postsByTitle.add(post1);
+        when(postDAO.findAllByTitle("NaRNIA")).thenReturn(postsByTitle);
+
         //Act
         List<Post> result = postService.findAllByTitle("NaRNIA");
 
         //Assert
         assertThat(result.size(), is(equalTo(1)));
-
-
-    }
-
-    @Test(expected = PostNotFoundException.class)
-    public void itShouldReturnPostNotFoundExceptionWhenNoPostsByTitle() throws PostNotFoundException {
-        //Act
-        List<Post> result = postService.findAllByTitle("El principito");
+        assertEquals(result.get(0).getTitle(),"Narnia");
+        verify(postDAO).findAllByTitle("NaRNIA");
     }
 
     @Test
-    public void itShouldReturnAllPostsByAuthorsAliasWhenAliasExists() throws PostNotFoundException {
+    public void shouldReturnNullWhenNoPostsFoundByTitle(){
+        //Arrange
+        when(postDAO.findAllByTitle("El principito")).thenReturn(null);
+
+        //Act
+        List<Post> result = postService.findAllByTitle("El principito");
+
+        //Assert
+        assertNull(result);
+        verify(postDAO).findAllByTitle("El principito");;
+    }
+
+    @Test
+    public void shouldReturnAllPostsByAlias(){
+        //Act
+        when(postDAO.findAllByAuthorsAlias("Felipe")).thenReturn(postList);
+
         //Act
         List<Post> result = postService.findAllByAuthorsAlias("Felipe");
 
@@ -91,30 +153,46 @@ public class PostServiceTest {
         assertEquals(result.get(1).getAuthor().getAlias(), "Felipe");
     }
 
-    @Test(expected = PostNotFoundException.class)
-    public void itShouldReturnPostNotFoundExceptionWhenNoPostsByAlias() throws PostNotFoundException {
+    @Test
+    public void shouldReturnEmptyListNoPostsFoundByAlias(){
+        //Arrange
+        when(postDAO.findAllByAuthorsAlias("German")).thenReturn(new ArrayList<>());
+
         //Act
         List<Post> result = postService.findAllByAuthorsAlias("German");
+
+        //Assert
+        assertThat(result.size(), is(equalTo(0)));
+        verify(postDAO).findAllByAuthorsAlias("German");
     }
 
     @Test
-    public void itShouldReturnAllPostsByContent() throws PostNotFoundException {
+    public void shouldReturnAllPostsByContent(){
+        //Arrange
+        List<Post> postContent = new ArrayList<>();
+        postContent.add(post1);
+        when(postDAO.findAllByContent("AndroiD")).thenReturn(postContent);
+
         //Act
-        List<Post> result = postService.findAllByContent("ANDROID");
+        List<Post> result = postService.findAllByContent("AndroiD");
 
         //Assert
         assertThat(result.size(), is(equalTo(1)));
     }
 
-    @Test(expected = PostNotFoundException.class)
-    public void itShouldReturnPostNotFoundExceptionWhenNoPostsByContent() throws PostNotFoundException {
+    @Test
+    public void shouldReturnEmptyListWhenNoFoundPostsByContent() {
+        //Arrange
+        when(postDAO.findAllByContent("AiRPlanE")).thenReturn(new ArrayList<>());
+
         //Act
         List<Post> result = postService.findAllByContent("AiRPlanE");
+
+        //Assert
+        assertThat(result.size(),is(equalTo(0)));
     }
 
-    @Test
-    public void shouldFindNothingOnSearchByBodyContent(){
 
-    }
+
 
 }
