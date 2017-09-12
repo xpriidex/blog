@@ -143,5 +143,30 @@ public class UserServiceTest {
         verify(userDAO).findByEmail(email);
     }
 
+    @Test
+    public void shouldReturnIdWhenCreatingNewUser() throws Exception{
+
+        User newUser = new User();
+        newUser.setId(4);
+        newUser.setAlias("Honey");
+        newUser.setEmail("joni@gmail.com");
+        newUser.setFirstName("Jana");
+        newUser.setLastName("Jensen");
+        newUser.setBio("Jamming to name of the Lord");
+        newUser.setImage("honi.jpg");
+
+        //Arrange
+        when(userDAO.findByAlias("Honey")).thenReturn(null);
+        when(userDAO.findByEmail("joni@gmail.com")).thenReturn(null);
+        when(userDAO.create(newUser)).thenReturn(3);
+
+        //Act
+        int result = userService.create(newUser);
+
+        //Assert
+        assertEquals(result, 3);
+        verify(userDAO).create(newUser);
+    }
+
     //shouldFailOn___ or shouldFailW
 }

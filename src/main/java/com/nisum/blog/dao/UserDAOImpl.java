@@ -52,7 +52,9 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public int create(User user) {
-        return 0;
+        user.setId(User.nextAvailableId++);
+        userList.add(user);
+        return user.getId();
     }
 
 

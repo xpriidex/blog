@@ -18,6 +18,26 @@ public class UserService {
         userList = new ArrayList<>();
     }
 
+    public int create(User user) {
+
+        if(user.getEmail() == null || user.getEmail().isEmpty())
+        {
+            return -1;
+        }
+
+        if (userDAO.findByAlias(user.getAlias()) != null)
+        {
+            return -1;
+        }
+
+        if (userDAO.findByEmail(user.getEmail()) != null)
+        {
+            return -1;
+        }
+
+        return userDAO.create(user);
+    }
+
     public List<User> findAll() {
         userList = userDAO.findAll();
 
@@ -54,7 +74,4 @@ public class UserService {
         return userFound;
     }
 
-    public void add(User user) {
-        userList.add(user);
-    }
 }
