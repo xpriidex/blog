@@ -22,7 +22,7 @@ public interface PostDAO {
 
     Post findByByDateRange(DateTime queryDate1, DateTime queryDate2);
 
-    void update(Post Post);
+    int update(Post Post);
 
     void delete(int id);
 }

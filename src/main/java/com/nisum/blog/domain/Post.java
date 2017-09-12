@@ -3,7 +3,7 @@ package com.nisum.blog.domain;
 import java.util.Date;
 
 public class Post {
-    public static int nextAviableId = 1;
+    public static int nextAviableId = 3;
     private int id;
     private int authorId;
     private String title;

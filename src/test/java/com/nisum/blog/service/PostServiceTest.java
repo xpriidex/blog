@@ -201,7 +201,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void shouldReturnMinusOneWhenCreateAPostalreadyExist() {
+    public void shouldReturnMinusOneWhenCreateAPostAlreadyExist() {
         //Arrange
         when(postDAO.create(post1)).thenReturn(-1);
 
@@ -212,6 +212,4 @@ public class PostServiceTest {
         assertEquals(result, -1);
         verify(postDAO).create(post1);
     }
-
-
 }
