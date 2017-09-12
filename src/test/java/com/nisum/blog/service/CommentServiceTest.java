@@ -69,12 +69,15 @@ public class CommentServiceTest {
         verify(commentDAO).findByAuthorId(1);
     }
 
-    /*@Test
+    @Test
     public void itShouldReturnAllCommentByAuthorAlias() throws Exception {
+        when(commentDAO.findByAuthorAlias("Pali")).thenReturn(comments);
 
-        int commentListSIze = commentService.findByAuthorAlias("Miki").size();
-        assertThat(commentListSIze, is(equalTo(1)));
-    }*/
+        List<Comment> resultAlias = commentService.findByAuthorAlias("Pali");
+
+        assertThat(resultAlias.size(), is(equalTo(3)));
+        verify(commentDAO).findByAuthorAlias("Pali");
+    }
 
     @Test
     public void itShouldReturnAllCommentByPostId() throws Exception {
