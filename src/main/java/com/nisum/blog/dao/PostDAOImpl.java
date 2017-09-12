@@ -7,7 +7,7 @@ import org.joda.time.DateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostDAOImpl implements PostDAO{
+public class PostDAOImpl implements PostDAO {
     private UserDAO userDAO;
     private List<Post> postList;
 
@@ -15,7 +15,7 @@ public class PostDAOImpl implements PostDAO{
         init();
     }
 
-    private void init(){
+    private void init() {
         postList = new ArrayList<>();
         userDAO = new UserDAOImpl();
 
@@ -50,8 +50,8 @@ public class PostDAOImpl implements PostDAO{
     @Override
     public Post findById(int id) {
         Post output = null;
-        for (int i =0; i<postList.size(); i++){
-            if(postList.get(i).getId()==id){
+        for (int i = 0; i < postList.size(); i++) {
+            if (postList.get(i).getId() == id) {
                 output = postList.get(i);
                 break;
             }
@@ -80,13 +80,13 @@ public class PostDAOImpl implements PostDAO{
     @Override
     public List<Post> findAllByAuthorsAlias(String alias) {
         List<Post> postsByAuthorAlias = new ArrayList<>();
-        User userFound =  userDAO.findByAlias(alias);
+        User userFound = userDAO.findByAlias(alias);
 
-        if (userFound==null)
+        if (userFound == null)
             return postsByAuthorAlias;
 
         for (int i = 0; i < postList.size(); i++) {
-            if (postList.get(i).getAuthorId()==userFound.getId())
+            if (postList.get(i).getAuthorId() == userFound.getId())
                 postsByAuthorAlias.add(postList.get(i));
         }
 
@@ -116,9 +116,18 @@ public class PostDAOImpl implements PostDAO{
     }
 
     @Override
-    public void update(Post post) {
+    public int update(Post post) {
+        int id = -1;
 
+        for (int i = 0; i < postList.size(); i++) {
+            if (postList.get(i).getId() == post.getId()) {
+                id = post.getId();
+                postList.set(i,post);
+                break;
+            }
+        }
 
+        return id;
     }
 
     @Override
