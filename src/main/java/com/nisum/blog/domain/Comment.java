@@ -4,36 +4,34 @@ import java.util.Date;
 
 public class Comment {
     private int id;
-    private User author;
+    private int authorId;
     private Date publicationDate;
     private String body;
-    private Post originalPost;
+    private int postId;
 
     public Comment() {
     }
 
-    public Comment(int id, User author, Date publicationDate, String body, Post originalPost) {
+    public Comment(int id, int authorId, Date publicationDate, String body, int postId) {
         this.id = id;
-        this.author = author;
+        this.authorId = authorId;
         this.publicationDate = publicationDate;
         this.body = body;
-        this.originalPost = originalPost;
+        this.postId = postId;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public User getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public Date getPublicationDate() {
@@ -52,11 +50,11 @@ public class Comment {
         this.body = body;
     }
 
-    public Post getOriginalPost() {
-        return originalPost;
+    public int getPostId() {
+        return postId;
     }
 
-    public void setOriginalPost(Post originalPost) {
-        this.originalPost = originalPost;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 }

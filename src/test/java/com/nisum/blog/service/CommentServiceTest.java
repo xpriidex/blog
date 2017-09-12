@@ -6,12 +6,14 @@ import com.nisum.blog.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.*;
 import static org.hamcrest.core.IsEqual.*;
 
 public class CommentServiceTest {
-
 
     private CommentService commentService;
     private User user1;
@@ -19,29 +21,17 @@ public class CommentServiceTest {
     @Before
     public void setUp() throws Exception {
         commentService = new CommentService();
-
-        Post post1 = new Post();
-        post1.setId(1);
-
-        Comment comment1 = new Comment();
-        comment1.setAuthor(user1);
-        comment1.setOriginalPost(post1);
-        commentService.add(comment1);
-
-        user1 = new User();
-        user1.setId(1);
-        user1.setAlias("Miki");
-
     }
 
     @Test
     public void itShouldReturnAllCommentByAuthorId() throws Exception {
 
-        int commentListSize = commentService.findByAuthorId(1).size();
+        List<Comment> commentList = commentService.findByAuthorId(1);
+        int commentListSize = commentList.size();
         assertThat(commentListSize, is(equalTo(1)));
     }
 
-    @Test
+    /*@Test
     public void itShouldReturnAllCommentByAuthorAlias() throws Exception {
 
         int commentListSIze = commentService.findByAuthorAlias("Miki").size();
@@ -53,6 +43,6 @@ public class CommentServiceTest {
 
         int commentListSize = commentService.findByPostId(1).size();
         assertThat(commentListSize, is(equalTo(1)));
-    }
+    }*/
 
 }

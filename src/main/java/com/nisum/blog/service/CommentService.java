@@ -1,5 +1,7 @@
 package com.nisum.blog.service;
 
+import com.nisum.blog.dao.CommentDAO;
+import com.nisum.blog.dao.CommentDAOImpl;
 import com.nisum.blog.domain.Comment;
 
 import java.util.ArrayList;
@@ -7,36 +9,21 @@ import java.util.List;
 
 public class CommentService {
 
-
-    private List<Comment> commentList;
+    private CommentDAO commentDAO = new CommentDAOImpl();
 
     public CommentService()
     {
-        commentList = new ArrayList<>();
-    }
 
-    public List<Comment> findAll(){
-
-        return commentList;
     }
 
     public List<Comment> findByAuthorId(int id) {
 
-        List<Comment> commentByAuthor = new ArrayList<>();
-
-        for (int i = 0; i < commentList.size(); i++) {
-
-            if (commentList.get(i).getAuthor().getId() == id) {
-
-                commentByAuthor.add(commentList.get(i));
-
-            }
-        }
+        List<Comment> commentByAuthor = commentDAO.findByAuthorId(id);
 
         return commentByAuthor;
     }
 
-    public List<Comment> findByAuthorAlias(String alias) {
+    /*public List<Comment> findByAuthorAlias(String alias) {
 
         List<Comment> commentByAuthor = new ArrayList<>();
 
@@ -50,17 +37,17 @@ public class CommentService {
         }
 
         return commentByAuthor;
-    }
+    }*/
 
     public void add(Comment comment) {
 
-        commentList.add(comment);
+        //commentList.add(comment);
     }
 
     public List<Comment> findByPostId(int id) {
 
         List<Comment> commentByPost = new ArrayList<>();
-
+        /*
         for (int i = 0; i < commentList.size(); i++) {
 
             if (commentList.get(i).getOriginalPost().getId() == id) {
@@ -69,7 +56,7 @@ public class CommentService {
 
             }
         }
-
+        */
         return commentByPost;
     }
 }
