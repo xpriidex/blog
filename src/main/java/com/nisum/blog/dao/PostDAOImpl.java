@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostDAOImpl implements PostDAO{
+    private UserDAO userDAO;
     private List<Post> postList;
 
     public PostDAOImpl() {
@@ -16,23 +17,22 @@ public class PostDAOImpl implements PostDAO{
 
     private void init(){
         postList = new ArrayList<>();
+        userDAO = new UserDAOImpl();
 
         Post post1;
         Post post2;
-        User user;
+
         post1 = new Post();
         post2 = new Post();
-        user = new User();
 
-        user.setAlias("Felipe");
         post1.setId(1);
         post1.setTitle("Narnia");
-        post1.setAuthor(user);
+        post1.setAuthorId(1);
         post1.setBody("I am post about ANDROID");
 
         post2.setId(2);
         post2.setTitle("Papelucho");
-        post2.setAuthor(user);
+        post1.setAuthorId(1);
         post2.setBody("I am post about AnImAlS");
 
         postList.add(post1);
@@ -41,7 +41,10 @@ public class PostDAOImpl implements PostDAO{
 
     @Override
     public int create(Post post) {
-        return 0;
+        post.setId(Post.nextAviableId++);
+        postList.add(post);
+
+        return post.getId();
     }
 
     @Override
@@ -77,9 +80,13 @@ public class PostDAOImpl implements PostDAO{
     @Override
     public List<Post> findAllByAuthorsAlias(String alias) {
         List<Post> postsByAuthorAlias = new ArrayList<>();
+        User userFound =  userDAO.findByAlias(alias);
+
+        if (userFound==null)
+            return postsByAuthorAlias;
 
         for (int i = 0; i < postList.size(); i++) {
-            if (postList.get(i).getAuthor().getAlias().equalsIgnoreCase(alias))
+            if (postList.get(i).getAuthorId()==userFound.getId())
                 postsByAuthorAlias.add(postList.get(i));
         }
 
@@ -110,6 +117,7 @@ public class PostDAOImpl implements PostDAO{
 
     @Override
     public void update(Post post) {
+
 
     }
 

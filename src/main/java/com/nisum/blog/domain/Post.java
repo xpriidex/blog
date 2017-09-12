@@ -1,26 +1,32 @@
 package com.nisum.blog.domain;
 
 import java.util.Date;
-import java.util.List;
 
 public class Post {
+    public static int nextAviableId = 1;
     private int id;
-    private User author;
+    private int authorId;
     private String title;
     private String body;
     private Date publicationDate;
-    private List<Comment> myComments;
 
     public Post() {
     }
 
-    public Post(int id, User author, String title, String body, Date publicationDate, List<Comment> myComments) {
+    public Post(int id, int authorId, String title, String body, Date publicationDate) {
         this.id = id;
-        this.author = author;
+        this.authorId = authorId;
         this.title = title;
         this.body = body;
         this.publicationDate = publicationDate;
-        this.myComments = myComments;
+    }
+
+    public static int getNextAviableId() {
+        return nextAviableId;
+    }
+
+    public static void setNextAviableId(int nextAviableId) {
+        Post.nextAviableId = nextAviableId;
     }
 
     public int getId() {
@@ -31,12 +37,12 @@ public class Post {
         this.id = id;
     }
 
-    public User getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public String getTitle() {
@@ -61,13 +67,5 @@ public class Post {
 
     public void setPublicationDate(Date publicationDate) {
         this.publicationDate = publicationDate;
-    }
-
-    public List<Comment> getMyComments() {
-        return myComments;
-    }
-
-    public void setMyComments(List<Comment> myComments) {
-        this.myComments = myComments;
     }
 }

@@ -2,7 +2,6 @@ package com.nisum.blog.service;
 
 import com.nisum.blog.dao.PostDAO;
 import com.nisum.blog.domain.Post;
-import com.nisum.blog.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +22,6 @@ import static org.mockito.Mockito.when;
 public class PostServiceTest {
     private Post post1;
     private Post post2;
-    private User user;
     private List<Post> postList;
 
     @Mock
@@ -38,17 +36,15 @@ public class PostServiceTest {
         postList = new ArrayList<>();
         post1 = new Post();
         post2 = new Post();
-        user = new User();
 
-        user.setAlias("Felipe");
         post1.setId(1);
         post1.setTitle("Narnia");
-        post1.setAuthor(user);
+        post1.setAuthorId(1);
         post1.setBody("I am post about ANDROID");
 
         post2.setId(2);
         post2.setTitle("Papelucho");
-        post2.setAuthor(user);
+        post2.setAuthorId(1);
         post2.setBody("I am post about AnImAlS");
 
         postList.add(post1);
@@ -56,27 +52,26 @@ public class PostServiceTest {
     }
 
 
-
     @Test
-    public void shouldReturnAPostIfIdExists(){
+    public void shouldReturnAPostIfIdExists() {
         //Arrange
         when(postDAO.findById(post1.getId())).thenReturn(post1);
 
         //Act
-        Post result=postService.findById(post1.getId());
+        Post result = postService.findById(post1.getId());
 
         //Assert
-        assertEquals(result.getTitle(),"Narnia");
+        assertEquals(result.getTitle(), "Narnia");
         verify(postDAO).findById(post1.getId());
     }
 
     @Test
-    public void shouldReturnNullIfIdNotExists(){
+    public void shouldReturnNullIfIdNotExists() {
         //Arrange
         when(postDAO.findById(2)).thenReturn(null);
 
         //Act
-        Post result=postService.findById(2);
+        Post result = postService.findById(2);
 
         //Assert
         assertNull(result);
@@ -100,18 +95,18 @@ public class PostServiceTest {
     }
 
     @Test
-    public void shouldReturnEmptyListWhenNoPostsFound(){
+    public void shouldReturnEmptyListWhenNoPostsFound() {
         //Arrange
         when(postDAO.findAll()).thenReturn(new ArrayList<>());
 
         //Act
         List<Post> result = postService.findAll();
 
-        assertEquals(result.size(),0);
+        assertEquals(result.size(), 0);
     }
 
     @Test
-    public void shouldReturnAllPostsByTitle(){
+    public void shouldReturnAllPostsByTitle() {
         //Arrange
         List<Post> postsByTitle = new ArrayList<>();
         postsByTitle.add(post1);
@@ -122,12 +117,12 @@ public class PostServiceTest {
 
         //Assert
         assertThat(result.size(), is(equalTo(1)));
-        assertEquals(result.get(0).getTitle(),"Narnia");
+        assertEquals(result.get(0).getTitle(), "Narnia");
         verify(postDAO).findAllByTitle("NaRNIA");
     }
 
     @Test
-    public void shouldReturnNullWhenNoPostsFoundByTitle(){
+    public void shouldReturnNullWhenNoPostsFoundByTitle() {
         //Arrange
         when(postDAO.findAllByTitle("El principito")).thenReturn(null);
 
@@ -136,11 +131,12 @@ public class PostServiceTest {
 
         //Assert
         assertNull(result);
-        verify(postDAO).findAllByTitle("El principito");;
+        verify(postDAO).findAllByTitle("El principito");
+        ;
     }
 
     @Test
-    public void shouldReturnAllPostsByAlias(){
+    public void shouldReturnAllPostsByAlias() {
         //Act
         when(postDAO.findAllByAuthorsAlias("Felipe")).thenReturn(postList);
 
@@ -149,12 +145,11 @@ public class PostServiceTest {
 
         //Assert
         assertThat(result.size(), is(equalTo(2)));
-        assertEquals(result.get(0).getAuthor().getAlias(), "Felipe");
-        assertEquals(result.get(1).getAuthor().getAlias(), "Felipe");
+
     }
 
     @Test
-    public void shouldReturnEmptyListNoPostsFoundByAlias(){
+    public void shouldReturnEmptyListNoPostsFoundByAlias() {
         //Arrange
         when(postDAO.findAllByAuthorsAlias("German")).thenReturn(new ArrayList<>());
 
@@ -167,7 +162,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void shouldReturnAllPostsByContent(){
+    public void shouldReturnAllPostsByContent() {
         //Arrange
         List<Post> postContent = new ArrayList<>();
         postContent.add(post1);
@@ -189,10 +184,34 @@ public class PostServiceTest {
         List<Post> result = postService.findAllByContent("AiRPlanE");
 
         //Assert
-        assertThat(result.size(),is(equalTo(0)));
+        assertThat(result.size(), is(equalTo(0)));
     }
 
+    @Test
+    public void shouldReturnIdWhenCreateANewPost() {
+        //Arrange
+        when(postDAO.create(post1)).thenReturn(1);
 
+        //Act
+        int result = postService.create(post1);
+
+        //Assert
+        assertEquals(result, 1);
+        verify(postDAO).create(post1);
+    }
+
+    @Test
+    public void shouldReturnMinusOneWhenCreateAPostalreadyExist() {
+        //Arrange
+        when(postDAO.create(post1)).thenReturn(-1);
+
+        //Act
+        int result = postService.create(post1);
+
+        //Assert
+        assertEquals(result, -1);
+        verify(postDAO).create(post1);
+    }
 
 
 }

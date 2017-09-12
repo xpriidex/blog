@@ -28,11 +28,16 @@ public class PostService {
         return postDAO.findAllByAuthorsAlias(alias);
     }
 
-    public List<Post> findAllByContent(String content){
-       return postDAO.findAllByContent(content);
+    public List<Post> findAllByContent(String content) {
+        return postDAO.findAllByContent(content);
     }
 
     public Post findById(int id) {
         return postDAO.findById(id);
+    }
+
+    public int create(Post post) {
+        return postDAO.create(post);
+
     }
 }
