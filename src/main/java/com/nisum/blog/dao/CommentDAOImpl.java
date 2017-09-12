@@ -1,7 +1,6 @@
 package com.nisum.blog.dao;
 
 import com.nisum.blog.domain.Comment;
-import com.sun.org.apache.xml.internal.security.Init;
 
 import java.util.List;
 
