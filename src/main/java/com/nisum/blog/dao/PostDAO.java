@@ -1,7 +1,7 @@
 package com.nisum.blog.dao;
 
 import com.nisum.blog.domain.Post;
-import com.nisum.blog.domain.User;
+import org.joda.time.DateTime;
 
 import java.util.List;
 
@@ -11,6 +11,16 @@ public interface PostDAO {
     Post findById(int id);
 
     List<Post> findAll();
+
+    List<Post> findAllByTitle(String title);
+
+    List<Post> findAllByAuthorsAlias(String alias);
+
+    List<Post> findAllByContent(String content);
+
+    Post findByDate(DateTime queryDate);
+
+    Post findByByDateRange(DateTime queryDate1, DateTime queryDate2);
 
     void update(Post Post);
 
