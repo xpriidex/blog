@@ -3,6 +3,8 @@ package com.nisum.blog.domain;
 import java.util.Date;
 
 public class Comment {
+    public static int nextAvailableId = 4;
+
     private int id;
     private int authorId;
     private Date publicationDate;

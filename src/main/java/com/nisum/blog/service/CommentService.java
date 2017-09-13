@@ -11,9 +11,9 @@ public class CommentService {
 
     private CommentDAO commentDAO = new CommentDAOImpl();
 
-    public CommentService()
-    {
+    public int create(Comment comment){
 
+        return commentDAO.create(comment);
     }
 
     public List<Comment> findByAuthorId(int id) {
@@ -37,4 +37,17 @@ public class CommentService {
 
         return commentByPost;
     }
+
+    public int deleteByAuthorId(int authorId){
+        int deletedByAuthor = commentDAO.deleteByAuthorId(authorId);
+
+        return deletedByAuthor;
+    }
+
+    public int deleteByPostId(int postId){
+        int deletedByPost = commentDAO.deleteByPostId(postId);
+
+        return deletedByPost;
+    }
+
 }
