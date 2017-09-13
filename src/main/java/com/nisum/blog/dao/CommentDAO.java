@@ -14,8 +14,7 @@ public interface CommentDAO {
 
     List<Comment> findByPostId(int id);
 
+    int deleteByAuthorId(int authorId);
 
-    void update(Comment comment);
-
-    void delete(int id);
+    int deleteByPostId(int postId);
 }

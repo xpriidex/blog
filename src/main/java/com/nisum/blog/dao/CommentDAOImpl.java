@@ -35,8 +35,11 @@ public class CommentDAOImpl implements CommentDAO{
     }
 
     @Override
-    public int create(Comment comment) {
-        return 0;
+    public int create(Comment comment)
+    {
+        comment.setId(comment.nextAvailableId++);
+        commentList.add(comment);
+        return comment.getId();
     }
 
     @Override
@@ -85,14 +88,33 @@ public class CommentDAOImpl implements CommentDAO{
         return commentByPost;
     }
 
-    @Override
-    public void update(Comment comment) {
 
+    @Override
+    public int deleteByAuthorId(int authorId){
+        int deletedByAuthor = 0;
+
+        for (int i = 0; i< commentList.size();i++){
+            if(commentList.get(i).getAuthorId() == authorId){
+                commentList.remove(i);
+                deletedByAuthor ++;
+            }
+        }
+
+        return deletedByAuthor;
     }
 
     @Override
-    public void delete(int id) {
+    public int deleteByPostId(int postId){
+        int deletedByPost = 0;
 
+        for (int i = 0; i< commentList.size();i++){
+            if(commentList.get(i).getPostId() == postId){
+                commentList.remove(i);
+                deletedByPost ++;
+            }
+        }
+
+        return deletedByPost;
     }
 
 }

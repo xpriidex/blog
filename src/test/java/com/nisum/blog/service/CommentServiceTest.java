@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -90,6 +91,42 @@ public class CommentServiceTest {
 
         assertThat(commentListSize, is(equalTo(1)));
         verify(commentDAO).findByPostId(2);
+    }
+
+    @Test
+    public void itShouldReturnIdWhenCreatingNewComment() throws Exception{
+        Comment newComment = new Comment();
+
+        when(commentDAO.create(newComment)).thenReturn(1);
+
+        int result = commentService.create(newComment);
+
+        assertEquals(result,1);
+        verify(commentDAO).create(newComment);
+    }
+
+    @Test
+    public void itShouldReturnDeleteCommentByAuthorId() throws Exception{
+        int userId = 1;
+
+        when(commentDAO.deleteByAuthorId(userId)).thenReturn(1);
+
+        int result = commentService.deleteByAuthorId(userId);
+
+        assertEquals(result,1);
+        verify(commentDAO).deleteByAuthorId(userId);
+    }
+
+    @Test
+    public void itShouldReturnDeleteCommentByPostId() throws Exception{
+        int postId = 1;
+
+        when(commentDAO.deleteByPostId(postId)).thenReturn(1);
+
+        int result = commentService.deleteByPostId(postId);
+
+        assertEquals(result,1);
+        verify(commentDAO).deleteByPostId(postId);
     }
 
 }
