@@ -133,6 +133,13 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void update(User user) {
 
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getId() == user.getId())
+            {
+                userList.set(i, user);
+                break;
+            }
+        }
     }
 
     @Override

@@ -20,26 +20,22 @@ public class UserService {
 
     public int create(User user) {
 
-        if(user.getEmail() == null || user.getEmail().isEmpty())
-        {
+        if (user.getEmail() == null || user.getEmail().isEmpty()) {
             return -1;
         }
 
-        if (userDAO.findByAlias(user.getAlias()) != null)
-        {
+        if (userDAO.findByAlias(user.getAlias()) != null) {
             return -1;
         }
 
-        if (userDAO.findByEmail(user.getEmail()) != null)
-        {
+        if (userDAO.findByEmail(user.getEmail()) != null) {
             return -1;
         }
 
         return userDAO.create(user);
     }
 
-    public int delete(int userId)
-    {
+    public int delete(int userId) {
         int deleted = userDAO.delete(userId);
         return deleted;
     }
@@ -80,4 +76,43 @@ public class UserService {
         return userFound;
     }
 
+    public void updateFirstName(int userId, String newFirstName) {
+        User user = findById(userId);
+
+        if (user != null) {
+            user.setFirstName(newFirstName);
+            userDAO.update(user);
+        }
+    }
+
+    public void updateLastName(int userId, String newLastName) {
+        User user = findById(userId);
+
+        if (user != null) {
+            user.setLastName(newLastName);
+            userDAO.update(user);
+        }
+    }
+
+    public void updateEmail(int userId, String newEmail) {
+        User user = findById(userId);
+
+        if (user != null) {
+            if (findByEmail(newEmail) == null) {
+                user.setEmail(newEmail);
+                userDAO.update(user);
+            }
+        }
+    }
+
+    public void updateAlias(int userId, String newAlias) {
+        User user = findById(userId);
+
+        if (user != null) {
+            if (findByAlias(newAlias) == null) {
+                user.setEmail(newAlias);
+                userDAO.update(user);
+            }
+        }
+    }
 }

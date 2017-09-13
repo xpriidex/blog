@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.test.context.TestExecutionListeners;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,7 +170,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldReturnDeleteUser() throws Exception{
+    public void shouldReturnOneDeleteUser() throws Exception{
         int userId = 1;
         //Arrange
         when(userDAO.delete(userId)).thenReturn(1);
@@ -181,6 +182,58 @@ public class UserServiceTest {
         assertEquals(result, 1);
         verify(userDAO).delete(userId);
     }
+
+    @Test
+    public void shouldUpdateUserFirstName() throws Exception {
+        int userId = 1;
+        String newFirstName = "Daniela";
+        when(userDAO.findById(userId)).thenReturn(user1);
+
+        userService.updateFirstName(userId, newFirstName);
+
+        verify(userDAO).findById(userId);
+        verify(userDAO).update(user1);
+    }
+
+    @Test
+    public void shouldUpdateUserLastName() throws Exception {
+        int userId = 1;
+        String newLastName = "Yurjevic";
+        when(userDAO.findById(userId)).thenReturn(user1);
+
+        userService.updateLastName(userId, newLastName);
+
+        verify(userDAO).findById(userId);
+        verify(userDAO).update(user1);
+    }
+
+    @Test
+    public void shouldUpdateUserEmail() throws Exception {
+        int userId = 1;
+        String newEmail = "miki@nisum.com";
+        when(userDAO.findById(userId)).thenReturn(user1);
+        when(userDAO.findByEmail(newEmail)).thenReturn(null);
+
+        userService.updateEmail(userId, newEmail);
+
+
+        verify(userDAO).findById(userId);
+        verify(userDAO).update(user1);
+    }
+
+    @Test
+    public void shouldUpdateUserAlias() throws Exception {
+        int userId = 1;
+        String newAlias = "Nikki";
+        when(userDAO.findById(userId)).thenReturn(user1);
+
+        userService.updateAlias(userId, newAlias);
+
+        verify(userDAO).findById(userId);
+        verify(userDAO).update(user1);
+    }
+
+
 
     //shouldFailOn___ or shouldFailW
 }
