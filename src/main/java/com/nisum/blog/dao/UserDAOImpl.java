@@ -57,7 +57,6 @@ public class UserDAOImpl implements UserDAO {
         return user.getId();
     }
 
-
     @Override
     public List<User> findAll() {
         return userList;
@@ -137,7 +136,17 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void delete(int id) {
+    public int delete(int id) {
+        int deleted = 0;
 
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getId() == id)
+            {
+                userList.remove(i);
+                deleted ++;
+            }
+        }
+
+        return deleted;
     }
 }

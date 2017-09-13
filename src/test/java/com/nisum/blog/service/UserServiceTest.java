@@ -168,5 +168,19 @@ public class UserServiceTest {
         verify(userDAO).create(newUser);
     }
 
+    @Test
+    public void shouldReturnDeleteUser() throws Exception{
+        int userId = 1;
+        //Arrange
+        when(userDAO.delete(userId)).thenReturn(1);
+
+        //Act
+        int result = userService.delete(userId);
+
+        //Assert
+        assertEquals(result, 1);
+        verify(userDAO).delete(userId);
+    }
+
     //shouldFailOn___ or shouldFailW
 }

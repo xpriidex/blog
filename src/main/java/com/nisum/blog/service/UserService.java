@@ -38,6 +38,12 @@ public class UserService {
         return userDAO.create(user);
     }
 
+    public int delete(int userId)
+    {
+        int deleted = userDAO.delete(userId);
+        return deleted;
+    }
+
     public List<User> findAll() {
         userList = userDAO.findAll();
 
