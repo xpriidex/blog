@@ -18,6 +18,8 @@ public class PostDAOImpl implements PostDAO {
     private void init() {
         postList = new ArrayList<>();
         userDAO = new UserDAOImpl();
+        DateTime nowLocal = DateTime.now();
+
 
         Post post1;
         Post post2;
@@ -28,11 +30,13 @@ public class PostDAOImpl implements PostDAO {
         post1.setId(1);
         post1.setTitle("Narnia");
         post1.setAuthorId(1);
+        post1.setPublicationDate(nowLocal);
         post1.setBody("I am post about ANDROID");
 
         post2.setId(2);
         post2.setTitle("Papelucho");
         post1.setAuthorId(1);
+        post2.setPublicationDate(nowLocal);
         post2.setBody("I am post about AnImAlS");
 
         postList.add(post1);
@@ -133,5 +137,24 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public void delete(int id) {
 
+        for (int i = 0; i < postList.size(); i++) {
+            if (postList.get(i).getId() == id) {
+                postList.remove(i);
+                break;
+            }
+        }
+    }
+
+    public int deleteByUserId(int id) {
+        int count =0;
+
+        for (int i = 0; i < postList.size(); i++) {
+            if (postList.get(i).getAuthorId() == id) {
+                postList.remove(i);
+                count++;
+            }
+        }
+
+        return count;
     }
 }

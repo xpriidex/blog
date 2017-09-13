@@ -2,6 +2,7 @@ package com.nisum.blog.service;
 
 import com.nisum.blog.dao.PostDAO;
 import com.nisum.blog.domain.Post;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,16 +34,20 @@ public class PostServiceTest {
     @Before
     public void setUp() throws Exception {
         //Arrange
+        DateTime nowLocal = DateTime.now();
+
         postList = new ArrayList<>();
         post1 = new Post();
         post2 = new Post();
 
         post1.setId(1);
+        post1.setPublicationDate(nowLocal);
         post1.setTitle("Narnia");
         post1.setAuthorId(1);
         post1.setBody("I am post about ANDROID");
 
         post2.setId(2);
+        post2.setPublicationDate(nowLocal);
         post2.setTitle("Papelucho");
         post2.setAuthorId(1);
         post2.setBody("I am post about AnImAlS");
@@ -211,5 +216,35 @@ public class PostServiceTest {
         //Assert
         assertEquals(result, -1);
         verify(postDAO).create(post1);
+    }
+
+    @Test
+    public void shouldReturnIdWhenUpdateAPost(){
+        //Arrange
+        when(postDAO.update(post1)).thenReturn(1);
+        when(postService.findById(1)).thenReturn(post1);
+
+        //Act
+        int result = postService.update(post1);
+
+        //Assert
+        assertEquals(result, 1);
+        verify(postDAO).update(post1);
+    }
+
+    @Test
+    public void checkDeletePost(){
+        postService.delete(1);
+
+        verify(postDAO).delete(1);
+    }
+
+    @Test
+    public  void shouldReturnCountPostDeleted(){
+        when(postDAO.deleteByUserId(1)).thenReturn(1);
+
+        int result= postService.deleteByUserId(1);
+
+        assertThat(result,is(equalTo(1)));
     }
 }

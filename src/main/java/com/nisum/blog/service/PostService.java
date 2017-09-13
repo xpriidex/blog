@@ -3,10 +3,13 @@ package com.nisum.blog.service;
 import com.nisum.blog.dao.PostDAO;
 import com.nisum.blog.dao.PostDAOImpl;
 import com.nisum.blog.domain.Post;
+import org.joda.time.DateTime;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class PostService {
 
     private PostDAO postDAO = new PostDAOImpl();
@@ -37,7 +40,29 @@ public class PostService {
     }
 
     public int create(Post post) {
-        return postDAO.create(post);
+        DateTime nowLocal = DateTime.now();
+        post.setPublicationDate(nowLocal);
 
+        return postDAO.create(post);
+    }
+    public int update(Post post){
+        DateTime nowLocal = DateTime.now();
+
+        Post postToUpdate = findById(post.getId());
+
+        postToUpdate.setPublicationDate(nowLocal);
+        postToUpdate.setBody(post.getBody());
+        postToUpdate.setTitle(post.getTitle());
+
+        return postDAO.update(postToUpdate);
+
+    }
+
+    public void delete(int id) {
+        postDAO.delete(id);
+    }
+
+    public int deleteByUserId(int id) {
+        return postDAO.deleteByUserId(id);
     }
 }

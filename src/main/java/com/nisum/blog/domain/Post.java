@@ -1,5 +1,7 @@
 package com.nisum.blog.domain;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 public class Post {
@@ -8,12 +10,12 @@ public class Post {
     private int authorId;
     private String title;
     private String body;
-    private Date publicationDate;
+    private DateTime publicationDate;
 
     public Post() {
     }
 
-    public Post(int id, int authorId, String title, String body, Date publicationDate) {
+    public Post(int id, int authorId, String title, String body, DateTime publicationDate) {
         this.id = id;
         this.authorId = authorId;
         this.title = title;
@@ -61,11 +63,35 @@ public class Post {
         this.body = body;
     }
 
-    public Date getPublicationDate() {
+    public DateTime getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(Date publicationDate) {
+    public void setPublicationDate(DateTime publicationDate) {
         this.publicationDate = publicationDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Post post = (Post) o;
+
+        if (id != post.id) return false;
+        if (authorId != post.authorId) return false;
+        if (title != null ? !title.equals(post.title) : post.title != null) return false;
+        if (body != null ? !body.equals(post.body) : post.body != null) return false;
+        return publicationDate != null ? publicationDate.equals(post.publicationDate) : post.publicationDate == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + authorId;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (body != null ? body.hashCode() : 0);
+        result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
+        return result;
     }
 }
