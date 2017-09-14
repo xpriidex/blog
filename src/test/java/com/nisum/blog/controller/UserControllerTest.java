@@ -1,6 +1,8 @@
 package com.nisum.blog.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.nisum.blog.domain.User;
 import com.nisum.blog.service.CommentService;
 import com.nisum.blog.service.UserService;
@@ -17,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +39,13 @@ public class UserControllerTest {
     @InjectMocks
     private UserController userController;
 
-    private MockMvc mockMvc;
+    private MockMvc controllerMockMvc;
 
     private ObjectMapper mapper = new ObjectMapper();
 
     @Before
     public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        controllerMockMvc = MockMvcBuilders.standaloneSetup(userController).build();
     }
 
     @Test
@@ -54,19 +57,45 @@ public class UserControllerTest {
 
         when(userService.findAll()).thenReturn(users);
 
-        MvcResult usersResponse = mockMvc.perform(get("/users/"))
+        MvcResult usersResponse = controllerMockMvc.perform(get("/api/users/"))
                 .andExpect(status().isOk())
                 .andReturn();
 
         String contentAsString = usersResponse.getResponse().getContentAsString();
         System.out.println(contentAsString);
 
-        List usersList = mapper.readValue(contentAsString, List.class);
+        CollectionType collectionType = TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, User.class);
+        List<User> usersList = mapper.readValue(contentAsString, collectionType);
+        System.out.println(usersList.get(0).getClass().getName());
         //parametizedType
         System.out.println(usersList.size());
 
         assertThat(usersList.size(),is(users.size()));
 
         verify(userService).findAll();
+    }
+
+    @Test
+    public void shouldFindById() throws Exception {
+        User user = new User();
+        user.setId(1);
+        user.setFirstName("Mari");
+
+        when(userService.findById(1)).thenReturn(user);
+
+        MvcResult usersResponse = controllerMockMvc.perform(get("/api/users/1"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String contentAsString = usersResponse.getResponse().getContentAsString();
+        System.out.println(contentAsString);
+
+        User userFound = mapper.readValue(contentAsString, User.class);
+        System.out.println(userFound.getId());
+        System.out.println(userFound.getFirstName());
+
+        assertThat(userFound.getId(),is(1));
+
+        verify(userService).findById(1);
     }
 }

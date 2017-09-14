@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -52,5 +52,4 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("deleted");
         //http://localhost:8080/users/1
     }
-
 }
