@@ -27,6 +27,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -97,5 +98,14 @@ public class UserControllerTest {
         assertThat(userFound.getId(),is(1));
 
         verify(userService).findById(1);
+    }
+
+    @Test
+    public void shouldDeleteById() throws Exception {
+
+        controllerMockMvc.perform(delete("/api/users/5"))
+                .andExpect(status().isOk());
+
+        verify(userService).delete(5);
     }
 }
