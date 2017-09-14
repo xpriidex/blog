@@ -3,7 +3,7 @@ package com.nisum.blog.domain;
 import java.util.List;
 
 public class User {
-    public static int nextAvailableId = 4;
+    public static int nextAvailableId = 1;
 
     private int id;
     private String firstName;

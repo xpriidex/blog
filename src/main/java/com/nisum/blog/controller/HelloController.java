@@ -15,7 +15,7 @@ public class HelloController {
     private HelloService helloService;
 
     @GetMapping("hello")
-    public ResponseEntity<String> helloWorld(){
+    public ResponseEntity<String> helloWorld() {
         String message = helloService.greet();
         return new ResponseEntity<String>(message, HttpStatus.OK);
     }

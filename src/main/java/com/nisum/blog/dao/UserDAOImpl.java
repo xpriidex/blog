@@ -1,7 +1,5 @@
 package com.nisum.blog.dao;
 
-import com.nisum.blog.domain.Comment;
-import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
 
 import java.util.ArrayList;
@@ -19,7 +17,6 @@ public class UserDAOImpl implements UserDAO {
         userList = new ArrayList<>();
 
         User user1 = new User();
-        user1.setId(1);
         user1.setFirstName("Macarena");
         user1.setLastName("Yurjevic");
         user1.setAlias("Miki");
@@ -28,7 +25,6 @@ public class UserDAOImpl implements UserDAO {
         user1.setImage("http://miFotoFeliz");
 
         User user2 = new User();
-        user2.setId(2);
         user2.setFirstName("Juan");
         user2.setLastName("Lopez");
         user2.setAlias("Juanes");
@@ -37,7 +33,6 @@ public class UserDAOImpl implements UserDAO {
         user2.setImage("http://fotoViaje");
 
         User user3 = new User();
-        user3.setId(3);
         user3.setFirstName("Paulina");
         user3.setLastName("Gamboa");
         user3.setAlias("Pali");
@@ -45,9 +40,9 @@ public class UserDAOImpl implements UserDAO {
         user3.setEmail("pgamboa@nisum.com");
         user3.setImage("http://selfieTrekking");
 
-        userList.add(user1);
-        userList.add(user2);
-        userList.add(user3);
+        create(user1);
+        create(user2);
+        create(user3);
     }
 
     @Override

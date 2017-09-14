@@ -5,9 +5,11 @@ import com.nisum.blog.dao.UserDAOImpl;
 import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class UserService {
 
     private List<User> userList;
