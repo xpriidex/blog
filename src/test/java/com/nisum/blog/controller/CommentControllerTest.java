@@ -62,5 +62,7 @@ public class CommentControllerTest {
         List commentsList = mapper.readValue(contentAsString, List.class);
         assertThat(commentsList.size(),is(comments.size()));
         verify(commentService).findAll();
+
+        System.out.println(commentsList.get(0).getClass().getName());
     }
 }
