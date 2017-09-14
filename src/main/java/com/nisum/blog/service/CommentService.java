@@ -3,10 +3,12 @@ package com.nisum.blog.service;
 import com.nisum.blog.dao.CommentDAO;
 import com.nisum.blog.dao.CommentDAOImpl;
 import com.nisum.blog.domain.Comment;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CommentService {
 
     private CommentDAO commentDAO = new CommentDAOImpl();
@@ -48,6 +50,13 @@ public class CommentService {
         int deletedByPost = commentDAO.deleteByPostId(postId);
 
         return deletedByPost;
+    }
+
+    public List<Comment> findAll() {
+
+        List<Comment> comments = commentDAO.findAll();
+
+        return comments;
     }
 
 }

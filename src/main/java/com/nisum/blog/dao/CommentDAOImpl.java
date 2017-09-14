@@ -117,5 +117,10 @@ public class CommentDAOImpl implements CommentDAO{
         return deletedByPost;
     }
 
+    @Override
+    public List<Comment> findAll() {
+        return commentList;
+    }
+
 }
 
