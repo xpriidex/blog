@@ -16,12 +16,6 @@ public class PostService {
     @Autowired
     private PostDAO postDAO;
 
-    private List<Post> postList;
-
-    public PostService() {
-        postList = new ArrayList<>();
-    }
-
     public List<Post> findAll() {
         return postDAO.findAll();
     }
