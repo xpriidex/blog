@@ -3,11 +3,16 @@ package com.nisum.blog.dao;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class PostDAOImpl implements PostDAO {
+
+    @Autowired
     private UserDAO userDAO;
     private List<Post> postList;
 
@@ -17,7 +22,7 @@ public class PostDAOImpl implements PostDAO {
 
     private void init() {
         postList = new ArrayList<>();
-        userDAO = new UserDAOImpl();
+
         DateTime nowLocal = DateTime.now();
 
 

@@ -2,20 +2,24 @@ package com.nisum.blog.dao;
 
 import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CommentDAOImpl implements CommentDAO{
 
     private List<Comment> commentList;
+
+    @Autowired
     private UserDAO userDAO;
 
     public CommentDAOImpl() { init();}
 
     private void init() {
         commentList = new ArrayList<>();
-        userDAO = new UserDAOImpl();
 
         Comment comment1 = new Comment();
         comment1.setAuthorId(1);

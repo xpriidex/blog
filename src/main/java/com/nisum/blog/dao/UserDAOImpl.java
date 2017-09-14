@@ -1,10 +1,12 @@
 package com.nisum.blog.dao;
 
 import com.nisum.blog.domain.User;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class UserDAOImpl implements UserDAO {
 
     private List<User> userList;

@@ -5,6 +5,7 @@ import com.nisum.blog.dao.UserDAOImpl;
 import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,7 +15,8 @@ public class UserService {
 
     private List<User> userList;
 
-    private UserDAO userDAO = new UserDAOImpl();
+    @Autowired
+    private UserDAO userDAO;
 
     public UserService() {
         userList = new ArrayList<>();

@@ -4,6 +4,7 @@ import com.nisum.blog.dao.PostDAO;
 import com.nisum.blog.dao.PostDAOImpl;
 import com.nisum.blog.domain.Post;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,7 +13,9 @@ import java.util.List;
 @Service
 public class PostService {
 
-    private PostDAO postDAO = new PostDAOImpl();
+    @Autowired
+    private PostDAO postDAO;
+
     private List<Post> postList;
 
     public PostService() {

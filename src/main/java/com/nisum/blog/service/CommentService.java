@@ -3,6 +3,7 @@ package com.nisum.blog.service;
 import com.nisum.blog.dao.CommentDAO;
 import com.nisum.blog.dao.CommentDAOImpl;
 import com.nisum.blog.domain.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.List;
 @Service
 public class CommentService {
 
-    private CommentDAO commentDAO = new CommentDAOImpl();
+    @Autowired
+    private CommentDAO commentDAO;
 
     public int create(Comment comment){
 
