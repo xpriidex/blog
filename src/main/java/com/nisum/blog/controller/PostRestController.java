@@ -39,4 +39,11 @@ public class PostRestController {
         int id = postService.create(post);
         return new ResponseEntity<Integer>(id,HttpStatus.CREATED);
     }
+
+    @RequestMapping(path = "/",method = RequestMethod.PUT )
+    @ResponseBody
+    public ResponseEntity<Integer> update(@RequestBody Post post){
+        int id = postService.update(post);
+        return new ResponseEntity<Integer>(id,HttpStatus.CREATED);
+    }
 }
