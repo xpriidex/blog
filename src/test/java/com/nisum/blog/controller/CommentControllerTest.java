@@ -51,7 +51,7 @@ public class CommentControllerTest {
 
         when(commentService.findAll()).thenReturn(comments);
 
-        MvcResult commentsResponse = mockMvc.perform(get("/comments/"))
+        MvcResult commentsResponse = mockMvc.perform(get("/api/comments/"))
                 .andExpect(status().isOk())
 
                 .andReturn();
