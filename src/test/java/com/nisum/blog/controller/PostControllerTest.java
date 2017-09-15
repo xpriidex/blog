@@ -65,7 +65,7 @@ public class PostControllerTest {
 
     @Test
     public void shouldReturnAllPost() throws Exception {
-        when(postService.findAll()).thenReturn(postList);
+       // when(postService.findAll()).thenReturn(postList);
 
 
     }
