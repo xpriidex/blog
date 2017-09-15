@@ -16,7 +16,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(path = "/aaa", method = RequestMethod.GET)
     public ResponseEntity<List<User>> findAll() {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
@@ -26,7 +26,7 @@ public class UserController {
         return new ResponseEntity<User>(userService.findById(id), HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.POST)
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public ResponseEntity<Integer> create(
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
@@ -43,7 +43,7 @@ public class UserController {
         newUser.setImage(image);
         int userId = userService.create(newUser);
         return new ResponseEntity<Integer>(userId, HttpStatus.OK);
-        //http://localhost:8080/users/?firstName=Jojo&lastName=Junes&alias=Jeans&bio=myBio&email=myEmail@gmail.com&image=laFotoBkn.jpg
+        //http://localhost:8080/api/users/?firstName=Jojo&lastName=Junes&alias=Jeans&bio=myBio&email=myEmail@gmail.com&image=laFotoBkn.jpg
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

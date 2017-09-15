@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Usuario</title>
+    <style type="text/css">
+        .usuario .usuario-input {
+            width:200px;
+            padding:5px;
+            background-color:#CCC;
+            color:#00C;
+        }
+        .usuario-label {
+            display: block;
+            margin: 5px;
+        }
+        .usuario-input--enviar {
+            background-color: #bada55;
+            padding: 10px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Nuevo Usuario</h1>
+</header>
+<main>
+    <section class="usuario">
+        <form action="/api/users/" method="get">
+            <label for="first_name" class="usuario-label">
+                First Name
+                <input id="first_name" type="text" name="firstName" class="usuario-input">
+            </label>
+            <label for="last_name" class="usuario-label">
+                Last Name
+                <input id="last_name" type="text" name="lastName" class="usuario-input">
+            </label>
+            <label for="alias" class="usuario-label">
+                alias
+                <input id="alias" type="text" name="alias" class="usuario-input">
+            </label>
+            <label for="bio" class="usuario-label">
+                bio
+                <input id="bio" type="text" name="bio" class="usuario-input">
+            </label>
+            <label for="email" class="usuario-label">
+                email
+                <input id="email" type="email" name="email" class="usuario-input">
+            </label>
+            <label for="image" class="usuario-label">
+                image
+                <input id="image" type="text" name="image" class="usuario-input">
+            </label>
+            <input type="submit" value="enviar" class="usuario-input usuario-input--enviar">
+        </form>
+    </section>
+</main>
+<footer></footer>
+</body>
+</html>
+
