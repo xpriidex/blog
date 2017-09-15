@@ -34,10 +34,9 @@ public class PostController {
     }
 
     @RequestMapping(path = "/",method = RequestMethod.POST )
+    @ResponseBody
     public ResponseEntity<Integer> create(@RequestBody Post post){
         int id = postService.create(post);
         return new ResponseEntity<Integer>(id,HttpStatus.CREATED);
     }
-
-
 }
