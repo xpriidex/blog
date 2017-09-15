@@ -28,24 +28,15 @@ public class UserController {
         return ok(userService.findById(id));
     }
 
+    @RequestMapping(path = "/alias/{alias}", method = RequestMethod.GET)
+    public ResponseEntity<User> findById(@PathVariable("alias") String alias) {
+        return ok(userService.findByAlias(alias));
+    }
+
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    public ResponseEntity<Integer> create(
-            @RequestParam("firstName") String firstName,
-            @RequestParam("lastName") String lastName,
-            @RequestParam("alias") String alias,
-            @RequestParam("bio") String bio,
-            @RequestParam("email") String email,
-            @RequestParam("image") String image) {
-        User newUser = new User();
-        newUser.setFirstName(firstName);
-        newUser.setLastName(lastName);
-        newUser.setAlias(alias);
-        newUser.setBio(bio);
-        newUser.setEmail(email);
-        newUser.setImage(image);
-        int userId = userService.create(newUser);
+    public ResponseEntity<Integer> create(@RequestBody User user) {
+        int userId = userService.create(user);
         return ok(userId);
-        //http://localhost:8080/api/users/?firstName=Jojo&lastName=Junes&alias=Jeans&bio=myBio&email=myEmail@gmail.com&image=laFotoBkn.jpg
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
@@ -55,40 +46,27 @@ public class UserController {
         //http://localhost:8080/users/1
     }
 
-    @RequestMapping(path = "/update/first_name", method = RequestMethod.PUT)
-    public ResponseEntity updateFirstName(
-            @RequestParam("id") Integer id,
-            @RequestParam("firstName") String firstName) {
-        userService.updateFirstName(id, firstName);
+    @RequestMapping(path = "/first_name", method = RequestMethod.PUT)
+    public ResponseEntity updateFirstName(@RequestBody User user) {
+        userService.updateFirstName(user.getId(), user.getFirstName());
         return ok("updated");
-        //http://localhost:8080/api/users/update?id=1&firstName=Orlando
     }
 
-    @RequestMapping(path = "/update/last_name", method = RequestMethod.PUT)
-    public ResponseEntity updateLastName(
-            @RequestParam("id") Integer id,
-            @RequestParam("lastName") String lastName) {
-        userService.updateLastName(id, lastName);
+    @RequestMapping(path = "/last_name", method = RequestMethod.PUT)
+    public ResponseEntity updateLastName(@RequestBody User user) {
+        userService.updateLastName(user.getId(), user.getLastName());
         return ok("updated");
-        //http://localhost:8080/api/users/update?id=1&firstName=Orlando
     }
 
-    @RequestMapping(path = "/update/email", method = RequestMethod.PUT)
-    public ResponseEntity updateEmail(
-            @RequestParam("id") Integer id,
-            @RequestParam("email") String email) {
-        userService.updateEmail(id, email);
+    @RequestMapping(path = "/email", method = RequestMethod.PUT)
+    public ResponseEntity updateEmail(@RequestBody User user) {
+        userService.updateEmail(user.getId(), user.getEmail());
         return ok("updated");
-        //http://localhost:8080/api/users/update/email/?id=1&email=Soko
-
     }
 
-    @RequestMapping(path = "/update/alias", method = RequestMethod.PUT)
-    public ResponseEntity updateAlias(
-            @RequestParam("id") Integer id,
-            @RequestParam("alias") String alias) {
-        userService.updateAlias(id, alias);
+    @RequestMapping(path = "/alias", method = RequestMethod.PUT)
+    public ResponseEntity updateAlias(@RequestBody User user) {
+        userService.updateAlias(user.getId(), user.getAlias());
         return ok("updated");
-        //http://localhost:8080/api/users/update/alias/?id=1&alias=Soko
     }
 }
