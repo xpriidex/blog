@@ -114,7 +114,7 @@ public class UserService {
 
         if (user != null) {
             if (findByAlias(newAlias) == null) {
-                user.setEmail(newAlias);
+                user.setAlias(newAlias);
                 userDAO.update(user);
             }
         }
