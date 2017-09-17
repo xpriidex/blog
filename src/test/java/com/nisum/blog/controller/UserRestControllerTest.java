@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.nisum.blog.domain.User;
-import com.nisum.blog.service.CommentService;
 import com.nisum.blog.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,13 +12,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,13 +28,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserControllerTest {
+public class UserRestControllerTest {
 
     @Mock
     private UserService userService;
 
     @InjectMocks
-    private UserController userController;
+    private UserRestController userRestController;
 
     private MockMvc controllerMockMvc;
 
@@ -47,7 +42,7 @@ public class UserControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        controllerMockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        controllerMockMvc = MockMvcBuilders.standaloneSetup(userRestController).build();
     }
 
     @Test
