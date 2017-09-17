@@ -97,6 +97,30 @@ public class UserRestControllerTest {
     }
 
     @Test
+    public void shouldFindByAlias() throws Exception {
+        User user = new User();
+        user.setId(4);
+        user.setAlias("JuneSky");
+
+        when(userService.findByAlias("junesky")).thenReturn(user);
+
+        MvcResult usersResponse = controllerMockMvc.perform(get("/api/users/alias/junesky"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String contentAsString = usersResponse.getResponse().getContentAsString();
+        System.out.println(contentAsString);
+
+        User userFound = mapper.readValue(contentAsString, User.class);
+        System.out.println(userFound.getId());
+        System.out.println(userFound.getAlias());
+
+        assertThat(userFound.getId(),is(4));
+
+        verify(userService).findByAlias("junesky");
+    }
+
+    @Test
     public void shouldDeleteById() throws Exception {
         controllerMockMvc.perform(delete("/api/users/5"))
                 .andExpect(status().isOk())
@@ -104,4 +128,6 @@ public class UserRestControllerTest {
 
         verify(userService).delete(5);
     }
+
+
 }

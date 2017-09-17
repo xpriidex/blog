@@ -42,9 +42,19 @@ public class UserDAOImpl implements UserDAO {
         user3.setEmail("pgamboa@nisum.com");
         user3.setImage("http://selfieTrekking");
 
+        User user4 = new User();
+        user4.setFirstName("Domi");
+        user4.setLastName("Sings");
+        user4.setAlias("JuneSky");
+        user4.setBio("I like flying");
+        user4.setEmail("juneskydiamond@yahoo.com");
+        user4.setImage("http://miPrimerDiaDeClases");
+
+
         create(user1);
         create(user2);
         create(user3);
+        create(user4);
     }
 
     @Override
@@ -98,7 +108,7 @@ public class UserDAOImpl implements UserDAO {
             }
         }
 
-        return null;
+        return usersFound;
     }
 
     @Override
