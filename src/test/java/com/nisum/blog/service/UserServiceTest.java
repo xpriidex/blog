@@ -26,6 +26,7 @@ public class UserServiceTest {
     private User user2;
     private User user3;
     private User user4;
+    private User user5;
     private List<User> users;
 
     @Mock
@@ -45,7 +46,7 @@ public class UserServiceTest {
         user1.setAlias("Miki");
         user1.setBio("Wazuup");
         user1.setEmail("myurjevic@gmail.com");
-        user1.setImage("http://miFotoFeliz");
+        user1.setImage("http://miFotoFeliz.jpg");
 
         user2 = new User();
         user2.setId(2);
@@ -54,7 +55,7 @@ public class UserServiceTest {
         user2.setAlias("Juanes");
         user2.setBio("Programar, comer, dormir, repeat");
         user2.setEmail("juan4eva@gmail.com");
-        user2.setImage("http://fotoViaje");
+        user2.setImage("http://fotoViaje.jpg");
 
         user3 = new User();
         user3.setId(3);
@@ -74,19 +75,32 @@ public class UserServiceTest {
         user4.setEmail("juneskydiamond@yahoo.com");
         user4.setImage("http://miPrimerDiaDeClases");
 
+        user5 = new User();
+        user5.setId(5);
+        user5.setFirstName("Pablo");
+        user5.setLastName("Ried");
+        user5.setAlias("ZoserLock");
+        user5.setBio("Overwatch all day");
+        user5.setEmail("zoser@gmail.com");
+        user5.setImage("http://soldier67.jpg");
+
         users.add(user1);
         users.add(user2);
         users.add(user3);
         users.add(user4);
+        users.add(user5);
     }
 
     @Test
     public void shouldReturnAllUsers() throws Exception {
+        //Arrange
         when(userDAO.findAll()).thenReturn(users);
         String expectedAlias = "Miki";
 
+        //Act
         List<User> result = userService.findAll();
 
+        //Assert
         assertThat(result.size(), is(equalTo(users.size())));
         assertEquals(expectedAlias.toLowerCase(), result.get(0).getAlias().toLowerCase());
         verify(userDAO).findAll();
@@ -94,36 +108,75 @@ public class UserServiceTest {
 
     @Test
     public void shouldReturnUserById() throws Exception {
+        //Arrange
         when(userDAO.findById(0)).thenReturn(users.get(0));
         String expectedAlias = "Miki";
 
+        //Act
         String userAlias = userService.findById(0).getAlias();
 
+        //Assert
         assertThat(userAlias, is(equalTo(expectedAlias)));
         verify(userDAO).findById(0);
     }
 
     @Test
+    public void shouldFailToReturnUserFromNonExistingId() throws Exception {
+        //Arrange
+        int nonExistingId = users.size();
+
+        when(userDAO.findById(nonExistingId)).thenReturn(null);
+
+        //Act
+        User user = userService.findById(nonExistingId);
+
+        //Assert
+        assertThat(user, is(equalTo(null)));
+        verify(userDAO).findById(nonExistingId);
+    }
+
+    @Test
     public void shouldReturnUserByAlias() throws Exception {
-        String MIKI = "Miki";
+        //Arrange
+        String MIKI = "miki";
         when(userDAO.findByAlias(MIKI)).thenReturn(user1);
 
+        //Act
         int userId = userService.findByAlias(MIKI).getId();
 
+        //Assert
         assertThat(userId, is(equalTo(1)));
         verify(userDAO).findByAlias(MIKI);
     }
 
     @Test
+    public void shouldFailToReturnUserFromNonExistingAlias() throws Exception {
+        //Arrange
+        String SUNNY = "sunny";
+        when(userDAO.findByAlias(SUNNY)).thenReturn(null);
+
+        //Act
+        User user = userService.findByAlias(SUNNY);
+
+        //Assert
+        assertThat(user, is(equalTo(null)));
+        verify(userDAO).findByAlias(SUNNY);
+    }
+
+    @Test
     public void shouldReturnUsersByFirstName() throws Exception {
+        //Arrange
         String JUAN = "Juan";
         List<User> juanUsers = new ArrayList<>();
         juanUsers.add(user2);
+
         when(userDAO.findByFirstName(JUAN)).thenReturn(juanUsers);
 
+        //Act
         List<User> usersFound = userService.findByFirstName(JUAN);
         int userListSize = usersFound.size();
 
+        //Assert
         assertThat(userListSize, is(equalTo(1)));
         assertEquals(usersFound.get(0).getFirstName().toLowerCase(), JUAN.toLowerCase());
         verify(userDAO).findByFirstName(JUAN);
@@ -131,13 +184,17 @@ public class UserServiceTest {
 
     @Test
     public void shouldReturnUsersByLastName() throws Exception {
+        //Arrange
         String YURJEVIC = "YURJEVIC";
         List<User> yurjevicUsers = new ArrayList<>();
         yurjevicUsers.add(user1);
+
         when(userDAO.findByLastName(YURJEVIC)).thenReturn(yurjevicUsers);
 
+        //Act
         List<User> usersFound = userService.findByLastName(YURJEVIC);
 
+        //Assert
         assertThat(usersFound.size(), is(equalTo(1)));
         assertEquals(usersFound.get(0).getLastName().toLowerCase(), YURJEVIC.toLowerCase());
         verify(userDAO).findByLastName(YURJEVIC);
@@ -145,11 +202,15 @@ public class UserServiceTest {
 
     @Test
     public void shouldReturnUserByEmail() throws Exception {
+        //Arrange
         String email = "myurjevic@gmail.COM";
+
         when(userDAO.findByEmail(email)).thenReturn(user1);
 
+        //Act
         User userFound = userService.findByEmail(email);
 
+        //Assert
         assertThat(userFound.getId(), is(equalTo(1)));
         assertEquals(userFound.getEmail().toLowerCase(), email.toLowerCase());
         verify(userDAO).findByEmail(email);
@@ -157,13 +218,12 @@ public class UserServiceTest {
 
     @Test
     public void shouldReturnIdWhenCreatingNewUser() throws Exception {
+        //Arrange
         User newUser = new User();
         newUser.setId(4);
         newUser.setAlias("Honey");
         newUser.setEmail("joni@gmail.com");
 
-
-        //Arrange
         when(userDAO.findByAlias("Honey")).thenReturn(null);
         when(userDAO.findByEmail("joni@gmail.com")).thenReturn(null);
         when(userDAO.create(newUser)).thenReturn(3);
@@ -178,8 +238,10 @@ public class UserServiceTest {
 
     @Test
     public void shouldFailOnCreatingNewUserNoEmailAdded() throws Exception {
+        //Arrange
+        int usedId = users.size() -1;
         User newUser = new User();
-        newUser.setId(4);
+        newUser.setId(usedId);
 
         //Act
         int result = userService.create(newUser);
@@ -190,12 +252,12 @@ public class UserServiceTest {
 
     @Test
     public void shouldFailOnCreatingNewUserAliasUnavailable() throws Exception {
+        //Arrange
         User newUser = new User();
         newUser.setId(4);
         newUser.setAlias("Miki");
         newUser.setEmail("joni@gmail.com");
 
-        //Arrange
         when(userDAO.findByAlias(newUser.getAlias())).thenReturn(user1);
 
         //Act
@@ -208,12 +270,12 @@ public class UserServiceTest {
 
     @Test
     public void shouldFailOnCreatingNewUserEmailUnavailable() throws Exception {
+        //Arrange
         User newUser = new User();
         newUser.setId(4);
         newUser.setAlias("Orthagon");
         newUser.setEmail("myurjevic@gmail.com");
 
-        //Arrange
         when(userDAO.findByEmail(newUser.getEmail())).thenReturn(user1);
 
         //Act
@@ -227,8 +289,8 @@ public class UserServiceTest {
 
     @Test
     public void shouldReturnOneDeleteUser() throws Exception {
-        int userId = 1;
         //Arrange
+        int userId = 1;
         when(userDAO.delete(userId)).thenReturn(1);
 
         //Act
@@ -241,54 +303,66 @@ public class UserServiceTest {
 
     @Test
     public void shouldUpdateUserFirstName() throws Exception {
+        //Arrange
         int userId = 1;
         String newFirstName = "Daniela";
+
         when(userDAO.findById(userId)).thenReturn(user1);
 
+        //Act
         userService.updateFirstName(userId, newFirstName);
 
+        //Assert
         verify(userDAO).findById(userId);
         verify(userDAO).update(user1);
     }
 
     @Test
     public void shouldUpdateUserLastName() throws Exception {
+        //Arrange
         int userId = 1;
         String newLastName = "Yurjevic";
+
         when(userDAO.findById(userId)).thenReturn(user1);
 
+        //Act
         userService.updateLastName(userId, newLastName);
 
+        //Assert
         verify(userDAO).findById(userId);
         verify(userDAO).update(user1);
     }
 
     @Test
     public void shouldUpdateUserEmail() throws Exception {
+        //Arrange
         int userId = 1;
         String newEmail = "miki@nisum.com";
+
         when(userDAO.findById(userId)).thenReturn(user1);
         when(userDAO.findByEmail(newEmail)).thenReturn(null);
 
+        //Act
         userService.updateEmail(userId, newEmail);
 
-
+        //Assert
         verify(userDAO).findById(userId);
         verify(userDAO).update(user1);
     }
 
     @Test
     public void shouldUpdateUserAlias() throws Exception {
+        //Arrange
         int userId = 1;
         String newAlias = "Nikki";
+
         when(userDAO.findById(userId)).thenReturn(user1);
 
+        //Act
         userService.updateAlias(userId, newAlias);
 
+        //Assert
         verify(userDAO).findById(userId);
         verify(userDAO).update(user1);
     }
-
-
-    //shouldFailOn___ or shouldFailW
 }
