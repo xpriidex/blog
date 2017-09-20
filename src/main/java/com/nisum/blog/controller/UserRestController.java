@@ -33,6 +33,21 @@ public class UserRestController {
         return ok(userService.findByAlias(alias));
     }
 
+    @RequestMapping(path = "/firstname/{firstName}", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> findByFirstName(@PathVariable("firstName") String firstName) {
+        return ok(userService.findByFirstName(firstName));
+    }
+
+    @RequestMapping(path = "/lastname/{lastName}", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> findByLastName(@PathVariable("lastName") String lastName) {
+        return ok(userService.findByLastName(lastName));
+    }
+
+    @RequestMapping(path = "/email/{email}", method = RequestMethod.GET)
+    public ResponseEntity<User> findByEmail(@PathVariable("email") String email) {
+        return ok(userService.findByEmail(email));
+    }
+
     @RequestMapping(path = "/", method = RequestMethod.POST)
     public ResponseEntity<Integer> create(@RequestBody User user) {
         int userId = userService.create(user);
@@ -43,7 +58,6 @@ public class UserRestController {
     public ResponseEntity delete(@PathVariable("id") Integer id) {
         userService.delete(id);
         return ok("deleted");
-        //http://localhost:8080/users/1
     }
 
     @RequestMapping(path = "/first_name", method = RequestMethod.PUT)
