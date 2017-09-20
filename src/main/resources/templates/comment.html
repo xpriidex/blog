@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Agregar Comentario</title>
     <style type="text/css">
         INPUT {
@@ -19,12 +19,12 @@
     </header>
     <main>
         <section>
-            <form id="formComment">
+            <form action="api/comments" method="get">
                 <label for="comentario">
                     comentario
-                    <input id="comentario" type="text" name="comentario">
+                    <input id="comentario" type="text" name="comentario" class="comment-input"/>
                 </label>
-                <input id="save" type="submit" value="enviar">
+                <input id="save" type="submit" value="enviar" class="comment-input comment-input--enviar"/>
             </form>
         </section>
     </main>

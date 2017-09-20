@@ -10,9 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
@@ -26,12 +24,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CommentControllerTest {
+public class CommentRestControllerTest {
     @Mock
     private CommentService commentService;
 
     @InjectMocks
-    private CommentController commentController;
+    private CommentRestController commentRestController;
 
     private MockMvc mockMvc;
 
@@ -39,7 +37,7 @@ public class CommentControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(commentController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(commentRestController).build();
     }
 
     @Test
@@ -53,7 +51,6 @@ public class CommentControllerTest {
 
         MvcResult commentsResponse = mockMvc.perform(get("/api/comments/"))
                 .andExpect(status().isOk())
-
                 .andReturn();
 
         String contentAsString = commentsResponse.getResponse().getContentAsString();

@@ -13,7 +13,7 @@ import java.util.List;
 public class CommentDAOImpl implements CommentDAO{
 
     private List<Comment> commentList;
-    private DateTime dateTime;
+    private DateTime dateTime1, dateTime2, dateTime3;
 
     @Autowired
     private UserDAO userDAO;
@@ -22,25 +22,26 @@ public class CommentDAOImpl implements CommentDAO{
 
     private void init() {
         commentList = new ArrayList<>();
-        dateTime = new DateTime(2017,9,18,00,00);
 
 
         Comment comment1 = new Comment();
         comment1.setAuthorId(1);
         comment1.setPostId(1);
-        comment1.setPublicationDate(dateTime);
+        comment1.setBody("Interesante");
 
         Comment comment2 = new Comment();
         comment2.setAuthorId(2);
         comment2.setPostId(1);
+        comment2.setBody("Lindo Post");
 
         Comment comment3 = new Comment();
         comment3.setAuthorId(3);
         comment3.setPostId(2);
+        comment3.setBody("Escribe otro");
 
-        commentList.add(comment1);
-        commentList.add(comment2);
-        commentList.add(comment3);
+        create(comment1);
+        create(comment2);
+        create(comment3);
     }
 
     @Override
