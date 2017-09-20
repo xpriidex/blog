@@ -2,9 +2,10 @@ package com.nisum.blog.dao;
 
 import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.User;
+import org.joda.time.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import java.lang.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public class CommentDAOImpl implements CommentDAO{
 
     private List<Comment> commentList;
+    private DateTime dateTime;
 
     @Autowired
     private UserDAO userDAO;
@@ -20,10 +22,13 @@ public class CommentDAOImpl implements CommentDAO{
 
     private void init() {
         commentList = new ArrayList<>();
+        dateTime = new DateTime(2017,9,18,00,00);
+
 
         Comment comment1 = new Comment();
         comment1.setAuthorId(1);
         comment1.setPostId(1);
+        comment1.setPublicationDate(dateTime);
 
         Comment comment2 = new Comment();
         comment2.setAuthorId(2);
@@ -41,7 +46,9 @@ public class CommentDAOImpl implements CommentDAO{
     @Override
     public int create(Comment comment)
     {
+        DateTime nowLocal = DateTime.now();
         comment.setId(comment.nextAvailableId++);
+        comment.setPublicationDate(nowLocal);
         commentList.add(comment);
         return comment.getId();
     }

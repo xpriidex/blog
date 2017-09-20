@@ -11,13 +11,17 @@ import java.util.List;
 
 @Service
 public class CommentService {
+    private List<Comment> comments;
 
     @Autowired
     private CommentDAO commentDAO;
 
+    public CommentService(){comments = new ArrayList<>();}
+
     public int create(Comment comment){
 
-        return commentDAO.create(comment);
+        int createdComment = commentDAO.create(comment);
+        return createdComment;
     }
 
     public List<Comment> findByAuthorId(int id) {
@@ -56,7 +60,7 @@ public class CommentService {
 
     public List<Comment> findAll() {
 
-        List<Comment> comments = commentDAO.findAll();
+        comments = commentDAO.findAll();
 
         return comments;
     }

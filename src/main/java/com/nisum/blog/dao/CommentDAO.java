@@ -2,6 +2,7 @@ package com.nisum.blog.dao;
 
 import com.nisum.blog.domain.Comment;
 
+
 import java.util.List;
 
 public interface CommentDAO {

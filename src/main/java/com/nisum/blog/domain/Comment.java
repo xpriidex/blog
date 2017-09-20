@@ -1,20 +1,24 @@
 package com.nisum.blog.domain;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.joda.time.DateTime;
+
 
 public class Comment {
-    public static int nextAvailableId = 4;
+    public static int nextAvailableId = 1;
 
     private int id;
     private int authorId;
-    private Date publicationDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private DateTime publicationDate;
     private String body;
     private int postId;
 
     public Comment() {
     }
 
-    public Comment(int id, int authorId, Date publicationDate, String body, int postId) {
+    public Comment(int id, int authorId, DateTime publicationDate, String body, int postId) {
         this.id = id;
         this.authorId = authorId;
         this.publicationDate = publicationDate;
@@ -36,11 +40,11 @@ public class Comment {
         this.authorId = authorId;
     }
 
-    public Date getPublicationDate() {
+    public DateTime getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(Date publicationDate) {
+    public void setPublicationDate(DateTime publicationDate) {
         this.publicationDate = publicationDate;
     }
 

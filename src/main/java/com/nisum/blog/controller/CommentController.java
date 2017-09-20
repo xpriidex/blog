@@ -13,12 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
+
     @Autowired
     private CommentService commentService;
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public ResponseEntity<List<Comment>> findAll(){
-        return new ResponseEntity<List<Comment>>(commentService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(commentService.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
@@ -38,4 +39,13 @@ public class CommentController {
         int commentId = commentService.create(comment);
         return new ResponseEntity<Integer>(commentId, HttpStatus.OK);
     }
+
+    @RequestMapping(path = "/",method = RequestMethod.POST )
+    @ResponseBody
+    public ResponseEntity<Integer> create(@RequestBody Comment comment){
+        int id = commentService.create(comment);
+        return new ResponseEntity<Integer>(id,HttpStatus.CREATED);
+    }
+
+
 }
