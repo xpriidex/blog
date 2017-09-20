@@ -214,19 +214,48 @@ public class UserRestControllerTest {
 
         when(userService.create(user)).thenReturn(4);
 
-        String jsonfake = mapper.writer().writeValueAsString(user);
-
-        //Gson gson = new Gson();
-        //String json = gson.toJson(user);
+        String json = mapper.writer().writeValueAsString(user);
 
         controllerMockMvc.perform(post("/api/users/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonfake))
+                .content(json))
                 .andExpect(status().isOk())
                 .andReturn();
 
         verify(userService).create(user);
+    }
 
-        System.out.println(jsonfake);
+    @Test
+    public void shouldUpdateUserByFirstName() throws Exception {
+        User user = new User();
+        user.setId(1);
+        user.setFirstName("Mona");
+
+        String json = mapper.writer().writeValueAsString(user);
+
+        controllerMockMvc.perform(put("/api/users/first_name")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        verify(userService).updateFirstName(1, "Mona");
+    }
+
+    @Test
+    public void shouldUpdateUserByLastName() throws Exception {
+        User user = new User();
+        user.setId(1);
+        user.setLastName("WhatWhat");
+
+        String json = mapper.writer().writeValueAsString(user);
+
+        controllerMockMvc.perform(put("/api/users/last_name")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        verify(userService).updateLastName(1, "WhatWhat");
     }
 }
