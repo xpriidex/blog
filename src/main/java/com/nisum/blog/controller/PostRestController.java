@@ -40,10 +40,11 @@ public class PostRestController {
         return new ResponseEntity<Integer>(id,HttpStatus.CREATED);
     }
 
-    @RequestMapping(path = "/",method = RequestMethod.PUT )
+    @RequestMapping(path = "/{id}",method = RequestMethod.PUT )
     @ResponseBody
-    public ResponseEntity<Integer> update(@RequestBody Post post){
-        int id = postService.update(post);
-        return new ResponseEntity<Integer>(id,HttpStatus.CREATED);
+    public ResponseEntity<Integer> update(@RequestBody Post post,@PathVariable("id") Integer id){
+        post.setId(id);
+        int result = postService.update(post);
+        return new ResponseEntity<Integer>(result,HttpStatus.OK);
     }
 }
