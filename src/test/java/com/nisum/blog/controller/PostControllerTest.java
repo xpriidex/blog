@@ -109,10 +109,11 @@ public class PostControllerTest {
         verifyNoMoreInteractions(postService);
     }
 
-    /*@Test
+    // TODO: 21-09-17 gitk
+    @Test
     public void shouldReturnIdWhenUpdateAPost() throws Exception {
         when(postService.update(post1)).thenReturn(1);
-        when(postService.findById(post1.getId())).thenReturn(post1);
+        //when(postService.findById(post1.getId())).thenReturn(post1);
 
         String json = mapper.writer().writeValueAsString(post1);
 
@@ -123,10 +124,10 @@ public class PostControllerTest {
                         .content(json))
                 .andExpect(status().isOk());
 
-        verify(postService, times(1)).findById(post1.getId());
+        //verify(postService, times(1)).findById(post1.getId());
         verify(postService, times(1)).update(post1);
         verifyNoMoreInteractions(postService);
-    }*/
+    }
 
     @Test
     public void checkDeleteAPost() throws Exception {
