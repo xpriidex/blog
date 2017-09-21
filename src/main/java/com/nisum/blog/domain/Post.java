@@ -1,5 +1,6 @@
 package com.nisum.blog.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.joda.time.DateTime;
 
 import java.util.Date;
@@ -10,6 +11,7 @@ public class Post {
     private int authorId;
     private String title;
     private String body;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private DateTime publicationDate;
 
     public Post() {

@@ -54,6 +54,7 @@ public class PostService {
         return postDAO.update(postToUpdate);
 
     }
+    // TODO: 21-09-17 manejar fechas 
 
     public void delete(int id) {
         postDAO.delete(id);
