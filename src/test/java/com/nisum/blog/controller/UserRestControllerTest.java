@@ -36,13 +36,13 @@ public class UserRestControllerTest {
     @InjectMocks
     private UserRestController userRestController;
 
-    private MockMvc controllerMockMvc;
+    private MockMvc userRestControllerMockMvc;
 
     private ObjectMapper mapper = new ObjectMapper();
 
     @Before
     public void setUp() throws Exception {
-        controllerMockMvc = MockMvcBuilders.standaloneSetup(userRestController).build();
+        userRestControllerMockMvc = MockMvcBuilders.standaloneSetup(userRestController).build();
     }
 
     @Test
@@ -54,7 +54,7 @@ public class UserRestControllerTest {
 
         when(userService.findAll()).thenReturn(users);
 
-        MvcResult usersResponse = controllerMockMvc.perform(get("/api/users/"))
+        MvcResult usersResponse = userRestControllerMockMvc.perform(get("/api/users/"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -80,7 +80,7 @@ public class UserRestControllerTest {
 
         when(userService.findById(1)).thenReturn(user);
 
-        MvcResult usersResponse = controllerMockMvc.perform(get("/api/users/1"))
+        MvcResult usersResponse = userRestControllerMockMvc.perform(get("/api/users/1"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -104,7 +104,7 @@ public class UserRestControllerTest {
 
         when(userService.findByAlias("junesky")).thenReturn(user);
 
-        MvcResult usersResponse = controllerMockMvc.perform(get("/api/users/alias/junesky"))
+        MvcResult usersResponse = userRestControllerMockMvc.perform(get("/api/users/alias/junesky"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -129,7 +129,7 @@ public class UserRestControllerTest {
 
         when(userService.findByEmail("myurjevic@gmail.com")).thenReturn(user);
 
-        MvcResult usersResponse = controllerMockMvc.perform(get("/api/users/email/myurjevic@gmail.com/"))
+        MvcResult usersResponse = userRestControllerMockMvc.perform(get("/api/users/email/myurjevic@gmail.com/"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -155,7 +155,7 @@ public class UserRestControllerTest {
 
         when(userService.findByFirstName("June")).thenReturn(users);
 
-        MvcResult usersResponse = controllerMockMvc.perform(get("/api/users/firstname/June"))
+        MvcResult usersResponse = userRestControllerMockMvc.perform(get("/api/users/firstname/June"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -181,7 +181,7 @@ public class UserRestControllerTest {
 
         when(userService.findByLastName("Jennings")).thenReturn(users);
 
-        MvcResult usersResponse = controllerMockMvc.perform(get("/api/users/lastname/Jennings"))
+        MvcResult usersResponse = userRestControllerMockMvc.perform(get("/api/users/lastname/Jennings"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -198,34 +198,6 @@ public class UserRestControllerTest {
     }
 
     @Test
-    public void shouldDeleteById() throws Exception {
-        controllerMockMvc.perform(delete("/api/users/5"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("deleted"));
-
-        verify(userService).delete(5);
-    }
-
-    @Test
-    public void shouldCreateNewUser() throws Exception {
-        User user = new User();
-        user.setEmail("min@gmail.com");
-        user.setAlias("Tintin");
-
-        when(userService.create(user)).thenReturn(4);
-
-        String json = mapper.writer().writeValueAsString(user);
-
-        controllerMockMvc.perform(post("/api/users/")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        verify(userService).create(user);
-    }
-
-    @Test
     public void shouldUpdateUserByFirstName() throws Exception {
         User user = new User();
         user.setId(1);
@@ -233,11 +205,10 @@ public class UserRestControllerTest {
 
         String json = mapper.writer().writeValueAsString(user);
 
-        controllerMockMvc.perform(put("/api/users/first_name")
+        userRestControllerMockMvc.perform(put("/api/users/first_name")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
-                .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(status().isOk());
 
         verify(userService).updateFirstName(1, "Mona");
     }
@@ -250,12 +221,70 @@ public class UserRestControllerTest {
 
         String json = mapper.writer().writeValueAsString(user);
 
-        controllerMockMvc.perform(put("/api/users/last_name")
+        userRestControllerMockMvc.perform(put("/api/users/last_name")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
-                .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(status().isOk());
 
         verify(userService).updateLastName(1, "WhatWhat");
+    }
+
+    @Test
+    public void shouldUpdateUserByAlias() throws Exception {
+        User user = new User();
+        user.setId(1);
+        user.setAlias("Marin");
+
+        String json = mapper.writer().writeValueAsString(user);
+
+        userRestControllerMockMvc.perform(put("/api/users/alias")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk());
+
+        verify(userService).updateAlias(1, "Marin");
+    }
+
+    @Test
+    public void shouldUpdateUserByEmail() throws Exception {
+        User user = new User();
+        user.setId(1);
+        user.setEmail("strink@gmail.com");
+
+        String json = mapper.writer().writeValueAsString(user);
+
+        userRestControllerMockMvc.perform(put("/api/users/email")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk());
+
+        verify(userService).updateEmail(1, "strink@gmail.com");
+    }
+
+    @Test
+    public void shouldCreateNewUser() throws Exception {
+        User user = new User();
+        user.setEmail("min@gmail.com");
+        user.setAlias("Tintin");
+
+        when(userService.create(user)).thenReturn(4);
+
+        String json = mapper.writer().writeValueAsString(user);
+
+        userRestControllerMockMvc.perform(post("/api/users/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk());
+
+        verify(userService).create(user);
+    }
+
+    @Test
+    public void shouldDeleteById() throws Exception {
+        userRestControllerMockMvc.perform(delete("/api/users/5"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("deleted"));
+
+        verify(userService).delete(5);
     }
 }

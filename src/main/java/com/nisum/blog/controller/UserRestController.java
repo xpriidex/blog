@@ -48,18 +48,6 @@ public class UserRestController {
         return ok(userService.findByEmail(email));
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.POST)
-    public ResponseEntity<Integer> create(@RequestBody User user) {
-        int userId = userService.create(user);
-        return ok(userId);
-    }
-
-    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity delete(@PathVariable("id") Integer id) {
-        userService.delete(id);
-        return ok("deleted");
-    }
-
     @RequestMapping(path = "/first_name", method = RequestMethod.PUT)
     public ResponseEntity updateFirstName(@RequestBody User user) {
         userService.updateFirstName(user.getId(), user.getFirstName());
@@ -82,5 +70,17 @@ public class UserRestController {
     public ResponseEntity updateAlias(@RequestBody User user) {
         userService.updateAlias(user.getId(), user.getAlias());
         return ok("alias updated");
+    }
+
+    @RequestMapping(path = "/", method = RequestMethod.POST)
+    public ResponseEntity<Integer> create(@RequestBody User user) {
+        int userId = userService.create(user);
+        return ok(userId);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity delete(@PathVariable("id") Integer id) {
+        userService.delete(id);
+        return ok("deleted");
     }
 }
