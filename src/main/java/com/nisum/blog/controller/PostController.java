@@ -1,5 +1,6 @@
 package com.nisum.blog.controller;
 
+import com.nisum.blog.domain.Post;
 import com.nisum.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,13 @@ public class PostController {
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String findAll(Model postModel) {
         postModel.addAttribute("posts", postService.findAll());
-        return "posts";
+        return "posts/posts";
+    }
+
+    @RequestMapping(path = "/create", method = RequestMethod.GET)
+    public String create(Model postModel) {
+        postModel.addAttribute("post", new Post());
+        return "posts/create";
     }
 
 }
