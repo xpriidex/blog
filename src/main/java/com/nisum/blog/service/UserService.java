@@ -18,6 +18,8 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
+
+
     public UserService() {
         userList = new ArrayList<>();
     }
@@ -40,6 +42,7 @@ public class UserService {
     }
 
     public int delete(int userId) {
+        // TODO: 21-09-17 implementar delete de comentarios y posts.
         int deleted = userDAO.delete(userId);
         return deleted;
     }
