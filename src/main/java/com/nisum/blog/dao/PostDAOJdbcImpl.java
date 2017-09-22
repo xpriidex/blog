@@ -22,7 +22,7 @@ public class PostDAOJdbcImpl implements PostDAO{
 
     @Override
     public int create(Post post) {
-
+return 0;
     }
 
     @Override
