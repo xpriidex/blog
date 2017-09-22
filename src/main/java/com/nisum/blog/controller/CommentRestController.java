@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 @RestController
 @RequestMapping("/api/comments")
 public class CommentRestController {
@@ -19,10 +21,10 @@ public class CommentRestController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public ResponseEntity<List<Comment>> findAll(){
-        return new ResponseEntity<>(commentService.findAll(), HttpStatus.OK);
+        return ok(commentService.findAll());
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{authorId}", method = RequestMethod.GET)
     public ResponseEntity<List<Comment>> findByAuthorId(@PathVariable("id") Integer id) {
         return new ResponseEntity<List<Comment>>(commentService.findByAuthorId(id), HttpStatus.OK);
     }
