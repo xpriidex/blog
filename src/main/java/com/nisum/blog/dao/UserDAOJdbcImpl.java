@@ -4,6 +4,7 @@ import com.nisum.blog.dao.rowMapper.UserRowMapper;
 import com.nisum.blog.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,8 @@ import java.util.List;
 
 @Repository
 @Qualifier("userDAOJdbc")
+
+@Primary
 public class UserDAOJdbcImpl implements UserDAO {
 
     @Autowired
