@@ -6,6 +6,7 @@ import com.nisum.blog.domain.User;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -15,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Qualifier("commmentDAOJdvc")
+@Qualifier("commmentDAOJdbc")
+
+@Primary
 public class CommentDAOjdbcImpl implements CommentDAO{
     @Autowired
     private JdbcTemplate jdbcTemplate;

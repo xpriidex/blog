@@ -15,7 +15,7 @@ public class CommentService {
     private List<Comment> comments;
 
     @Autowired
-    @Qualifier("commmentDAOJdvc")
+    @Qualifier("commmentDAOJdbc")
     private CommentDAO commentDAO;
 
     public CommentService(){comments = new ArrayList<>();}
