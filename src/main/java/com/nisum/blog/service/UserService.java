@@ -6,6 +6,7 @@ import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,6 +17,7 @@ public class UserService {
     private List<User> userList;
 
     @Autowired
+    @Qualifier("userDAOJdbc")
     private UserDAO userDAO;
 
     public UserService() {
@@ -40,6 +42,7 @@ public class UserService {
     }
 
     public int delete(int userId) {
+        // TODO: 21-09-17 implementar delete de comentarios y posts.
         int deleted = userDAO.delete(userId);
         return deleted;
     }
