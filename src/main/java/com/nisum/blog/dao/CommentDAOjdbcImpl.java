@@ -1,24 +1,33 @@
 package com.nisum.blog.dao;
 
+import com.nisum.blog.dao.rowMapper.CommentRowMapper;
 import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.User;
-import org.joda.time.*;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import java.lang.*;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class CommentDAOImpl implements CommentDAO{
-
-    private List<Comment> commentList;
-    //private DateTime dateTime1, dateTime2, dateTime3;
+@Repository
+@Qualifier("commmentDAOJdvc")
+public class CommentDAOjdbcImpl implements CommentDAO{
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private UserDAO userDAO;
 
-    public CommentDAOImpl() { init();}
+    private List<Comment> commentList;
+    //private DateTime dateTime1, dateTime2, dateTime3;
+
+
+    public CommentDAOjdbcImpl() { init();}
 
     private void init() {
         commentList = new ArrayList<>();
@@ -130,7 +139,9 @@ public class CommentDAOImpl implements CommentDAO{
     }
 
     @Override
+    @Transactional
     public List<Comment> findAll() {
+        List<Comment> commentList = jdbcTemplate.query("select * from comment", new CommentRowMapper());
         return commentList;
     }
 
