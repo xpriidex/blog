@@ -15,10 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-@Qualifier("commmentDAOJdbc")
-
-@Primary
+@Repository("commmentDAOJdbc")
 public class CommentDAOjdbcImpl implements CommentDAO{
     @Autowired
     private JdbcTemplate jdbcTemplate;
