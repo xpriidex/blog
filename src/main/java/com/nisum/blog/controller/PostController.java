@@ -1,6 +1,7 @@
 package com.nisum.blog.controller;
 
 import com.nisum.blog.domain.Post;
+import com.nisum.blog.domain.User;
 import com.nisum.blog.service.PostService;
 import com.nisum.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,10 @@ public class PostController {
 
     @RequestMapping(path = "/read/{id}", method = RequestMethod.GET)
     public String read(@PathVariable("id") int id, Model postModel){
-        postModel.addAttribute("post", postService.findById(id));
+        Post post = postService.findById(id);
+        User user = userService.findById(post.getAuthorId());
+        postModel.addAttribute("post", post);
+        postModel.addAttribute("user", user);
         return "posts/detail";
     }
 

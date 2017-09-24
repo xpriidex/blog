@@ -96,8 +96,11 @@ public class PostDAOJdbcImpl implements PostDAO{
 
     @Override
     @Transactional
-    public int update(Post Post) {
-        return 0;
+    public int update(Post post) {
+        String sql = "update post set title = ?, body = ?, publication_date = ?  where id_post = ?";
+        DateTime nowLocal = DateTime.now();
+        jdbcTemplate.update(sql, new Object[]{post.getTitle(), post.getBody(),nowLocal });
+        return post.getId();
     }
 
     @Override
