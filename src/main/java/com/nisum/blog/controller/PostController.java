@@ -6,6 +6,7 @@ import com.nisum.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -36,4 +37,18 @@ public class PostController {
         postService.create(post);
         return "redirect:/posts/";
     }
+
+    @RequestMapping(path = "/read/{id}", method = RequestMethod.GET)
+    public String read(@PathVariable("id") int id, Model postModel){
+        postModel.addAttribute("post", postService.findById(id));
+        return "posts/detail";
+    }
+
+    @RequestMapping(path = "/update/{id}", method = RequestMethod.GET)
+    public String update(@PathVariable("id") int id, Model postModel){
+        postModel.addAttribute("post", postService.findById(id));
+        return "posts/update";
+    }
+
+
 }

@@ -18,9 +18,9 @@ public interface PostDAO {
 
     List<Post> findAllByContent(String content);
 
-    Post findByDate(DateTime queryDate);
+    List<Post> findByDate(DateTime queryDate);
 
-    Post findByByDateRange(DateTime queryDate1, DateTime queryDate2);
+    List<Post> findByByDateRange(DateTime queryDate1, DateTime queryDate2);
 
     int update(Post Post);
 

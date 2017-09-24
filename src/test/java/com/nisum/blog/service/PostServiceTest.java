@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class PostServiceTest {
     private List<Post> postList;
 
     @Mock
+    @Qualifier("postDAOJdbc")
     private PostDAO postDAO;
 
     @InjectMocks

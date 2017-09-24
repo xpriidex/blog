@@ -10,19 +10,33 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
-@Qualifier("postDAOJdbc")
+@Repository("postDAOJdbc")
 public class PostDAOJdbcImpl implements PostDAO{
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    @Qualifier("userDAOJdbc")
+    private UserDAO userDAO;
+
     @Override
     public int create(Post post) {
-return 0;
+
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+        simpleJdbcInsert.withTableName("post").usingGeneratedKeyColumns("id_post");
+        Map<String, Object> parameters = new HashMap<String, Object>(4);
+
+        parameters.put("title", post.getTitle());
+        parameters.put("body", post.getBody());
+        parameters.put("id_user", post.getAuthorId());
+
+        Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
+        return insertedId.intValue();
     }
 
     @Override
@@ -42,12 +56,20 @@ return 0;
 
     @Override
     public List<Post> findAllByTitle(String title) {
-        return null;
+
+        List<Post> posts = jdbcTemplate.query("select * from post where title=?",new PostRowMapper());
+
+        return posts;
     }
 
     @Override
     public List<Post> findAllByAuthorsAlias(String alias) {
-        return null;
+        List<Post> postsByAuthorAlias = new ArrayList<>();
+        int id = userDAO.findByAlias(alias).getId();
+
+        postsByAuthorAlias = jdbcTemplate.query("select * from post where id_user=?",new PostRowMapper());
+
+        return postsByAuthorAlias;
     }
 
     @Override
@@ -56,12 +78,12 @@ return 0;
     }
 
     @Override
-    public Post findByDate(DateTime queryDate) {
+    public List<Post> findByDate(DateTime queryDate) {
         return null;
     }
 
     @Override
-    public Post findByByDateRange(DateTime queryDate1, DateTime queryDate2) {
+    public List<Post> findByByDateRange(DateTime queryDate1, DateTime queryDate2) {
         return null;
     }
 

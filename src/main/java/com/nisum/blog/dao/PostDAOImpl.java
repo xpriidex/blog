@@ -3,6 +3,7 @@ package com.nisum.blog.dao;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -115,13 +116,36 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public Post findByDate(DateTime queryDate) {
-        return null;
+    public List<Post> findByDate(DateTime queryDate) {
+        List<Post> posts = new ArrayList<>();
+        DateTime queryMidnight = queryDate.withTimeAtStartOfDay();
+        for (Post post : posts) {
+            DateTime publicationDateMidnight = post.getPublicationDate().withTimeAtStartOfDay();
+
+            if (publicationDateMidnight.equals(queryMidnight)) {
+                posts.add(post);
+            }
+        }
+        return posts;
     }
 
     @Override
-    public Post findByByDateRange(DateTime queryDate1, DateTime queryDate2) {
-        return null;
+    public List<Post> findByByDateRange(DateTime queryDate1, DateTime queryDate2) {
+
+        DateTime queryMidnight1 = queryDate1.withTimeAtStartOfDay();
+        DateTime queryMidnight2 = queryDate2.withTimeAtStartOfDay();
+        Interval interval = new Interval(queryMidnight1, queryMidnight2);
+        List<Post> posts = new ArrayList<>();
+
+        for (Post post : posts) {
+            DateTime publicationDateMidnight = post.getPublicationDate().withTimeAtStartOfDay();
+
+            if (interval.contains(publicationDateMidnight)) {
+                posts.add(post);
+            }
+        }
+
+        return posts;
     }
 
     @Override
@@ -131,7 +155,7 @@ public class PostDAOImpl implements PostDAO {
         for (int i = 0; i < postList.size(); i++) {
             if (postList.get(i).getId() == post.getId()) {
                 id = post.getId();
-                postList.set(i,post);
+                postList.set(i, post);
                 break;
             }
         }
@@ -151,7 +175,7 @@ public class PostDAOImpl implements PostDAO {
     }
 
     public int deleteByUserId(int id) {
-        int count =0;
+        int count = 0;
 
         for (int i = 0; i < postList.size(); i++) {
             if (postList.get(i).getAuthorId() == id) {
