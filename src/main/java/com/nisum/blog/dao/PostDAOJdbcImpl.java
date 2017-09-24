@@ -30,7 +30,7 @@ public class PostDAOJdbcImpl implements PostDAO{
 
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         simpleJdbcInsert.withTableName("post").usingGeneratedKeyColumns("id_post");
-        Map<String, Object> parameters = new HashMap<String, Object>(4);
+        Map<String, Object> parameters = new HashMap<String, Object>(3);
 
         parameters.put("title", post.getTitle());
         parameters.put("body", post.getBody());

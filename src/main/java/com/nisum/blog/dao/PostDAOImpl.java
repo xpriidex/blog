@@ -5,6 +5,7 @@ import com.nisum.blog.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.List;
 public class PostDAOImpl implements PostDAO {
 
     @Autowired
+    @Qualifier("userDAOJdbc")
+
     private UserDAO userDAO;
     private List<Post> postList;
 
