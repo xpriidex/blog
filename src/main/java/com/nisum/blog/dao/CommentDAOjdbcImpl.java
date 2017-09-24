@@ -21,6 +21,7 @@ public class CommentDAOjdbcImpl implements CommentDAO{
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
+    @Qualifier("userDAOJdbc")
     private UserDAO userDAO;
 
     private List<Comment> commentList;
