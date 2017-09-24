@@ -9,6 +9,9 @@ th {
     background-color: #EFF2FB;
     color: lightslategrey;
 }
+.pull-right {
+    float: right !important; // Use of important emulates bootstrap
+}
 
 .footer {
     padding-top: 40px;
