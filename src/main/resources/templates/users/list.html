@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+</head>
+<body>
+
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <h1>All users    <a class="btn btn-lg btn-success" href="#" th:href="@{/users/create}" role="button">Create User</a></h1>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th><label>UserId</label></th>
+                <th><label>Alias</label></th>
+                <th><label>First Name</label></th>
+                <th><label>Last Name</label></th>
+                <th><label>Email</label></th>
+                <th><label>Bio</label></th>
+                <th><label>Image</label></th>
+                <th><label>Read</label></th>
+                <th><label>Update</label></th>
+                <th><label>Delete</label></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.getId()}"></td>
+                <td th:text="${user.getAlias()}"></td>
+                <td th:text="${user.getFirstName()}"></td>
+                <td th:text="${user.getLastName()}"></td>
+                <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getBio()}"></td>
+                <td th:text="${user.getImage()}"></td>
+                <td><a th:href="${ '/users/read/' + user.getId()}"><i class="fa fa-search" aria-hidden="true"></i></a></td>
+                <td><a th:href="${ '/users/update/' + user.getId()}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                <td><a th:href="${ '#'}"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div> <!-- /container -->
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+</body>
+</html>

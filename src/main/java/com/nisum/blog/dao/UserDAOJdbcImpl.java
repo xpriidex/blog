@@ -3,8 +3,6 @@ package com.nisum.blog.dao;
 import com.nisum.blog.dao.rowMapper.UserRowMapper;
 import com.nisum.blog.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -20,16 +18,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-@Qualifier("userDAOJdbc")
-
-@Primary
+@Repository("userDAOJdbc")
 public class UserDAOJdbcImpl implements UserDAO {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    @Transactional
     public int create(User user) {
         try {
             String sql = "insert into blog_user (first_name, last_name, email, bio, alias) values(?,?,?,?,?)";
@@ -139,19 +135,8 @@ public class UserDAOJdbcImpl implements UserDAO {
     }
 
     @Override
+    @Transactional
     public void update(User user) {
-        //final String updateSql = "insert into blog_user (first_name, last_name, email, bio, alias) values(?,?,?,?,?)";
-        //jdbcTemplate.update(updateSql, new Object[]{user.getFirstName(), user.getLastName(), user.getEmail(), user.getBio(), user.getAlias()}, types);
-        /*String updateStatement = " Update blog_user "
-                + " SET first_name=?, "
-                + " last_name=?, "
-                + " email=?, "
-                + " bio=?, "
-                + " alias=?, "
-                + " image=? "
-                + " WHERE id_user=?";
-        jdbcTemplate.update(updateStatement, new Object[] {"workstation77", ftpEvent.getId()});*/
-
         String updateSql = " Update blog_user"
                 + " SET first_name=?,"
                 + " last_name=?,"
@@ -172,6 +157,7 @@ public class UserDAOJdbcImpl implements UserDAO {
     }
 
     @Override
+    @Transactional
     public int delete(int id) {
         String deleteStatement = "DELETE FROM blog_user WHERE id_user=?;";
 
