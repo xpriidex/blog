@@ -2,6 +2,8 @@ package com.nisum.blog.controller;
 
 import com.nisum.blog.domain.Comment;
 import com.nisum.blog.service.CommentService;
+import com.nisum.blog.service.PostService;
+import com.nisum.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,10 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private PostService postService;
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String findAll(Model postModel){
@@ -26,14 +32,16 @@ public class CommentController {
     @RequestMapping(path = "/create", method = RequestMethod.GET)
     public String createView(Model postModel){
         postModel.addAttribute("comment", new Comment());
+        postModel.addAttribute("users", userService.findAll());
+        postModel.addAttribute("posts", postService.findAll());
         return "comments/create";
     }
 
-    /*@RequestMapping(path = "/create", method = RequestMethod.POST)
+    @RequestMapping(path = "/create", method = RequestMethod.POST)
     public String create(Comment comment){
         commentService.create(comment);
         return "redirect:/comments/";
-    }*/
+    }
 
 
 }
