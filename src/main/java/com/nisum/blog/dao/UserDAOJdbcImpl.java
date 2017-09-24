@@ -5,10 +5,19 @@ import com.nisum.blog.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -22,49 +31,151 @@ public class UserDAOJdbcImpl implements UserDAO {
 
     @Override
     public int create(User user) {
-        return 0;
+        try {
+            String sql = "insert into blog_user (first_name, last_name, email, bio, alias) values(?,?,?,?,?)";
+
+            KeyHolder holder = new GeneratedKeyHolder();
+            jdbcTemplate.update(new PreparedStatementCreator() {
+                @Override
+                public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                    PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    ps.setString(1, user.getFirstName());
+                    ps.setString(2, user.getLastName());
+                    ps.setString(3, user.getEmail());
+                    ps.setString(4, user.getBio());
+                    ps.setString(5, user.getAlias());
+                    return ps;
+                }
+            }, holder);
+
+            //holder.getKey().intValue(); This is the whole object
+
+            int newUserId = (int) holder.getKeys().get("id_user");
+            System.out.println(newUserId);
+            user.setId(newUserId);
+            return user.getId();
+        } catch (EmptyResultDataAccessException e) {
+            return -1;
+        }
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> findAll() {
-        List<User> userList =jdbcTemplate.query("select * from blog_user desc", new UserRowMapper());
-        return userList;
+        try {
+            String sql = "select * from blog_user ORDER BY id_user;";
+
+            List<User> userList = jdbcTemplate.query(sql, new UserRowMapper());
+            return userList;
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<User>();
+        }
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public User findById(int id) {
-        User user =  jdbcTemplate.queryForObject("select * from blog_user where id_user = ?", new Object[]{id}, new UserRowMapper());
-        return user;
+        try {
+            String sql = "SELECT * FROM blog_user WHERE id_user = ?;";
+
+            User user = jdbcTemplate.queryForObject(sql, new Object[]{id}, new UserRowMapper());
+            return user;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findByAlias(String alias) {
-        return null;
+        try {
+            String sql = "select * from blog_user where UPPER(alias) = UPPER(?);";
+
+            User user = jdbcTemplate.queryForObject(sql, new Object[]{alias}, new UserRowMapper());
+            return user;
+
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> findByFirstName(String firstName) {
-        return null;
+        try {
+            String sql = "select * from blog_user where UPPER(first_name) = UPPER(?);";
+
+            List<User> userList = jdbcTemplate.query(sql, new Object[]{firstName}, new UserRowMapper());
+            return userList;
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<User>();
+        }
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> findByLastName(String lastName) {
-        return null;
+        try {
+            String sql = "select * from blog_user where UPPER(last_name) = UPPPER(?);";
+
+            List<User> userList = jdbcTemplate.query(sql, new Object[]{lastName}, new UserRowMapper());
+            return userList;
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<User>();
+        }
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findByEmail(String email) {
-        return null;
+        try {
+            String sql = "select * from blog_user where UPPER(email) = (?);";
+
+            User user = jdbcTemplate.queryForObject(sql, new Object[]{email}, new UserRowMapper());
+            return user;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
     public void update(User user) {
+        //final String updateSql = "insert into blog_user (first_name, last_name, email, bio, alias) values(?,?,?,?,?)";
+        //jdbcTemplate.update(updateSql, new Object[]{user.getFirstName(), user.getLastName(), user.getEmail(), user.getBio(), user.getAlias()}, types);
+        /*String updateStatement = " Update blog_user "
+                + " SET first_name=?, "
+                + " last_name=?, "
+                + " email=?, "
+                + " bio=?, "
+                + " alias=?, "
+                + " image=? "
+                + " WHERE id_user=?";
+        jdbcTemplate.update(updateStatement, new Object[] {"workstation77", ftpEvent.getId()});*/
 
+        String updateSql = " Update blog_user"
+                + " SET first_name=?,"
+                + " last_name=?,"
+                + " email=?,"
+                + " bio=?,"
+                + " alias=?,"
+                + " image=?"
+                + " WHERE id_user=?;";
+
+        //This returns number of rows updated
+        jdbcTemplate.update(updateSql, new Object[]{user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getBio(),
+                user.getAlias(),
+                user.getImage(),
+                user.getId()});
     }
 
     @Override
     public int delete(int id) {
+        String deleteStatement = "DELETE FROM blog_user WHERE id_user=?;";
+
+        jdbcTemplate.update(deleteStatement, id);
         return 0;
     }
 }

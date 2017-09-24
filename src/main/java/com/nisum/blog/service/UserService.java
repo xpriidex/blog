@@ -25,7 +25,6 @@ public class UserService {
     }
 
     public int create(User user) {
-
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
             return -1;
         }
