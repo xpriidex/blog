@@ -25,6 +25,7 @@ public class PostDAOJdbcImpl implements PostDAO{
     private UserDAO userDAO;
 
     @Override
+    @Transactional
     public int create(Post post) {
 
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
@@ -48,6 +49,7 @@ public class PostDAOJdbcImpl implements PostDAO{
     }
 
     @Override
+    @Transactional
     public List<Post> findAll() {
         List<Post> posts = jdbcTemplate.query("select * from post order by id_post desc",new PostRowMapper());
 
@@ -55,6 +57,7 @@ public class PostDAOJdbcImpl implements PostDAO{
     }
 
     @Override
+    @Transactional
     public List<Post> findAllByTitle(String title) {
 
         List<Post> posts = jdbcTemplate.query("select * from post where title=?",new PostRowMapper());
@@ -63,6 +66,7 @@ public class PostDAOJdbcImpl implements PostDAO{
     }
 
     @Override
+    @Transactional
     public List<Post> findAllByAuthorsAlias(String alias) {
         List<Post> postsByAuthorAlias = new ArrayList<>();
         int id = userDAO.findByAlias(alias).getId();
@@ -73,21 +77,25 @@ public class PostDAOJdbcImpl implements PostDAO{
     }
 
     @Override
+    @Transactional
     public List<Post> findAllByContent(String content) {
         return null;
     }
 
     @Override
+    @Transactional
     public List<Post> findByDate(DateTime queryDate) {
         return null;
     }
 
     @Override
+    @Transactional
     public List<Post> findByByDateRange(DateTime queryDate1, DateTime queryDate2) {
         return null;
     }
 
     @Override
+    @Transactional
     public int update(Post Post) {
         return 0;
     }
