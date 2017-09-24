@@ -4,6 +4,7 @@ import com.nisum.blog.domain.Comment;
 import com.nisum.blog.domain.User;
 import org.joda.time.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import java.lang.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class CommentDAOImpl implements CommentDAO{
     //private DateTime dateTime1, dateTime2, dateTime3;
 
     @Autowired
+    @Qualifier("userDAOJdbc")
     private UserDAO userDAO;
 
     public CommentDAOImpl() { init();}
