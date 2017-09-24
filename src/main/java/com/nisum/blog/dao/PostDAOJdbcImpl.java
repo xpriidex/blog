@@ -71,7 +71,7 @@ public class PostDAOJdbcImpl implements PostDAO{
         List<Post> postsByAuthorAlias = new ArrayList<>();
         int id = userDAO.findByAlias(alias).getId();
 
-        postsByAuthorAlias = jdbcTemplate.query("select * from post where id_user=?",new PostRowMapper());
+        postsByAuthorAlias = jdbcTemplate.query("select * from post where id_user=?",new Object[]{id},new PostRowMapper());
 
         return postsByAuthorAlias;
     }
