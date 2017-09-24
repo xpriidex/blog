@@ -24,12 +24,28 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="first_name">FirstName</label>
+                        <label for="first_name">First Name</label>
                         <input name="first_name" type="text" class="form-control" id="first_name" th:field="*{firstName}" placeholder="First Name" required="required"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input name="last_name" type="text" class="form-control" id="last_name" th:field="*{lastName}" placeholder="Last Name" required="required"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Last Name</label>
+                        <input name="email" type="email" class="form-control" id="email" th:field="*{email}" placeholder="email@example.com" required="required"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bio">Bio</label>
+                        <input name="bio" type="text" class="form-control" id="bio" th:field="*{bio}" placeholder="My bio" required="required"/>
                     </div>
 
                     <button id="save" type="submit" class="btn btn-default">Save</button>
                 </form>
+
             </div>
         </div>
 
