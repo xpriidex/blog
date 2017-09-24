@@ -41,4 +41,10 @@ public class UserController {
         postModel.addAttribute("user", user);
         return "users/detail";
     }
+
+    @RequestMapping(path = "/update/{id}", method = RequestMethod.GET)
+    public String update(@PathVariable("id") int id, Model postModel){
+        postModel.addAttribute("user", userService.findById(id));
+        return "users/update";
+    }
 }
