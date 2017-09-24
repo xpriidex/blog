@@ -16,21 +16,21 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String findAll(Model postModel) {
-        postModel.addAttribute("posts", userService.findAll());
+    public String findAll(Model userModel) {
+        userModel.addAttribute("posts", userService.findAll());
         return "users";
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.GET)
-    public String createView(Model postModel) {
-        postModel.addAttribute("user", new User());
-        postModel.addAttribute("users", userService.findAll());
+    public String createView(Model userModel) {
+        userModel.addAttribute("user", new User());
+        userModel.addAttribute("users", userService.findAll());
         return "users/create";
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public String create(User post){
-        userService.create(post);
+    public String create(User user){
+        userService.create(user);
         return "redirect:/users/";
     }
 }
