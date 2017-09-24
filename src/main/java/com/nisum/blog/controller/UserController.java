@@ -1,5 +1,6 @@
 package com.nisum.blog.controller;
 
+import com.nisum.blog.domain.User;
 import com.nisum.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,21 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String findAll(Model postModel) {
-        postModel.addAttribute("posts", userService.findAll());
-        return "posts";
+    public String findAll(Model userModel) {
+        userModel.addAttribute("posts", userService.findAll());
+        return "users";
+    }
+
+    @RequestMapping(path = "/create", method = RequestMethod.GET)
+    public String createView(Model userModel) {
+        userModel.addAttribute("user", new User());
+        userModel.addAttribute("users", userService.findAll());
+        return "users/create";
+    }
+
+    @RequestMapping(path = "/create", method = RequestMethod.POST)
+    public String create(User user){
+        userService.create(user);
+        return "redirect:/users/";
     }
 }

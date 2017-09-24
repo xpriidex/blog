@@ -10,19 +10,34 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
-@Qualifier("postDAOJdbc")
+@Repository("postDAOJdbc")
 public class PostDAOJdbcImpl implements PostDAO{
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    @Qualifier("userDAOJdbc")
+    private UserDAO userDAO;
+
     @Override
+    @Transactional
     public int create(Post post) {
-return 0;
+
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+        simpleJdbcInsert.withTableName("post").usingGeneratedKeyColumns("id_post");
+        Map<String, Object> parameters = new HashMap<String, Object>(4);
+
+        parameters.put("title", post.getTitle());
+        parameters.put("body", post.getBody());
+        parameters.put("id_user", post.getAuthorId());
+
+        Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
+        return insertedId.intValue();
     }
 
     @Override
@@ -34,6 +49,7 @@ return 0;
     }
 
     @Override
+    @Transactional
     public List<Post> findAll() {
         List<Post> posts = jdbcTemplate.query("select * from post order by id_post desc",new PostRowMapper());
 
@@ -41,33 +57,50 @@ return 0;
     }
 
     @Override
+    @Transactional
     public List<Post> findAllByTitle(String title) {
-        return null;
+
+        List<Post> posts = jdbcTemplate.query("select * from post where title=?",new PostRowMapper());
+
+        return posts;
     }
 
     @Override
+    @Transactional
     public List<Post> findAllByAuthorsAlias(String alias) {
-        return null;
+        List<Post> postsByAuthorAlias = new ArrayList<>();
+        int id = userDAO.findByAlias(alias).getId();
+
+        postsByAuthorAlias = jdbcTemplate.query("select * from post where id_user=?",new PostRowMapper());
+
+        return postsByAuthorAlias;
     }
 
     @Override
+    @Transactional
     public List<Post> findAllByContent(String content) {
         return null;
     }
 
     @Override
-    public Post findByDate(DateTime queryDate) {
+    @Transactional
+    public List<Post> findByDate(DateTime queryDate) {
         return null;
     }
 
     @Override
-    public Post findByByDateRange(DateTime queryDate1, DateTime queryDate2) {
+    @Transactional
+    public List<Post> findByByDateRange(DateTime queryDate1, DateTime queryDate2) {
         return null;
     }
 
     @Override
-    public int update(Post Post) {
-        return 0;
+    @Transactional
+    public int update(Post post) {
+        String sql = "update post set title = ?, body = ?, publication_date = ?  where id_post = ?";
+        DateTime nowLocal = DateTime.now();
+        jdbcTemplate.update(sql, new Object[]{post.getTitle(), post.getBody(),nowLocal });
+        return post.getId();
     }
 
     @Override
