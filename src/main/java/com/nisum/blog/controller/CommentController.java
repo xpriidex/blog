@@ -69,4 +69,10 @@ public class CommentController {
         return "comments/list";
     }
 
+    @RequestMapping(path = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") int id){
+        commentService.deleteByCommentId(id);
+        return "redirect:/comments/";
+    }
+
 }

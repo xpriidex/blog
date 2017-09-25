@@ -133,33 +133,43 @@ public class CommentDAOjdbcImpl implements CommentDAO {
         }
     }
 
-
     @Override
-    public int deleteByAuthorId(int authorId) {
-        int deletedByAuthor = 0;
+    @Transactional
+    public int deleteByCommentId(int id) {
+        try {
+            String sql = "delete from comment where id_comment = ?";
 
-        for (int i = 0; i < commentList.size(); i++) {
-            if (commentList.get(i).getAuthorId() == authorId) {
-                commentList.remove(i);
-                deletedByAuthor++;
-            }
+            int deleteById = jdbcTemplate.update(sql, id);
+            return deleteById;
+        } catch (EmptyResultDataAccessException e) {
+            return 0;
         }
-
-        return deletedByAuthor;
     }
 
     @Override
-    public int deleteByPostId(int postId) {
-        int deletedByPost = 0;
+    @Transactional
+    public int deleteByAuthorId(int authorId) {
+        try {
+            String sql = "delete from comment where id_user = ?";
 
-        for (int i = 0; i < commentList.size(); i++) {
-            if (commentList.get(i).getPostId() == postId) {
-                commentList.remove(i);
-                deletedByPost++;
-            }
+            int deleteCommentByAuthor = jdbcTemplate.update(sql, authorId);
+            return deleteCommentByAuthor;
+        } catch (EmptyResultDataAccessException e) {
+            return 0;
         }
+    }
 
-        return deletedByPost;
+    @Override
+    @Transactional
+    public int deleteByPostId(int postId) {
+        try {
+            String sql = "delete from comment where id_post = ?";
+
+            int deletePostByAuthor = jdbcTemplate.update(sql, postId);
+            return deletePostByAuthor;
+        } catch (EmptyResultDataAccessException e) {
+            return 0;
+        }
     }
 
 }

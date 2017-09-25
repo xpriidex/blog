@@ -1,6 +1,7 @@
 package com.nisum.blog.dao;
 
 import com.nisum.blog.domain.Comment;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -14,6 +15,8 @@ public interface CommentDAO {
     List<Comment> findByAuthorAlias(String alias);
 
     List<Comment> findByPostId(int id);
+
+    int deleteByCommentId(int id);
 
     int deleteByAuthorId(int authorId);
 

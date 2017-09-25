@@ -102,6 +102,11 @@ public class CommentDAOImpl implements CommentDAO{
         return commentByPost;
     }
 
+    @Override
+    public int deleteByCommentId(int id) {
+        return 0;
+    }
+
 
     @Override
     public int deleteByAuthorId(int authorId){

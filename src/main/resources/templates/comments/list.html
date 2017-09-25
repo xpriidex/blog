@@ -32,7 +32,7 @@
                 <td th:text="${comment.getPostId()}"></td>
                 <td th:text="${comment.getBody()}"></td>
                 <td><a th:href="${ '/comments/read/' + comment.getId()}"><i class="fa fa-search" aria-hidden="true"></i></a></td>
-                <td><a th:href="${ '#'}"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                <td><a th:href="${ '/comments/delete/'+comment.getId()}" onclick="javascript: return confirm('Are you sure?')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                 <td><a th:href="${ '/users/read/' + comment.getAuthorId()}"><i class="fa fa-user" aria-hidden="true"></i></a></td>
                 <td><a th:href="${ '/posts/read/' + comment.getPostId()}"><i class="fa fa-newspaper-o" aria-hidden="true"></i></a></td>
 

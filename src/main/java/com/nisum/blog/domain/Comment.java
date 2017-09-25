@@ -63,4 +63,29 @@ public class Comment {
     public void setPostId(int postId) {
         this.postId = postId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Comment comment = (Comment) o;
+
+        if (id != comment.id) return false;
+        if (authorId != comment.authorId) return false;
+        if (postId != comment.postId) return false;
+        if (publicationDate != null ? !publicationDate.equals(comment.publicationDate) : comment.publicationDate != null)
+            return false;
+        return body != null ? body.equals(comment.body) : comment.body == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + authorId;
+        result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
+        result = 31 * result + (body != null ? body.hashCode() : 0);
+        result = 31 * result + postId;
+        return result;
+    }
 }

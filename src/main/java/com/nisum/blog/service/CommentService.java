@@ -60,6 +60,12 @@ public class CommentService {
         return deletedByPost;
     }
 
+    public int deleteByCommentId(int id){
+        int deletedById = commentDAO.deleteByCommentId(id);
+
+        return deletedById;
+    }
+
     public List<Comment> findAll() {
 
         comments = commentDAO.findAll();
