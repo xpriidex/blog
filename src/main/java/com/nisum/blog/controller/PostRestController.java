@@ -2,6 +2,9 @@ package com.nisum.blog.controller;
 
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.service.PostService;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +49,38 @@ public class PostRestController {
         post.setId(id);
         int result = postService.update(post);
         return new ResponseEntity<Integer>(result,HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/content/{content}",method = RequestMethod.GET )
+    @ResponseBody
+    public ResponseEntity<List<Post>> findByContent(@PathVariable("content") String content){
+        List<Post> result =postService.findAllByContent(content);
+        return new ResponseEntity<List<Post>>(result,HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/title/{title}",method = RequestMethod.GET )
+    @ResponseBody
+    public ResponseEntity<List<Post>> findByTitle(@PathVariable("title") String title){
+        List<Post> result =postService.findAllByTitle(title);
+        return new ResponseEntity<List<Post>>(result,HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/alias/{alias}",method = RequestMethod.GET )
+    @ResponseBody
+    public ResponseEntity<List<Post>> findByAlias(@PathVariable("alias") String alias){
+        List<Post> result =postService.findAllByAuthorsAlias(alias);
+
+        return new ResponseEntity<List<Post>>(result,HttpStatus.OK);
+    }
+
+    @RequestMapping(params = {"date"}, method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findByDate(@RequestParam("date") String date) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTime dateTime = formatter.parseDateTime(date);
+        //dateTime.withTimeAtStartOfDay();
+
+        List<Post> result = postService.findByDate(dateTime);
+
+        return new ResponseEntity<List<Post>>(result,HttpStatus.OK);
     }
 }
