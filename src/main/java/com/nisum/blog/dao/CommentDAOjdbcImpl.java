@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -145,6 +146,20 @@ public class CommentDAOjdbcImpl implements CommentDAO{
         List<Comment> commentList = jdbcTemplate.query("select * from comment", new CommentRowMapper());
         return commentList;
     }
+
+    @Override
+    public Comment findById(int id) {
+        try {
+            String sql = "SELECT * FROM comment WHERE id_comment = ?;";
+
+            Comment comment = jdbcTemplate.queryForObject(sql, new Object[]{id}, new CommentRowMapper());
+            return comment;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+
 
 }
 

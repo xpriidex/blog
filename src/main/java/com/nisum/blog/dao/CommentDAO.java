@@ -20,4 +20,6 @@ public interface CommentDAO {
     int deleteByPostId(int postId);
 
     List<Comment> findAll();
+
+    Comment findById(int id);
 }

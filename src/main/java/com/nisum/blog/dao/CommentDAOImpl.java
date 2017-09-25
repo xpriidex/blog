@@ -136,5 +136,10 @@ public class CommentDAOImpl implements CommentDAO{
         return commentList;
     }
 
+    @Override
+    public Comment findById(int id) {
+        return null;
+    }
+
 }
 

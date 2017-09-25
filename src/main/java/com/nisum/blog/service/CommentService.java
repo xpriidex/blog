@@ -67,4 +67,9 @@ public class CommentService {
         return comments;
     }
 
+    public Comment findById(int id){
+        Comment comment = commentDAO.findById(id);
+        return comment;
+    }
+
 }
