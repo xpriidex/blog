@@ -10,22 +10,50 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <!-- write your stuff here! -->
-    <header>
-        <h1>Nuevo comentario</h1>
-    </header>
-    <main>
-        <section>
-            <form action="api/comments" method="get">
-                <label for="comentario">
-                    comentario
-                    <input id="comentario" type="text" name="comentario" class="comment-input"/>
-                </label>
-                <input id="save" type="submit" value="enviar" class="comment-input comment-input--enviar"/>
-            </form>
-        </section>
-    </main>
+    <div class="container">
+        <h3 class="text-muted">Create a comment</h3>
 
+        <div class="row justify-content-md-left">
+            <div class="col col-lg-4">
+                <div id="errors" style="display: none;" class="alert alert-danger"></div>
+                <form id="formComment" th:object="${comment}" action="/comments/create" th:action="@{'/comments/create'}" method="POST">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Author:</label>
+                        <div class="col-lg-12" >
+                            <select class="form-control"  th:field="*{authorId}" >
+                                <option value="1">Choose the user</option>
+                                <option th:each="user : ${users}"
+                                        th:value="${user.getId()}"
+                                        th:text="${user.alias}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Post:</label>
+                        <div class="col-lg-12" >
+                            <select class="form-control"  th:field="*{postId}" >
+                                <option value="1">Choose the post</option>
+                                <option th:each="post : ${posts}"
+                                        th:value="${post.getId()}"
+                                        th:text="${post.title}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="body">Body</label>
+                        <textarea rows="8" name="body" type="text" class="form-control" id="body" th:field="*{body}" placeholder="Content" required="required" maxlength="250"/>
+                    </div>
+
+                    <button id="save" type="submit" class="btn btn-default">Save</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
 
 
 </div> <!-- /container -->
@@ -33,14 +61,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
