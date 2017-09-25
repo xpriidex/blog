@@ -165,8 +165,8 @@ public class CommentDAOjdbcImpl implements CommentDAO {
         try {
             String sql = "delete from comment where id_post = ?";
 
-            int deletePostByAuthor = jdbcTemplate.update(sql, postId);
-            return deletePostByAuthor;
+            int deleteCommentByPost = jdbcTemplate.update(sql, postId);
+            return deleteCommentByPost;
         } catch (EmptyResultDataAccessException e) {
             return 0;
         }
