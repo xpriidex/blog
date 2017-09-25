@@ -32,7 +32,7 @@
                 <td><a th:href="${ '/users/update/' + user.getId()}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                 <td><a th:href="${ '#'}"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                 <td><a th:href="${ '/posts/findbyalias/' + user.getAlias()}"><i class="fa fa-newspaper-o" aria-hidden="true"></i></a></td>
-                <td><a th:href="${ '/comments/' + user.getAlias()}"><i class="fa fa-comments" aria-hidden="true"></i></a></td>
+                <td><a th:href="${ '/comments/findbyauthorid/' + user.getId()}"><i class="fa fa-comments" aria-hidden="true"></i></a></td>
             </tr>
             </tbody>
         </table>
