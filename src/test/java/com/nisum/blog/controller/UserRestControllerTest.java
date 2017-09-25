@@ -197,69 +197,69 @@ public class UserRestControllerTest {
         verify(userService).findByLastName("Jennings");
     }
 
-    @Test
-    public void shouldUpdateUserByFirstName() throws Exception {
-        User user = new User();
-        user.setId(1);
-        user.setFirstName("Mona");
+//    @Test
+//    public void shouldUpdateUserByFirstName() throws Exception {
+//        User user = new User();
+//        user.setId(1);
+//        user.setFirstName("Mona");
+//
+//        String json = mapper.writer().writeValueAsString(user);
+//
+//        userRestControllerMockMvc.perform(put("/api/users/first_name")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(json))
+//                .andExpect(status().isOk());
+//
+//        verify(userService).updateFirstName(1, "Mona");
+//    }
 
-        String json = mapper.writer().writeValueAsString(user);
+//    @Test
+//    public void shouldUpdateUserByLastName() throws Exception {
+//        User user = new User();
+//        user.setId(1);
+//        user.setLastName("WhatWhat");
+//
+//        String json = mapper.writer().writeValueAsString(user);
+//
+//        userRestControllerMockMvc.perform(put("/api/users/last_name")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(json))
+//                .andExpect(status().isOk());
+//
+//        verify(userService).updateLastName(1, "WhatWhat");
+//    }
 
-        userRestControllerMockMvc.perform(put("/api/users/first_name")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
-                .andExpect(status().isOk());
+//    @Test
+//    public void shouldUpdateUserByAlias() throws Exception {
+//        User user = new User();
+//        user.setId(1);
+//        user.setAlias("Marin");
+//
+//        String json = mapper.writer().writeValueAsString(user);
+//
+//        userRestControllerMockMvc.perform(put("/api/users/alias")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(json))
+//                .andExpect(status().isOk());
+//
+//        verify(userService).updateAlias(1, "Marin");
+//    }
 
-        verify(userService).updateFirstName(1, "Mona");
-    }
-
-    @Test
-    public void shouldUpdateUserByLastName() throws Exception {
-        User user = new User();
-        user.setId(1);
-        user.setLastName("WhatWhat");
-
-        String json = mapper.writer().writeValueAsString(user);
-
-        userRestControllerMockMvc.perform(put("/api/users/last_name")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
-                .andExpect(status().isOk());
-
-        verify(userService).updateLastName(1, "WhatWhat");
-    }
-
-    @Test
-    public void shouldUpdateUserByAlias() throws Exception {
-        User user = new User();
-        user.setId(1);
-        user.setAlias("Marin");
-
-        String json = mapper.writer().writeValueAsString(user);
-
-        userRestControllerMockMvc.perform(put("/api/users/alias")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
-                .andExpect(status().isOk());
-
-        verify(userService).updateAlias(1, "Marin");
-    }
-
-    @Test
-    public void shouldUpdateUserByEmail() throws Exception {
-        User user = new User();
-        user.setId(1);
-        user.setEmail("strink@gmail.com");
-
-        String json = mapper.writer().writeValueAsString(user);
-
-        userRestControllerMockMvc.perform(put("/api/users/email")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
-                .andExpect(status().isOk());
-
-        verify(userService).updateEmail(1, "strink@gmail.com");
-    }
+//    @Test
+//    public void shouldUpdateUserByEmail() throws Exception {
+//        User user = new User();
+//        user.setId(1);
+//        user.setEmail("strink@gmail.com");
+//
+//        String json = mapper.writer().writeValueAsString(user);
+//
+//        userRestControllerMockMvc.perform(put("/api/users/email")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(json))
+//                .andExpect(status().isOk());
+//
+//        verify(userService).updateEmail(1, "strink@gmail.com");
+//    }
 
     @Test
     public void shouldCreateNewUser() throws Exception {

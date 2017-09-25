@@ -8,21 +8,22 @@ $.when($.ready).then(function () {
             contentType: "application/json",
             dataType: "json",
             type: "PUT",
-            url: "/api/users/first_name",
+            url: "/api/users/update",
             data: data
         }).done(function (msg) {
-            alert("Data Saved: " + msg);
+            alert("Data Updated: " + msg);
+            location.href="/users/";
         });
     }
 
     function executeSave(e) {
         e.preventDefault();
-        var formData = formHelper($('#formFirstName').serializeArray());
+        var formData = formHelper($('#formUser').serializeArray());
         console.log(formData);
         saveUser(formData);
     }
 
-    $("#updateFirstName").click(executeSave);
+    $("#update").click(executeSave);
 
     function formHelper(unindexed_array) {
 

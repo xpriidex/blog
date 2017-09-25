@@ -48,28 +48,10 @@ public class UserRestController {
         return ok(userService.findByEmail(email));
     }
 
-    @RequestMapping(path = "/first_name", method = RequestMethod.PUT)
+    @RequestMapping(path = "/update", method = RequestMethod.PUT)
     public ResponseEntity updateFirstName(@RequestBody User user) {
-        userService.updateFirstName(user.getId(), user.getFirstName());
-        return ok("first name updated");
-    }
-
-    @RequestMapping(path = "/last_name", method = RequestMethod.PUT)
-    public ResponseEntity updateLastName(@RequestBody User user) {
-        userService.updateLastName(user.getId(), user.getLastName());
-        return ok("lasts name updated");
-    }
-
-    @RequestMapping(path = "/email", method = RequestMethod.PUT)
-    public ResponseEntity updateEmail(@RequestBody User user) {
-        userService.updateEmail(user.getId(), user.getEmail());
-        return ok("email updated");
-    }
-
-    @RequestMapping(path = "/alias", method = RequestMethod.PUT)
-    public ResponseEntity updateAlias(@RequestBody User user) {
-        userService.updateAlias(user.getId(), user.getAlias());
-        return ok("alias updated");
+        userService.update(user);
+        return ok(1);
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)

@@ -82,43 +82,24 @@ public class UserService {
         return userFound;
     }
 
-    public void updateFirstName(int userId, String newFirstName) {
-        User user = findById(userId);
+    public void update(User user)
+    {
+        if (user == null) return;
 
-        if (user != null) {
-            user.setFirstName(newFirstName);
-            userDAO.update(user);
-        }
-    }
+        if (user.getFirstName().isEmpty()) return;
 
-    public void updateLastName(int userId, String newLastName) {
-        User user = findById(userId);
+        if (user.getLastName().isEmpty()) return;
 
-        if (user != null) {
-            user.setLastName(newLastName);
-            userDAO.update(user);
-        }
-    }
+        if (user.getEmail().isEmpty()) return;
 
-    public void updateEmail(int userId, String newEmail) {
-        User user = findById(userId);
+        if (user.getAlias().isEmpty()) return;
 
-        if (user != null) {
-            if (findByEmail(newEmail) == null) {
-                user.setEmail(newEmail);
-                userDAO.update(user);
-            }
-        }
-    }
+        if (user.getBio().isEmpty()) return;
 
-    public void updateAlias(int userId, String newAlias) {
-        User user = findById(userId);
+        if(findByAlias(user.getAlias())!= null) return;
 
-        if (user != null) {
-            if (findByAlias(newAlias) == null) {
-                user.setAlias(newAlias);
-                userDAO.update(user);
-            }
-        }
+        if(findByEmail(user.getEmail()) != null) return;
+
+        userDAO.update(user);
     }
 }

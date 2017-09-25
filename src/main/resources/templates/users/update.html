@@ -14,81 +14,59 @@
 
     <h2>Update User </h2>
     <div>
-        <form id="formFirstName" class="form-horizontal" th:object="${user}">
+        <form id="formUser" class="form-horizontal" th:object="${user}">
             <input name="id_user" id="user_id" type="hidden" th:field="*{id}"/>
             <table class="table table-striped table table-bordered">
                 <tr>
                     <td><label>First Name</label></td>
                     <td>
-                        <input name="first_name" type="text" class="form-control" th:field="*{firstName}" required="required" maxlength="50"/>
+                        <input name="first_name" type="text" class="form-control" th:field="*{firstName}"
+                               required="required" maxlength="50"/>
                     </td>
+                </tr>
+                <tr>
+                    <td><label>Alias</label></td>
                     <td>
-                        <button id="updateFirstName" type="button" class="btn btn-primary btn-block" align="right">Update</button>
+                        <input type="text" class="form-control" th:field="*{alias}" required="required" maxlength="50"/>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Last Name</label></td>
+                    <td>
+                        <input type="text" class="form-control" th:field="*{lastName}" required="required"
+                               maxlength="50"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Email</label></td>
+                    <td>
+                        <input type="email" class="form-control" th:field="*{email}" required="required"
+                               maxlength="50"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Bio</label></td>
+                    <td>
+                        <input type="text" class="form-control" th:field="*{bio}" required="required" maxlength="50"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>image</label></td>
+                    <td>
+                        <input type="text" class="form-control" th:field="*{image}" required="required" maxlength="50"/>
                     </td>
                 </tr>
             </table>
+
             <div>
+                <button id="update" type="submit" class="btn btn-primary btn-block" align="right">Update</button>
                 <button type="button" align="right" onclick="javascript:location.href=/users/">Back</button>
             </div>
         </form>
-
-
-
-        <form id="formRest" class="form-horizontal" th:object="${user}" th:action="@{'#'}" method="put">
-                 <table class="table table-striped table table-bordered">
-                 <tr>
-                     <td><label>Alias</label></td>
-                     <td>
-                         <input type="text" class="form-control" th:field="*{alias}" required="required" maxlength="50"/>
-
-                     </td>
-                     <td>
-                         <button id="updateAlias" type="submit" class="btn btn-primary btn-block" align="right">Update</button>
-                     </td>
-                 </tr>
-                 <tr>
-                     <td><label>Last Name</label></td>
-                     <td>
-                         <input type="text" class="form-control" th:field="*{lastName}" required="required" maxlength="50"/>
-                     </td>
-                     <td>
-                         <button id="updateLastName" type="submit" class="btn btn-primary btn-block" align="right">Update</button>
-                     </td>
-                 </tr>
-                 <tr>
-                     <td><label>Email</label></td>
-                     <td>
-                         <input type="email" class="form-control" th:field="*{email}" required="required" maxlength="50"/>
-                     </td>
-                     <td>
-                         <button id="updateEmail" type="submit" class="btn btn-primary btn-block" align="right">Update</button>
-                     </td>
-                 </tr>
-                 <tr>
-                     <td><label>Bio</label></td>
-                     <td>
-                         <input type="text" class="form-control" th:field="*{bio}" required="required" maxlength="50"/>
-                     </td>
-                     <td>
-                         <button id="updateBio" type="submit" class="btn btn-primary btn-block" align="right">Update</button>
-                     </td>
-                 </tr>
-                 <tr>
-                     <td><label>image</label></td>
-                     <td>
-                         <input type="text" class="form-control" th:field="*{image}" required="required" maxlength="50"/>
-                     </td>
-                     <td>
-                         <button id="updateImage" type="submit" class="btn btn-primary btn-block" align="right">Update</button>
-                     </td>
-                 </tr>
-                 </table>
-             </form>
-         </div>
-
-
-     </div> <!-- /container -->
+    </div>
+</div> <!-- /container -->
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
-<script src="/js/user/updateFirstName.js"></script>
+<script src="/js/user/update.js"></script>
 </body>
 </html>

@@ -12,6 +12,7 @@ $.when($.ready).then(function () {
             data: data //data serializada a json object que espera el backend
         }).done(function (msg) { //se ejecuta cuando responda el backend
             alert("Data Saved: " + msg);
+            location.href="/users/";
         });
     }
 

@@ -47,4 +47,10 @@ public class UserController {
         postModel.addAttribute("user", userService.findById(id));
         return "users/update";
     }
+
+    @RequestMapping(path = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") int id){
+        userService.delete(id);
+        return "redirect:/users/";
+    }
 }

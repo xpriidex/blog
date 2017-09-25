@@ -301,68 +301,68 @@ public class UserServiceTest {
         verify(userDAO).delete(userId);
     }
 
-    @Test
-    public void shouldUpdateUserFirstName() throws Exception {
-        //Arrange
-        int userId = 1;
-        String newFirstName = "Daniela";
+//    @Test
+//    public void shouldUpdateUserFirstName() throws Exception {
+//        //Arrange
+//        int userId = 1;
+//        String newFirstName = "Daniela";
+//
+//        when(userDAO.findById(userId)).thenReturn(user1);
+//
+//        //Act
+//        userService.updateFirstName(userId, newFirstName);
+//
+//        //Assert
+//        verify(userDAO).findById(userId);
+//        verify(userDAO).update(user1);
+//    }
 
-        when(userDAO.findById(userId)).thenReturn(user1);
+//    @Test
+//    public void shouldUpdateUserLastName() throws Exception {
+//        //Arrange
+//        int userId = 1;
+//        String newLastName = "Yurjevic";
+//
+//        when(userDAO.findById(userId)).thenReturn(user1);
+//
+//        //Act
+//        userService.updateLastName(userId, newLastName);
+//
+//        //Assert
+//        verify(userDAO).findById(userId);
+//        verify(userDAO).update(user1);
+//    }
 
-        //Act
-        userService.updateFirstName(userId, newFirstName);
+//    @Test
+//    public void shouldUpdateUserEmail() throws Exception {
+//        //Arrange
+//        int userId = 1;
+//        String newEmail = "miki@nisum.com";
+//
+//        when(userDAO.findById(userId)).thenReturn(user1);
+//        when(userDAO.findByEmail(newEmail)).thenReturn(null);
+//
+//        //Act
+//        userService.updateEmail(userId, newEmail);
+//
+//        //Assert
+//        verify(userDAO).findById(userId);
+//        verify(userDAO).update(user1);
+//    }
 
-        //Assert
-        verify(userDAO).findById(userId);
-        verify(userDAO).update(user1);
-    }
-
-    @Test
-    public void shouldUpdateUserLastName() throws Exception {
-        //Arrange
-        int userId = 1;
-        String newLastName = "Yurjevic";
-
-        when(userDAO.findById(userId)).thenReturn(user1);
-
-        //Act
-        userService.updateLastName(userId, newLastName);
-
-        //Assert
-        verify(userDAO).findById(userId);
-        verify(userDAO).update(user1);
-    }
-
-    @Test
-    public void shouldUpdateUserEmail() throws Exception {
-        //Arrange
-        int userId = 1;
-        String newEmail = "miki@nisum.com";
-
-        when(userDAO.findById(userId)).thenReturn(user1);
-        when(userDAO.findByEmail(newEmail)).thenReturn(null);
-
-        //Act
-        userService.updateEmail(userId, newEmail);
-
-        //Assert
-        verify(userDAO).findById(userId);
-        verify(userDAO).update(user1);
-    }
-
-    @Test
-    public void shouldUpdateUserAlias() throws Exception {
-        //Arrange
-        int userId = 1;
-        String newAlias = "Nikki";
-
-        when(userDAO.findById(userId)).thenReturn(user1);
-
-        //Act
-        userService.updateAlias(userId, newAlias);
-
-        //Assert
-        verify(userDAO).findById(userId);
-        verify(userDAO).update(user1);
-    }
+//    @Test
+//    public void shouldUpdateUserAlias() throws Exception {
+//        //Arrange
+//        int userId = 1;
+//        String newAlias = "Nikki";
+//
+//        when(userDAO.findById(userId)).thenReturn(user1);
+//
+//        //Act
+//        userService.updateAlias(userId, newAlias);
+//
+//        //Assert
+//        verify(userDAO).findById(userId);
+//        verify(userDAO).update(user1);
+//    }
 }
