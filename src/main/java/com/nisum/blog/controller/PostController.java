@@ -26,9 +26,6 @@ public class PostController {
         return "posts/list";
     }
 
-    /* @RequestMapping(path = "/read/{id}", method = RequestMethod.GET)
-    public String read(@PathVariable("id") int id, Model postModel){*/
-
     @RequestMapping(path = "/findbyalias/{alias}", method = RequestMethod.GET)
     public String findAllByAlias(@PathVariable("alias") String alias,Model postModel) {
         postModel.addAttribute("posts", postService.findAllByAuthorsAlias(alias));

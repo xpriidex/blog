@@ -16,13 +16,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.codehaus.groovy.runtime.DefaultGroovyMethods.any;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @RunWith(MockitoJUnitRunner.class)
 public class PostControllerTest {
     private MockMvc mockMvc;
@@ -77,15 +80,51 @@ public class PostControllerTest {
     }
 
     @Test
-    public void create() throws Exception {
+    public void checkCreate() throws Exception {
+        //when(postService.create(post)).thenReturn(1);
+
+        mockMvc.perform(
+                post("/posts/create/")).
+                andExpect(redirectedUrl("/posts/"));
+
+        //verify(postService).create(post);
+        /// TODO: 24-09-17  
     }
 
     @Test
-    public void read() throws Exception {
+    public void checkRead() throws Exception {
+        when(postService.findById(1)).thenReturn(post);
+
+        mockMvc.perform(get("/posts/read/{id}",1))
+                .andExpect(status().isOk())
+                .andExpect(view().name("posts/detail"))
+                .andExpect(model().attribute("post",post));
+
+        verify(postService).findById(1);
     }
 
     @Test
-    public void update() throws Exception {
+    public void checkUpdateView() throws Exception {
+        when(postService.findById(1)).thenReturn(post);
+
+        mockMvc.perform(get("/posts/update/{id}",1))
+                .andExpect(status().isOk())
+                .andExpect(view().name("posts/update"))
+                .andExpect(model().attribute("post",post));
+
+        verify(postService).findById(1);
+
     }
 
+    @Test
+    public void checkFindAllPostByAlias() throws Exception {
+        when(postService.findAllByAuthorsAlias(anyString())).thenReturn(postList);
+
+        mockMvc.perform(get("/posts/findbyalias/{alias}",1))
+                .andExpect(status().isOk())
+                .andExpect(view().name("posts/list"))
+                .andExpect(model().attribute("posts",postList));
+
+        verify(postService).findAllByAuthorsAlias(anyString());
+    }
 }
