@@ -56,7 +56,6 @@ public class PostService {
         return postDAO.update(postToUpdate);
 
     }
-    // TODO: 21-09-17 manejar fechas 
 
     public void delete(int id) {
         postDAO.delete(id);
@@ -64,5 +63,9 @@ public class PostService {
 
     public int deleteByUserId(int id) {
         return postDAO.deleteByUserId(id);
+    }
+
+    public List<Post> findByDate(DateTime dateTime) {
+        return postDAO.findByDate(dateTime);
     }
 }

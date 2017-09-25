@@ -1,22 +1,28 @@
 package com.nisum.blog.dao;
 
 import com.nisum.blog.dao.rowMapper.PostRowMapper;
+import com.nisum.blog.dao.rowMapper.UserRowMapper;
 import com.nisum.blog.domain.Post;
+import com.nisum.blog.domain.User;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Repository("postDAOJdbc")
-public class PostDAOJdbcImpl implements PostDAO{
+public class PostDAOJdbcImpl implements PostDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -27,23 +33,28 @@ public class PostDAOJdbcImpl implements PostDAO{
     @Override
     @Transactional
     public int create(Post post) {
+        DateTime nowLocal = DateTime.now();
+        // TODO: 25-09-17 timestamp
+        Timestamp timeStamp = new Timestamp(nowLocal.getMillis());
 
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         simpleJdbcInsert.withTableName("post").usingGeneratedKeyColumns("id_post");
-        Map<String, Object> parameters = new HashMap<String, Object>(3);
+        Map<String, Object> parameters = new HashMap<String, Object>();
 
         parameters.put("title", post.getTitle());
         parameters.put("body", post.getBody());
         parameters.put("id_user", post.getAuthorId());
 
-        Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
+        Number insertedId = simpleJdbcInsert
+                .usingColumns("title", "body", "id_user")
+                .executeAndReturnKey(parameters);
         return insertedId.intValue();
     }
 
     @Override
     @Transactional
     public Post findById(int id) {
-        Post post = jdbcTemplate.queryForObject("select * from post where id_post=?",new Object[]{id},new PostRowMapper());
+        Post post = jdbcTemplate.queryForObject("select * from post where id_post=?", new Object[]{id}, new PostRowMapper());
 
         return post;
     }
@@ -51,7 +62,7 @@ public class PostDAOJdbcImpl implements PostDAO{
     @Override
     @Transactional
     public List<Post> findAll() {
-        List<Post> posts = jdbcTemplate.query("select * from post order by id_post desc",new PostRowMapper());
+        List<Post> posts = jdbcTemplate.query("select * from post order by id_post desc", new PostRowMapper());
 
         return posts;
     }
@@ -60,32 +71,66 @@ public class PostDAOJdbcImpl implements PostDAO{
     @Transactional
     public List<Post> findAllByTitle(String title) {
 
-        List<Post> posts = jdbcTemplate.query("select * from post where title=?",new PostRowMapper());
+        title = title.toUpperCase();
 
-        return posts;
+        try {
+            String sql = "SELECT * FROM post WHERE UPPER(title) LIKE ?;";
+
+            List<Post> posList = jdbcTemplate.query(sql, new Object[]{"%" + title + "%"}, new PostRowMapper());
+            return posList;
+
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Post>();
+        }
     }
 
     @Override
     @Transactional
     public List<Post> findAllByAuthorsAlias(String alias) {
-        List<Post> postsByAuthorAlias = new ArrayList<>();
-        int id = userDAO.findByAlias(alias).getId();
+        try {
+            int id = userDAO.findByAlias(alias).getId();
+            String sql = "select * from post where id_user=?;";
 
-        postsByAuthorAlias = jdbcTemplate.query("select * from post where id_user=?",new Object[]{id},new PostRowMapper());
+            List<Post> posList = jdbcTemplate.query(sql, new Object[]{id}, new PostRowMapper());
+            return posList;
 
-        return postsByAuthorAlias;
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Post>();
+        }
     }
 
     @Override
     @Transactional
     public List<Post> findAllByContent(String content) {
-        return null;
+
+        content = content.toUpperCase();
+
+        try {
+            String sql = "SELECT * FROM post WHERE UPPER(body) LIKE ?;";
+
+            List<Post> posList = jdbcTemplate.query(sql, new Object[]{"%" + content + "%"}, new PostRowMapper());
+            return posList;
+
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Post>();
+        }
     }
 
     @Override
     @Transactional
     public List<Post> findByDate(DateTime queryDate) {
-        return null;
+
+        try {
+            String sql = "select * from post where date_trunc('day', publication_date) = date_trunc('day', ?::timestamp);";
+
+            List<Post> post = jdbcTemplate.query(sql,new Object[] {
+                    new Timestamp(queryDate.getMillis())
+            }, new PostRowMapper());
+
+            return post;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -99,7 +144,7 @@ public class PostDAOJdbcImpl implements PostDAO{
     public int update(Post post) {
         String sql = "update post set title = ?, body = ?, publication_date = ?  where id_post = ?";
         DateTime nowLocal = DateTime.now();
-        jdbcTemplate.update(sql, new Object[]{post.getTitle(), post.getBody(),nowLocal });
+        jdbcTemplate.update(sql, new Object[]{post.getTitle(), post.getBody(), nowLocal});
         return post.getId();
     }
 
