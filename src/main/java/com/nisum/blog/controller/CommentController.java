@@ -51,5 +51,22 @@ public class CommentController {
         return "comments/detail";
     }
 
+    @RequestMapping(path = "/findbyalias/{alias}", method = RequestMethod.GET)
+    public String findAllByAlias(@PathVariable("alias") String alias,Model postModel) {
+        postModel.addAttribute("comments", postService.findAllByAuthorsAlias(alias));
+        return "comments/list";
+    }
+
+    @RequestMapping(path = "/findbyauthorid/{authorId}", method = RequestMethod.GET)
+    public String findByAuthorId(@PathVariable("authorId") int authorId,Model postModel) {
+        postModel.addAttribute("comments", commentService.findByAuthorId(authorId));
+        return "comments/list";
+    }
+
+    @RequestMapping(path = "/findbypostid/{postId}", method = RequestMethod.GET)
+    public String findByPostId(@PathVariable("postId") int postId,Model postModel) {
+        postModel.addAttribute("comments", commentService.findByPostId(postId));
+        return "comments/list";
+    }
 
 }

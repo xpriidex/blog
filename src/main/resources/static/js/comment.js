@@ -20,7 +20,7 @@ $.when( $.ready ).then(function() {
 
         console.log($('#formComment').serializeArray());
 
-        var formComment = $('#formComment').serializeArray();
+        var formComment = formHelper($('#formComment').serializeArray());
 
         saveComment(formComment);
     }
