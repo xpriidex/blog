@@ -29,6 +29,11 @@ public class CommentRestController {
         return new ResponseEntity<List<Comment>>(commentService.findByAuthorId(id), HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/{postId}", method = RequestMethod.GET)
+    public ResponseEntity<List<Comment>> findByPostId(@PathVariable("id") Integer id) {
+        return new ResponseEntity<List<Comment>>(commentService.findByPostId(id), HttpStatus.OK);
+    }
+
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public ResponseEntity<Integer> create(
             @RequestParam("authorId") Integer authorId,
