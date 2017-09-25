@@ -177,7 +177,7 @@ public class PostDAOImpl implements PostDAO {
         }
     }
 
-    public void deleteByUserId(int id) {
+    public int deleteByUserId(int id) {
         int count = 0;
 
         for (int i = 0; i < postList.size(); i++) {

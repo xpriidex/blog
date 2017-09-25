@@ -26,5 +26,5 @@ public interface PostDAO {
 
     void delete(int id);
 
-    void deleteByUserId(int id);
+    int deleteByUserId(int id);
 }

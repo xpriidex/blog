@@ -1,7 +1,11 @@
 package com.nisum.blog.dao;
 
 import com.nisum.blog.dao.rowMapper.PostRowMapper;
+import com.nisum.blog.dao.rowMapper.UserRowMapper;
 import com.nisum.blog.domain.Post;
+import com.nisum.blog.domain.User;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -148,7 +152,14 @@ public class PostDAOJdbcImpl implements PostDAO {
     }
 
     @Override
-    public void deleteByUserId(int id) {
-        jdbcTemplate.update("delete from post where id_user = ?", id);
+    public int deleteByUserId(int id) {
+        try {
+            String sql = "delete from post where id_user = ?";
+
+            int countRawr = jdbcTemplate.update(sql, id);
+            return countRawr;
+        } catch (EmptyResultDataAccessException e) {
+            return 0;
+        }
     }
 }
