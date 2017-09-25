@@ -60,5 +60,15 @@ public class PostController {
         return "posts/update";
     }
 
+    @RequestMapping(path = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") int id){
+        postService.delete(id);
+        return "redirect:/posts/";
+    }
 
+    @RequestMapping(path = "/update/", method = RequestMethod.POST)
+    public String update(Post post){
+        postService.update(post);
+        return "redirect:/posts/read/" + post.getId();
+    }
 }

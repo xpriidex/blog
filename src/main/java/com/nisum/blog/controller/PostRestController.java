@@ -77,7 +77,7 @@ public class PostRestController {
     public ResponseEntity<List<Post>> findByDate(@RequestParam("date") String date) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
         DateTime dateTime = formatter.parseDateTime(date);
-        //dateTime.withTimeAtStartOfDay();
+        dateTime.withTimeAtStartOfDay();
 
         List<Post> result = postService.findByDate(dateTime);
 

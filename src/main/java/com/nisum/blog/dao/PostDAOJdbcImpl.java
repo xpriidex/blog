@@ -123,9 +123,7 @@ public class PostDAOJdbcImpl implements PostDAO {
         try {
             String sql = "select * from post where date_trunc('day', publication_date) = date_trunc('day', ?::timestamp);";
 
-            List<Post> post = jdbcTemplate.query(sql,new Object[] {
-                    new Timestamp(queryDate.getMillis())
-            }, new PostRowMapper());
+            List<Post> post = jdbcTemplate.query(sql,new Object[] {queryDate}, new PostRowMapper());
 
             return post;
         } catch (EmptyResultDataAccessException e) {
