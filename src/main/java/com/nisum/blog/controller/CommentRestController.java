@@ -24,12 +24,12 @@ public class CommentRestController {
         return ok(commentService.findAll());
     }
 
-    @RequestMapping(path = "/{authorId}", method = RequestMethod.GET)
-    public ResponseEntity<List<Comment>> findByAuthorId(@PathVariable("id") Integer id) {
+    @RequestMapping(path = "/findbyauthorid/{authorId}", method = RequestMethod.GET)
+    public ResponseEntity<List<Comment>> findByAuthorId(@PathVariable("authorId") Integer id) {
         return new ResponseEntity<List<Comment>>(commentService.findByAuthorId(id), HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/{postId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/findbypostid{postId}", method = RequestMethod.GET)
     public ResponseEntity<List<Comment>> findByPostId(@PathVariable("id") Integer id) {
         return new ResponseEntity<List<Comment>>(commentService.findByPostId(id), HttpStatus.OK);
     }
