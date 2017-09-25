@@ -66,7 +66,7 @@ public class PostController {
         return "redirect:/posts/";
     }
 
-    @RequestMapping(path = "/update/", method = RequestMethod.POST)
+    @RequestMapping(path = "/update", method = RequestMethod.POST)
     public String update(Post post){
         postService.update(post);
         return "redirect:/posts/read/" + post.getId();

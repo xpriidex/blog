@@ -33,9 +33,6 @@ public class PostDAOJdbcImpl implements PostDAO {
     @Override
     @Transactional
     public int create(Post post) {
-        DateTime nowLocal = DateTime.now();
-        // TODO: 25-09-17 timestamp
-        Timestamp timeStamp = new Timestamp(nowLocal.getMillis());
 
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         simpleJdbcInsert.withTableName("post").usingGeneratedKeyColumns("id_post");
@@ -140,9 +137,12 @@ public class PostDAOJdbcImpl implements PostDAO {
     @Override
     @Transactional
     public int update(Post post) {
-        String sql = "update post set title = ?, body = ?, publication_date = ?  where id_post = ?";
         DateTime nowLocal = DateTime.now();
-        jdbcTemplate.update(sql, new Object[]{post.getTitle(), post.getBody(), nowLocal});
+        Timestamp timeStamp = new Timestamp(nowLocal.getMillis());
+
+        String sql = "update post set title = ?, body = ?, publication_date = ?  where id_post = ?";
+
+        jdbcTemplate.update(sql, new Object[]{post.getTitle(), post.getBody(),timeStamp ,post.getId()});
         return post.getId();
     }
 
@@ -153,6 +153,6 @@ public class PostDAOJdbcImpl implements PostDAO {
 
     @Override
     public int deleteByUserId(int id) {
-        return 0;
+        jdbcTemplate.update("delete from post where id_user = ?", id);
     }
 }
