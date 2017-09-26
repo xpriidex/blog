@@ -76,6 +76,14 @@ public class PostController {
         return "posts/list";
     }
 
+    @RequestMapping(path = "/findbyalias/{alias}", method = RequestMethod.GET)
+    public String findAllByAlias(Model postModel, @PathVariable("alias") String alias) {
+        User user = userService.findByAlias(alias);
+
+        postModel.addAttribute("posts", postService.findAllByAuthorsAlias(user.getAlias()));
+        return "posts/list";
+    }
+
     @RequestMapping(path = "/findbyalias", method = RequestMethod.POST)
     public String findAllByAlias(User user, Model postModel) {
         System.out.println(user.getAlias());

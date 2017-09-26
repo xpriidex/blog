@@ -132,11 +132,10 @@ public class PostDAOJdbcImpl implements PostDAO {
     @Transactional
     public List<Post> findByByDateRange(DateTime queryDate1, DateTime queryDate2) {
         String sql = "select * from post as p where " +
-                "date_trunc('day', p.publication_date) between date_trunc('day', ?) \n" +
-                "and date_trunc('day', ?);";
+                "date_trunc('day', p.publication_date) between date_trunc('day', ?::timestamp) and date_trunc('day', ?::timestamp);";
 
         try {
-            List<Post> post = jdbcTemplate.query(sql,new Object[] {queryDate1, queryDate2}, new PostRowMapper());
+            List<Post> post = jdbcTemplate.query(sql,new Object[] {new Timestamp(queryDate1.getMillis()), new Timestamp(queryDate2.getMillis())}, new PostRowMapper());
 
             return post;
         } catch (EmptyResultDataAccessException e) {

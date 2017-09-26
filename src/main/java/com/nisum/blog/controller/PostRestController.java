@@ -82,11 +82,6 @@ public class PostRestController {
         DateTime dateTime = formatter.parseDateTime(date);
         dateTime.withTimeAtStartOfDay();
 
-        Log log = LogFactory.getLog(PostRestController.class);
-
-        log.error("DATA TIME " + dateTime);
-        log.error(date);
-
         List<Post> result = postService.findByDate(dateTime);
 
         return new ResponseEntity<List<Post>>(result, HttpStatus.OK);
@@ -99,6 +94,8 @@ public class PostRestController {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
         DateTime dateQuery1 = formatter.parseDateTime(dateFrom);
         DateTime dateQuery2 = formatter.parseDateTime(dateTo);
+        dateQuery1.withTimeAtStartOfDay();
+        dateQuery2.withTimeAtStartOfDay();
 
         List<Post> result = postService.findByDateRange(dateQuery1, dateQuery2);
 
