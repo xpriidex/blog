@@ -14,41 +14,45 @@
 
     <h2>Update User </h2>
     <div>
+        <button type="button" style="float: right" onclick="javascript:location.href=/users/">Cancel</button>
         <form id="formUser" class="form-horizontal" th:object="${user}">
             <input name="id_user" id="user_id" type="hidden" th:field="*{id}"/>
             <table class="table table-striped table table-bordered">
                 <tr>
-                    <td><label>Alias</label></td>
+                    <td><label>Alias (required)</label></td>
                     <td>
-                        <input name="alias" type="text" class="form-control" th:field="*{alias}" required="required" maxlength="50"/>
+                        <input name="alias" type="text" class="form-control" th:field="*{alias}" required="required"
+                               maxlength="50"/>
 
                     </td>
                 </tr>
                 <tr>
-                    <td><label>First Name</label></td>
+                    <td><label>First Name (required)</label></td>
                     <td>
                         <input name="first_name" type="text" class="form-control" th:field="*{firstName}"
                                required="required" maxlength="50"/>
                     </td>
                 </tr>
                 <tr>
-                    <td><label>Last Name</label></td>
+                    <td><label>Last Name (required)</label></td>
                     <td>
-                        <input name="last_name" type="text" class="form-control" th:field="*{lastName}" required="required"
+                        <input name="last_name" type="text" class="form-control" th:field="*{lastName}"
+                               required="required"
                                maxlength="50"/>
                     </td>
                 </tr>
                 <tr>
-                    <td><label>Email</label></td>
+                    <td><label>Email (required)</label></td>
                     <td>
                         <input name="email" type="email" class="form-control" th:field="*{email}" required="required"
                                maxlength="50"/>
                     </td>
                 </tr>
                 <tr>
-                    <td><label>Bio</label></td>
+                    <td><label>Bio (required)</label></td>
                     <td>
-                        <input name="bio" type="text" class="form-control" th:field="*{bio}" required="required" maxlength="50"/>
+                        <input name="bio" type="text" class="form-control" th:field="*{bio}" required="required"
+                               maxlength="50"/>
                     </td>
                 </tr>
                 <tr>
@@ -58,10 +62,7 @@
                     </td>
                 </tr>
             </table>
-            <div>
-                <button id="update" type="submit" class="btn btn-primary btn-block" align="right">Update</button>
-                <button type="button" align="right" onclick="javascript:location.href=/users/">Back</button>
-            </div>
+            <button id="update" class="btn btn-primary btn-block" type="submit" align="right">Update</button>
         </form>
     </div>
 </div> <!-- /container -->
