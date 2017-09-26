@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -40,6 +42,34 @@ public class UserController {
         User user = userService.findById(id);
         postModel.addAttribute("user", user);
         return "users/detail";
+    }
+
+    @RequestMapping(path = "/findbyalias", method = RequestMethod.POST)
+    public String findByAlias(User user, Model postModel){
+        User userByAlias = userService.findByAlias(user.getAlias());
+        postModel.addAttribute("user", userByAlias);
+        return "users/detail";
+    }
+
+    @RequestMapping(path = "/findbyemail", method = RequestMethod.POST)
+    public String findByEmail(User user, Model postModel){
+        User userByEmail = userService.findByAlias(user.getEmail());
+        postModel.addAttribute("user", userByEmail);
+        return "users/detail";
+    }
+
+    @RequestMapping(path = "/findbyfirstname", method = RequestMethod.POST)
+    public String findByFirstName(User user, Model postModel){
+        List<User> userList = userService.findByFirstName(user.getFirstName());
+        postModel.addAttribute("users", userList);
+        return "users/list";
+    }
+
+    @RequestMapping(path = "/findbylastname", method = RequestMethod.POST)
+    public String findByLastName(User user, Model postModel){
+        List<User> userList = userService.findByLastName(user.getLastName());
+        postModel.addAttribute("users", userList);
+        return "users/list";
     }
 
     @RequestMapping(path = "/update/{id}", method = RequestMethod.GET)

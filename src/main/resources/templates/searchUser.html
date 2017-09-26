@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+
+<body>
+
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <!-- write your stuff here! -->
+    <h1>In users</h1>
+
+    <form class="form-inline my-2 my-lg-0" th:object="${user}" th:action="@{'/users/findbyalias'}" method="POST">
+        <!-- <label>By alias</label> -->
+        <input class="form-control mr-sm-2" type="text" id="alias" th:field="*{alias}" placeholder="Search by alias"/>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <form class="form-inline my-2 my-lg-0" th:object="${user}" th:action="@{'/users/findbyemail'}" method="POST">
+        <!-- <label>By alias</label> -->
+        <input class="form-control mr-sm-2" type="text" id="email" th:field="*{email}"  placeholder="Search by email"/>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <form class="form-inline my-2 my-lg-0" th:object="${user}" th:action="@{'/users/findbyfirstname'}" method="POST">
+        <!-- <label>By alias</label> -->
+        <input class="form-control mr-sm-2" type="text" id="firstName" th:field="*{firstName}" placeholder="Search by first name"/>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <form class="form-inline my-2 my-lg-0">
+        <!-- <label>By alias</label> -->
+        <input class="form-control mr-sm-2" type="text"  placeholder="Search by email"/>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</div> <!-- /container -->
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+</body>
+</html>

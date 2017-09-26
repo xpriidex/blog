@@ -21,4 +21,10 @@ public class IndexController {
         model.addAttribute("user", new User());
         return "search";
     }
+
+    @RequestMapping(path = "/searchuser", method = RequestMethod.GET)
+    public String searchUser(Model model) {
+        model.addAttribute("user", new User());
+        return "searchUser";
+    }
 }
