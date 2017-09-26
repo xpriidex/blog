@@ -51,17 +51,28 @@ public class PostDAOJdbcImpl implements PostDAO {
     @Override
     @Transactional
     public Post findById(int id) {
-        Post post = jdbcTemplate.queryForObject("select * from post where id_post=?", new Object[]{id}, new PostRowMapper());
+        try {
+            Post post = jdbcTemplate.queryForObject("select * from post where id_post=?", new Object[]{id}, new PostRowMapper());
 
-        return post;
+            return post;
+
+        } catch (EmptyResultDataAccessException e) {
+            return new Post();
+        }
     }
 
     @Override
     @Transactional
     public List<Post> findAll() {
-        List<Post> posts = jdbcTemplate.query("select * from post order by id_post desc", new PostRowMapper());
+        try{
+            List<Post> posts = jdbcTemplate.query("select * from post order by id_post desc", new PostRowMapper());
 
-        return posts;
+            return posts;
+
+        }catch (EmptyResultDataAccessException e){
+            return new ArrayList<Post>();
+        }
+
     }
 
     @Override

@@ -199,7 +199,7 @@ public class PostRestControllerTest {
         verifyNoMoreInteractions(postService);
     }
 
-    /*@Test
+    @Test
     public void itShouldReturnAllPostsByDate() throws Exception {
         List<Post> posts = new ArrayList<>();
         Post post = new Post();
@@ -213,12 +213,38 @@ public class PostRestControllerTest {
 
         when(postService.findByDate(dateTime)).thenReturn(posts);
 
-        MvcResult postsResponse = mockMvc.perform(get("/api/posts/bydate")
+        MvcResult postsResponse = mockMvc.perform(get("/api/posts/bydate/")
                 .param("date", "2017-12-21"))
                 .andExpect(status().isOk())
                 .andReturn();
 
         verify(postService).findByDate(dateTime);
-    }*/
+    }
+
+    @Test
+    public void itShouldReturnAllPostsByDateRange() throws Exception {
+        List<Post> posts = new ArrayList<>();
+        Post post = new Post();
+
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTime dateTime1 = formatter.parseDateTime("2017-12-21");
+        DateTime dateTime2 = formatter.parseDateTime("2017-12-22");
+
+        post.setId(1);
+        post.setPublicationDate(dateTime1);
+        posts.add(post);
+
+        when(postService.findByDateRange(dateTime1, dateTime2)).thenReturn(posts);
+
+        MvcResult postsResponse = mockMvc.perform(get("/api/posts/byrange/")
+                .param("dateFrom", "2017-12-21")
+                .param("dateTo", "2017-12-22"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //verificar que el json tiene 2 elementos
+
+        verify(postService).findByDateRange(dateTime1, dateTime2);
+    }
 
 }

@@ -2,6 +2,7 @@ package com.nisum.blog.controller;
 
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.domain.User;
+import com.nisum.blog.service.CommentService;
 import com.nisum.blog.service.PostService;
 import com.nisum.blog.service.UserService;
 import org.joda.time.DateTime;
@@ -25,6 +26,9 @@ public class PostController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String findAll(Model postModel) {
@@ -50,19 +54,35 @@ public class PostController {
     public String read(@PathVariable("id") int id, Model postModel) {
         Post post = postService.findById(id);
         User user = userService.findById(post.getAuthorId());
+        if (post == null || user == null) {
+            return "noData";
+        }
         postModel.addAttribute("post", post);
         postModel.addAttribute("user", user);
+        postModel.addAttribute("comments", commentService.findByPostId(id));
         return "posts/detail";
     }
 
     @RequestMapping(path = "/update/{id}", method = RequestMethod.GET)
     public String update(@PathVariable("id") int id, Model postModel) {
-        postModel.addAttribute("post", postService.findById(id));
+        Post post = postService.findById(id);
+
+        if (post.getId()==0) {
+            return "noData";
+        }
+
+        postModel.addAttribute("post", post);
         return "posts/update";
     }
 
     @RequestMapping(path = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable("id") int id) {
+        Post post = postService.findById(id);
+
+        if (post == null) {
+            return "noData";
+        }
+
         postService.delete(id);
         return "redirect:/posts/";
     }

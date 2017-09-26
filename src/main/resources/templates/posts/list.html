@@ -19,6 +19,8 @@
                 <th><label>Title</label></th>
                 <th><label>Body</label></th>
                 <th><label>Read</label></th>
+                <th><label>Author</label></th>
+                <th><label>Read Comments</label></th>
                 <th><label>Update</label></th>
                 <th><label>Delete</label></th>
             </tr>
@@ -29,6 +31,9 @@
                 <td th:text="${post.getBody()}"></td>
                 <td><a th:href="${ '/posts/read/' + post.getId()}"><i class="fa fa-search" aria-hidden="true"></i></a>
                 </td>
+                <td><a th:href="${ '/users/read/' + post.getAuthorId()}"><i class="fa fa-user" aria-hidden="true"></i></a></td>
+                <td><a th:href="${ '/comments/findbypostid/' + post.getId()}"><i class="fa fa-comments" aria-hidden="true"></i></a></td>
+
                 <td><a th:href="${ '/posts/update/' + post.getId()}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </td>
                 <td><a id="delete" th:href="${ '/posts/delete/'+post.getId()}"

@@ -24,13 +24,6 @@ public class PostRowMapper implements RowMapper<Post> {
         post.setTitle(rs.getString("title"));
         post.setBody(rs.getString("body"));
         post.setAuthorId(rs.getInt("id_user"));
-        Log log = LogFactory.getLog(PostRowMapper.class);
-        log.info(rs.getTimestamp("publication_date"));
-        log.info(new DateTime(rs.getTimestamp("publication_date"), DateTimeZone.UTC));
-        log.info(new DateTime(rs.getTimestamp("publication_date").getTime()));
-
-        log.info(new LocalDateTime(rs.getTimestamp("publication_date")));
-
         post.setPublicationDate(new LocalDateTime(rs.getTimestamp("publication_date")).toDateTime());
 
         return post;

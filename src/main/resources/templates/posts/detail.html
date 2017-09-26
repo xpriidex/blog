@@ -44,6 +44,25 @@
     </table>
     <button style="float: right" type="button" onclick="javascript:history.back()">Back</button>
 
+    <h3>My comments</h3>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th><label>Id Author</label></th>
+                <th><label>Body</label></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="comment : ${comments}">
+                <td th:text="${comment.getAuthorId()}"></td>
+                <td th:text="${comment.getBody()}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div> <!-- /container -->
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 
