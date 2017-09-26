@@ -81,13 +81,13 @@ public class UserController {
     }
 
     @RequestMapping(path = "/update/{id}", method = RequestMethod.GET)
-    public String update(@PathVariable("id") int id, Model postModel){
+    public String update(@PathVariable("id") Integer id, Model postModel){
         postModel.addAttribute("user", userService.findById(id));
         return "users/update";
     }
 
     @RequestMapping(path = "/delete/{id}", method = RequestMethod.GET)
-    public String delete(@PathVariable("id") int id){
+    public String delete(@PathVariable("id") Integer id){
         userService.delete(id);
         return "redirect:/users/";
     }
