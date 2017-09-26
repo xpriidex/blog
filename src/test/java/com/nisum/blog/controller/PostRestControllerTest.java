@@ -3,6 +3,9 @@ package com.nisum.blog.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.service.PostService;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
@@ -193,6 +197,28 @@ public class PostRestControllerTest {
 
         verify(postService, times(1)).findAllByAuthorsAlias("Pali");
         verifyNoMoreInteractions(postService);
+    }
+
+    @Test
+    public void itShouldReturnAllPostsByDate() throws Exception {
+        List<Post> posts = new ArrayList<>();
+        Post post = new Post();
+
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTime dateTime = formatter.parseDateTime("2017-12-21");
+
+        post.setId(1);
+        post.setPublicationDate(dateTime);
+        posts.add(post);
+
+        when(postService.findByDate(dateTime)).thenReturn(posts);
+
+        MvcResult postsResponse = mockMvc.perform(get("/api/posts")
+                .param("date", "2017-12-21"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        verify(postService).findByDate(dateTime);
     }
 
 }

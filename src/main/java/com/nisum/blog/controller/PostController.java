@@ -63,7 +63,8 @@ public class PostController {
 
     @RequestMapping(path = "/findbytitle", method = RequestMethod.POST)
     public String findByTitle(Model postModel, Post post) {
-        postModel.addAttribute("posts", postService.findAllByTitle(post.getTitle()));
+        String title = post.getTitle();
+        postModel.addAttribute("posts", postService.findAllByTitle(title));
 
         return "posts/list";
     }

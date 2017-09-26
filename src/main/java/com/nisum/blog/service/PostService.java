@@ -68,4 +68,9 @@ public class PostService {
     public List<Post> findByDate(DateTime dateTime) {
         return postDAO.findByDate(dateTime);
     }
+
+    public List<Post> findByDateRange(DateTime dateQuery1, DateTime dateQuery2) {
+        return postDAO.findByByDateRange(dateQuery1, dateQuery2);
+
+    }
 }
