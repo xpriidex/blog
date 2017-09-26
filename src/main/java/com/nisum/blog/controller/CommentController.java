@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/comments")
 public class CommentController {
@@ -55,40 +57,82 @@ public class CommentController {
 
     @RequestMapping(path = "/findbyalias/{alias}", method = RequestMethod.GET)
     public String findAllByAlias(@PathVariable("alias") String alias,Model postModel) {
-        postModel.addAttribute("comments", commentService.findByAuthorAlias(alias));
+        List<Comment> commentList = commentService.findByAuthorAlias(alias);
+
+        if (commentList.size() == 0)
+        {
+            return "noData";
+        }
+
+        postModel.addAttribute("comments", commentList);
         return "comments/list";
     }
 
     @RequestMapping(path = "/findbyauthorid/{authorId}", method = RequestMethod.GET)
     public String findByAuthorId(@PathVariable("authorId") int authorId,Model postModel) {
-        postModel.addAttribute("comments", commentService.findByAuthorId(authorId));
+        List<Comment> commentList = commentService.findByAuthorId(authorId);
+
+        if (commentList.size() == 0)
+        {
+            return "noData";
+        }
+
+        postModel.addAttribute("comments", commentList);
         return "comments/list";
     }
 
     @RequestMapping(path = "/findbypostid/{postId}", method = RequestMethod.GET)
     public String findByPostId(@PathVariable("postId") int postId,Model postModel) {
-        postModel.addAttribute("comments", commentService.findByPostId(postId));
+        List<Comment> commentList = commentService.findByPostId(postId);
+
+        if (commentList.size() == 0)
+        {
+            return "noData";
+        }
+
+        postModel.addAttribute("comments", commentList);
         return "comments/list";
     }
 
     @RequestMapping(path = "/findbyalias", method = RequestMethod.POST)
     public String searchAllByAlias(User user, Model postModel) {
         System.out.println(user.getAlias());
-        postModel.addAttribute("comments", commentService.findByAuthorAlias(user.getAlias()));
+        List<Comment> commentList = commentService.findByAuthorAlias(user.getAlias());
+
+        if (commentList.size() == 0 || user.getAlias().isEmpty())
+        {
+            return "noData";
+        }
+
+        postModel.addAttribute("comments", commentList);
         return "comments/list";
     }
 
     @RequestMapping(path = "/findbyauthorid",method = RequestMethod.POST)
     public String searchByAuthorId(User user, Model postModel) {
         System.out.println(user.getId());
-        postModel.addAttribute("comments", commentService.findByAuthorId(user.getId()));
+        List<Comment> commentList = commentService.findByAuthorId(user.getId());
+
+        if (commentList.size() == 0)
+        {
+            return "noData";
+        }
+
+        postModel.addAttribute("comments", commentList);
         return "comments/list";
     }
 
     @RequestMapping(path = "/findbypostid", method = RequestMethod.POST)
     public String searchByPostId(Post post, Model postModel) {
         System.out.println(post.getId());
-        postModel.addAttribute("comments", commentService.findByPostId(post.getId()));
+        List<Comment> commentList = commentService.findByPostId(post.getId());
+
+        if (commentList.size() == 0)
+        {
+            return "noData";
+        }
+
+        postModel.addAttribute("comments", commentList);
         return "comments/list";
     }
 
