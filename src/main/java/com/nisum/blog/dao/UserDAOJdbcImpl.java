@@ -112,7 +112,7 @@ public class UserDAOJdbcImpl implements UserDAO {
     @Transactional(readOnly = true)
     public List<User> findByLastName(String lastName) {
         try {
-            String sql = "select * from blog_user where UPPER(last_name) = UPPPER(?);";
+            String sql = "select * from blog_user where UPPER(last_name) = UPPER(?);";
 
             List<User> userList = jdbcTemplate.query(sql, new Object[]{lastName}, new UserRowMapper());
             return userList;
@@ -125,7 +125,7 @@ public class UserDAOJdbcImpl implements UserDAO {
     @Transactional(readOnly = true)
     public User findByEmail(String email) {
         try {
-            String sql = "select * from blog_user where UPPER(email) = (?);";
+            String sql = "select * from blog_user where UPPER(email) = UPPER(?);";
 
             User user = jdbcTemplate.queryForObject(sql, new Object[]{email}, new UserRowMapper());
             return user;
