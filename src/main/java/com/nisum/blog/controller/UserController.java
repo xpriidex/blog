@@ -40,6 +40,12 @@ public class UserController {
     @RequestMapping(path = "/read/{id}", method = RequestMethod.GET)
     public String read(@PathVariable("id") int id, Model postModel){
         User user = userService.findById(id);
+
+        if (user == null)
+        {
+            return "noData";
+        }
+
         postModel.addAttribute("user", user);
         return "users/detail";
     }
@@ -49,7 +55,7 @@ public class UserController {
         User userByAlias = userService.findByAlias(user.getAlias());
         if (userByAlias == null)
         {
-            userByAlias = new User();
+            return "noData";
         }
         postModel.addAttribute("user", userByAlias);
         return "users/detail";
@@ -60,7 +66,7 @@ public class UserController {
         User userByEmail = userService.findByEmail(user.getEmail());
         if (userByEmail == null)
         {
-            userByEmail = new User();
+            return "noData";
         }
         postModel.addAttribute("user", userByEmail);
         return "users/detail";
@@ -69,6 +75,12 @@ public class UserController {
     @RequestMapping(path = "/findbyfirstname", method = RequestMethod.POST)
     public String findByFirstName(User user, Model postModel){
         List<User> userList = userService.findByFirstName(user.getFirstName());
+
+        if (userList.size() == 0)
+        {
+            return "noData";
+        }
+
         postModel.addAttribute("users", userList);
         return "users/list";
     }
@@ -76,6 +88,12 @@ public class UserController {
     @RequestMapping(path = "/findbylastname", method = RequestMethod.POST)
     public String findByLastName(User user, Model postModel){
         List<User> userList = userService.findByLastName(user.getLastName());
+
+        if (userList.size() ==0)
+        {
+            return "noData";
+        }
+
         postModel.addAttribute("users", userList);
         return "users/list";
     }
