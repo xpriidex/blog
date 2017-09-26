@@ -27,4 +27,11 @@ public class IndexController {
         model.addAttribute("user", new User());
         return "searchUser";
     }
+
+    @RequestMapping(path = "/searchcomment", method = RequestMethod.GET)
+    public String searchComment(Model model) {
+        model.addAttribute("post", new Post());
+        model.addAttribute("user", new User());
+        return "searchComment";
+    }
 }
