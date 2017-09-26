@@ -15,7 +15,7 @@
 
     <form class="form-inline my-2 my-lg-0" th:object="${user}" th:action="@{'/comments/findbyauthorid/'}" method="POST">
         <!-- <label>By author id</label> -->
-        <input class="form-control mr-sm-2" type="text" id="id" th:field="*{id}" placeholder="Search by author id"/>
+        <input class="form-control mr-sm-2" type="text" id="authorId" th:field="*{id}" placeholder="Search by author id"/>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 
@@ -27,7 +27,7 @@
 
     <form class="form-inline my-2 my-lg-0" th:object="${post}" th:action="@{'/comments/findbypostid/'}" method="POST">
         <!-- <label>By post id</label> -->
-        <input class="form-control mr-sm-2" type="text" id="id" th:field="*{id}" placeholder="Search by post id"/>
+        <input class="form-control mr-sm-2" type="text" id="postId" th:field="*{id}" placeholder="Search by post id"/>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 
