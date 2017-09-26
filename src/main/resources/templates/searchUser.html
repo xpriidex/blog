@@ -31,9 +31,9 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 
-    <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0" th:object="${user}" th:action="@{'/users/findbylastname'}" method="POST" >
         <!-- <label>By alias</label> -->
-        <input class="form-control mr-sm-2" type="text"  placeholder="Search by email"/>
+        <input class="form-control mr-sm-2" type="text" id="lastName" th:field="*{lastName}" placeholder="Search by last name" />
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 </div> <!-- /container -->

@@ -2,6 +2,8 @@ package com.nisum.blog.controller;
 
 import com.nisum.blog.domain.Post;
 import com.nisum.blog.service.PostService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -73,13 +76,28 @@ public class PostRestController {
         return new ResponseEntity<List<Post>>(result, HttpStatus.OK);
     }
 
-    @RequestMapping(params = {"date"}, method = RequestMethod.GET)
+    @RequestMapping(path = "/bydate/", params = {"date"}, method = RequestMethod.GET)
     public ResponseEntity<List<Post>> findByDate(@RequestParam("date") String date) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
         DateTime dateTime = formatter.parseDateTime(date);
         dateTime.withTimeAtStartOfDay();
 
         List<Post> result = postService.findByDate(dateTime);
+
+        return new ResponseEntity<List<Post>>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/byrange/", params = {"dateFrom", "dateTo"}, method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findByDateRange(
+            @RequestParam("dateFrom") String dateFrom,
+            @RequestParam("dateTo") String dateTo) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTime dateQuery1 = formatter.parseDateTime(dateFrom);
+        DateTime dateQuery2 = formatter.parseDateTime(dateTo);
+        dateQuery1.withTimeAtStartOfDay();
+        dateQuery2.withTimeAtStartOfDay();
+
+        List<Post> result = postService.findByDateRange(dateQuery1, dateQuery2);
 
         return new ResponseEntity<List<Post>>(result, HttpStatus.OK);
     }

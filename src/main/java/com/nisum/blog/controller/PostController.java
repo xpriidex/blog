@@ -63,7 +63,8 @@ public class PostController {
 
     @RequestMapping(path = "/findbytitle", method = RequestMethod.POST)
     public String findByTitle(Model postModel, Post post) {
-        postModel.addAttribute("posts", postService.findAllByTitle(post.getTitle()));
+        String title = post.getTitle();
+        postModel.addAttribute("posts", postService.findAllByTitle(title));
 
         return "posts/list";
     }
@@ -72,6 +73,14 @@ public class PostController {
     public String findByBody(Model postModel, Post post) {
         postModel.addAttribute("posts", postService.findAllByContent(post.getBody()));
 
+        return "posts/list";
+    }
+
+    @RequestMapping(path = "/findbyalias/{alias}", method = RequestMethod.GET)
+    public String findAllByAlias(Model postModel, @PathVariable("alias") String alias) {
+        User user = userService.findByAlias(alias);
+
+        postModel.addAttribute("posts", postService.findAllByAuthorsAlias(user.getAlias()));
         return "posts/list";
     }
 

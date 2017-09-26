@@ -66,7 +66,6 @@ public class PostControllerTest {
                 .andExpect(model().attribute("posts",postList));
 
         verify(postService).findAll();
-
     }
 
     @Test
@@ -135,5 +134,10 @@ public class PostControllerTest {
 
         verify(postService).delete(1);
     }
+
+
+
+
+
 
 }

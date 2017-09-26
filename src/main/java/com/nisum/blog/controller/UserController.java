@@ -47,13 +47,21 @@ public class UserController {
     @RequestMapping(path = "/findbyalias", method = RequestMethod.POST)
     public String findByAlias(User user, Model postModel){
         User userByAlias = userService.findByAlias(user.getAlias());
+        if (userByAlias == null)
+        {
+            userByAlias = new User();
+        }
         postModel.addAttribute("user", userByAlias);
         return "users/detail";
     }
 
     @RequestMapping(path = "/findbyemail", method = RequestMethod.POST)
     public String findByEmail(User user, Model postModel){
-        User userByEmail = userService.findByAlias(user.getEmail());
+        User userByEmail = userService.findByEmail(user.getEmail());
+        if (userByEmail == null)
+        {
+            userByEmail = new User();
+        }
         postModel.addAttribute("user", userByEmail);
         return "users/detail";
     }
@@ -73,13 +81,13 @@ public class UserController {
     }
 
     @RequestMapping(path = "/update/{id}", method = RequestMethod.GET)
-    public String update(@PathVariable("id") int id, Model postModel){
+    public String update(@PathVariable("id") Integer id, Model postModel){
         postModel.addAttribute("user", userService.findById(id));
         return "users/update";
     }
 
     @RequestMapping(path = "/delete/{id}", method = RequestMethod.GET)
-    public String delete(@PathVariable("id") int id){
+    public String delete(@PathVariable("id") Integer id){
         userService.delete(id);
         return "redirect:/users/";
     }
