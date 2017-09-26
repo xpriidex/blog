@@ -30,7 +30,8 @@
                 <td th:text="${user.getBio()}"></td>
                 <td><a th:href="${ '/users/read/' + user.getId()}"><i class="fa fa-search" aria-hidden="true"></i></a></td>
                 <td><a th:href="${ '/users/update/' + user.getId()}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                <td><a th:href="${ '/users/delete/'+ user.getId()}"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                <td><a th:href="${ '/users/delete/'+ user.getId()}"
+                       onclick="javascript: return confirm('Are you sure?')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                 <td><a th:href="${ '/posts/findbyalias/' + user.getAlias()}"><i class="fa fa-newspaper-o" aria-hidden="true"></i></a></td>
                 <td><a th:href="${ '/comments/findbyauthorid/' + user.getId()}"><i class="fa fa-comments" aria-hidden="true"></i></a></td>
             </tr>
