@@ -50,8 +50,8 @@ public class UserRestController {
 
     @RequestMapping(path = "/update", method = RequestMethod.PUT)
     public ResponseEntity updateFirstName(@RequestBody User user) {
-        userService.update(user);
-        return ok(1);
+        int rowsUpdated = userService.update(user);
+        return ok(rowsUpdated);
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)

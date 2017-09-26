@@ -138,15 +138,19 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void update(User user) {
+    public int update(User user) {
+        int updatedRows = 0;
 
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getId() == user.getId())
             {
+                updatedRows++;
                 userList.set(i, user);
                 break;
             }
         }
+
+        return updatedRows;
     }
 
     @Override

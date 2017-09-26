@@ -136,7 +136,7 @@ public class UserDAOJdbcImpl implements UserDAO {
 
     @Override
     @Transactional
-    public void update(User user) {
+    public int update(User user) {
         String updateSql = " Update blog_user"
                 + " SET first_name=?,"
                 + " last_name=?,"
@@ -147,13 +147,15 @@ public class UserDAOJdbcImpl implements UserDAO {
                 + " WHERE id_user=?;";
 
         //This returns number of rows updated
-        jdbcTemplate.update(updateSql, new Object[]{user.getFirstName(),
+        int updatedRows = jdbcTemplate.update(updateSql, new Object[]{user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
                 user.getBio(),
                 user.getAlias(),
                 user.getImage(),
                 user.getId()});
+
+        return updatedRows;
     }
 
     @Override

@@ -82,24 +82,40 @@ public class UserService {
         return userFound;
     }
 
-    public void update(User user)
+    public int update(User updatedUser)
     {
-        if (user == null) return;
+        if (updatedUser == null) return -1;
 
-        if (user.getFirstName().isEmpty()) return;
+        if (updatedUser.getFirstName().isEmpty()) return -2;
 
-        if (user.getLastName().isEmpty()) return;
+        if (updatedUser.getLastName().isEmpty()) return -2;
 
-        if (user.getEmail().isEmpty()) return;
+        if (updatedUser.getEmail().isEmpty()) return -2;
 
-        if (user.getAlias().isEmpty()) return;
+        if (updatedUser.getAlias().isEmpty()) return -2;
 
-        if (user.getBio().isEmpty()) return;
+        if (updatedUser.getBio().isEmpty()) return -2;
 
-        if(findByAlias(user.getAlias())!= null) return;
+        User userByAlias = findByAlias(updatedUser.getAlias());
 
-        if(findByEmail(user.getEmail()) != null) return;
+        if(userByAlias != null)
+        {
+            if(userByAlias.getId() != updatedUser.getId())
+            {
+                return -3;
+            }
+        }
 
-        userDAO.update(user);
+        User userByEmail = findByEmail(updatedUser.getEmail());
+
+        if(userByEmail != null)
+        {
+            if(userByEmail.getId() != updatedUser.getId())
+            {
+                return -4;
+            }
+        }
+
+        return userDAO.update(updatedUser);
     }
 }

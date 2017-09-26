@@ -2,8 +2,6 @@ $.when($.ready).then(function () {
     console.log("Ready to go with jQuery");
 
     function saveUser(data) {
-        // $.get();
-
         $.ajax({
             contentType: "application/json",
             dataType: "json",
@@ -11,8 +9,27 @@ $.when($.ready).then(function () {
             url: "/api/users/update",
             data: data
         }).done(function (msg) {
-            alert("Data Updated: " + msg);
-            location.href="/users/";
+            if (msg === 1)
+            {
+                alert("Data Updated: " + msg);
+                location.href="/users/";
+            }
+            else if (msg === -1)
+            {
+                alert("Error data missing");
+            }
+            else if (msg === -2)
+            {
+                alert("Error data missing");
+            }
+            else if (msg === -3)
+            {
+                alert("Alias already in use");
+            }
+            else if (msg === -4)
+            {
+                alert("Email already in use");
+            }
         });
     }
 
