@@ -81,14 +81,14 @@ public class PostControllerTest {
 
     @Test
     public void checkCreate() throws Exception {
-        //when(postService.create(post)).thenReturn(1);
 
         mockMvc.perform(
                 post("/posts/create/")).
                 andExpect(redirectedUrl("/posts/"));
 
-        //verify(postService).create(post);
-        /// TODO: 24-09-17  
+        //verify(postService).create(any(Post.class));
+
+
     }
 
     @Test
@@ -116,15 +116,24 @@ public class PostControllerTest {
 
     }
 
-    @Test
+    /*@Test
     public void checkFindAllPostByAlias() throws Exception {
-        when(postService.findAllByAuthorsAlias(anyString())).thenReturn(postList);
+        when(postService.findAllByAuthorsAlias("pali")).thenReturn(postList);
 
-        mockMvc.perform(get("/posts/findbyalias/{alias}",1))
+        mockMvc.perform(post("/posts/findbyalias"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("posts/list"))
                 .andExpect(model().attribute("posts",postList));
 
         verify(postService).findAllByAuthorsAlias(anyString());
+    }*/
+
+    @Test
+    public void checkDelete() throws Exception {
+        mockMvc.perform(get("/posts/delete/{id}",1))
+                .andExpect(redirectedUrl("/posts/"));
+
+        verify(postService).delete(1);
     }
+
 }

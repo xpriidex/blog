@@ -96,4 +96,15 @@ public class Post {
         result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", authorId=" + authorId +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", publicationDate=" + publicationDate +
+                '}';
+    }
 }

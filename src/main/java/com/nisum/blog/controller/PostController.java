@@ -26,11 +26,6 @@ public class PostController {
         return "posts/list";
     }
 
-    @RequestMapping(path = "/findbyalias/{alias}", method = RequestMethod.GET)
-    public String findAllByAlias(@PathVariable("alias") String alias,Model postModel) {
-        postModel.addAttribute("posts", postService.findAllByAuthorsAlias(alias));
-        return "posts/list";
-    }
 
     @RequestMapping(path = "/create", method = RequestMethod.GET)
     public String createView(Model postModel) {
@@ -40,13 +35,13 @@ public class PostController {
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public String create(Post post){
+    public String create(Post post) {
         postService.create(post);
         return "redirect:/posts/";
     }
 
     @RequestMapping(path = "/read/{id}", method = RequestMethod.GET)
-    public String read(@PathVariable("id") int id, Model postModel){
+    public String read(@PathVariable("id") int id, Model postModel) {
         Post post = postService.findById(id);
         User user = userService.findById(post.getAuthorId());
         postModel.addAttribute("post", post);
@@ -55,20 +50,35 @@ public class PostController {
     }
 
     @RequestMapping(path = "/update/{id}", method = RequestMethod.GET)
-    public String update(@PathVariable("id") int id, Model postModel){
+    public String update(@PathVariable("id") int id, Model postModel) {
         postModel.addAttribute("post", postService.findById(id));
         return "posts/update";
     }
 
     @RequestMapping(path = "/delete/{id}", method = RequestMethod.GET)
-    public String delete(@PathVariable("id") int id){
+    public String delete(@PathVariable("id") int id) {
         postService.delete(id);
         return "redirect:/posts/";
     }
 
-    @RequestMapping(path = "/update", method = RequestMethod.POST)
-    public String update(Post post){
-        postService.update(post);
-        return "redirect:/posts/read/" + post.getId();
+    @RequestMapping(path = "/findbytitle", method = RequestMethod.POST)
+    public String findByTitle(Model postModel, Post post) {
+        postModel.addAttribute("posts", postService.findAllByTitle(post.getTitle()));
+
+        return "posts/list";
+    }
+
+    @RequestMapping(path = "/findbybody", method = RequestMethod.POST)
+    public String findByBody(Model postModel, Post post) {
+        postModel.addAttribute("posts", postService.findAllByContent(post.getBody()));
+
+        return "posts/list";
+    }
+
+    @RequestMapping(path = "/findbyalias", method = RequestMethod.POST)
+    public String findAllByAlias(User user, Model postModel) {
+        System.out.println(user.getAlias());
+        postModel.addAttribute("posts", postService.findAllByAuthorsAlias(user.getAlias()));
+        return "posts/list";
     }
 }

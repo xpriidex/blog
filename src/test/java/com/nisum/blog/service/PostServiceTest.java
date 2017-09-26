@@ -249,4 +249,22 @@ public class PostServiceTest {
 
         assertThat(result,is(equalTo(1)));
     }
+
+    @Test
+    public void shouldReturnAllPostsByDate() throws Exception {
+        //Arrange
+        DateTime dateTime = new DateTime();
+
+        when(postDAO.findByDate(dateTime)).thenReturn(postList);
+
+        //Act
+        List<Post> result = postService.findByDate(dateTime);
+
+        //Assert
+        assertThat(result.size(), is(equalTo(2)));
+        assertEquals(result.get(0).getId(), 1);
+        assertEquals(result.get(1).getId(), 2);
+        verify(postDAO).findByDate(dateTime);
+
+    }
 }

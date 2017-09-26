@@ -119,7 +119,7 @@ public class PostRestControllerTest {
 
 
         mockMvc.perform(
-                put("/api/posts/{id}", post1.getId())
+                put("/api/posts/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isOk());
@@ -140,6 +140,58 @@ public class PostRestControllerTest {
 // TODO: 21-09-17 revisar delete 
         //verify(postService, times(1)).findById(post1.getId());
         verify(postService, times(1)).delete(post1.getId());
+        verifyNoMoreInteractions(postService);
+    }
+
+    @Test
+    public void shouldReturnAllPostByContent() throws Exception {
+        List<Post> posts = new ArrayList<>();
+        posts.add(post1);
+        when(postService.findAllByContent("ANDroid")).thenReturn(posts);
+
+        mockMvc.perform(get("/api/posts/content/{content}","ANDroid"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].title", is("Narnia")))
+                .andExpect(jsonPath("$[0].body", is("I am post about ANDROID")));
+
+        verify(postService, times(1)).findAllByContent("ANDroid");
+        verifyNoMoreInteractions(postService);
+    }
+
+    @Test
+    public void shouldReturnAllPostByTitle() throws Exception {
+        List<Post> posts = new ArrayList<>();
+        posts.add(post1);
+        when(postService.findAllByTitle("NarniA")).thenReturn(posts);
+
+        mockMvc.perform(get("/api/posts/title/{title}","NarniA"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].title", is("Narnia")));
+
+        verify(postService, times(1)).findAllByTitle("NarniA");
+        verifyNoMoreInteractions(postService);
+    }
+
+    @Test
+    public void shouldReturnAllPostByAlias() throws Exception {
+        List<Post> posts = new ArrayList<>();
+        posts.add(post1);
+        when(postService.findAllByAuthorsAlias("Pali")).thenReturn(posts);
+
+        mockMvc.perform(get("/api/posts/alias/{alias}","Pali"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].title", is("Narnia")));
+
+        verify(postService, times(1)).findAllByAuthorsAlias("Pali");
         verifyNoMoreInteractions(postService);
     }
 
